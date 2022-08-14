@@ -18,6 +18,10 @@ function blue_eye() {
         return
     fi
 
+    if [[ $(type -t blue_eye_$task) == "function" ]] ; then
+        blue_eye_$task ${@:2}
+    fi
+
     if [ "$task" == "task_1" ] ; then
         python3 -m blue_eye \
             task_1 \
