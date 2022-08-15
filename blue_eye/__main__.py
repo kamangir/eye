@@ -9,13 +9,13 @@ parser = argparse.ArgumentParser(name, description=f"{name}-{version}")
 parser.add_argument(
     "task",
     type=str,
-    help="TBD",
+    help="start_session",
 )
 args = parser.parse_args()
 
 success = False
-if args.task == "TBD":
-    success = True
+if args.task == "start_session":
+    success = start_session()
 else:
     logger.error(f"-{name}: {args.task}: command not found.")
 
