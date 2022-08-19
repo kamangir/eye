@@ -1,7 +1,5 @@
-name = "blue_eye"
+NAME = "blue_eye"
 
-version = "1.33.1"
+VERSION = "1.34.1"
 
-description = "an abcli plugin for a cloud-connected raspberry pi/jetson camera"
-
-from .functions import *
+from blue_eye.functions import *
