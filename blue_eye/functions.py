@@ -6,6 +6,6 @@ logger = logging.getLogger(__name__)
 
 
 def start_session():
-    logger.info(f"{NAME}: start_session()")
-    logger.info(f"{NAME}: end_session()")
+    logger.info(f"{NAME}: session started.")
+    logger.info(f"{NAME}: session ended.")
     return True
