@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-function eye() {
+function be() {
     blue_eye $@
 }
 
