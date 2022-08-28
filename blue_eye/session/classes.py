@@ -16,6 +16,12 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+if host.cookie.get("camera") == "lepton":
+    from blue_eye.camera.lepton import instance as camera
+else:
+    from blue_eye.camera import instance as camera
+logger.info(f"camera: {camera.__class__.__name__}")
+
 
 class Session(object):
     def __init__(self, output=""):

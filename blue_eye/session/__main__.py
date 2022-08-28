@@ -1,21 +1,21 @@
 import argparse
-from blue_eye import *
+from . import *
 from abcli import logging
 import logging
 
 logger = logging.getLogger(__name__)
 
-parser = argparse.ArgumentParser(NAME, description=f"{NAME}-{VERSION}")
+parser = argparse.ArgumentParser(NAME)
 parser.add_argument(
     "task",
     type=str,
-    help="session",
+    help="start",
 )
 args = parser.parse_args()
 
 success = False
-if args.task == "session":
-    success = session(Session)
+if args.task == "start":
+    success = start_session(Session)
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")
 

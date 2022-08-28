@@ -1,7 +1,6 @@
 import os
 from abcli import file
 from abcli.logging import crash_report
-from blue_eye import NAME
 from abcli import logging
 import logging
 
@@ -25,7 +24,7 @@ def return_to_bash(status, content=[]):
     )
 
 
-def session(Session, output=""):
+def start_session(Session, output=""):
     logger.info(f"{Session.__name__} started  -> {output}")
 
     try:

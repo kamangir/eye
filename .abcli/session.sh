@@ -8,7 +8,7 @@ function blue_eye_session() {
             "start a blue_eye session."
 
         if [ "$(abcli_keyword_is $2 verbose)" == true ] ; then
-            python3 -m blue_eye --help
+            python3 -m blue_eye.session --help
         fi
 
         return
@@ -19,7 +19,7 @@ function blue_eye_session() {
 
         abcli_tag set $abcli_object_name session,$abcli_host_name,$(abcli_string_today),$abcli_fullname,open,$abcli_wifi_ssid
 
-        python3 -m blue_eye session ${@:3}
+        python3 -m blue_eye.session start ${@:3}
 
         abcli_upload open
 
