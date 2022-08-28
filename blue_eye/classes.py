@@ -9,6 +9,7 @@ from abcli import string
 from abcli.timer import Timer
 from abcli.modules import host
 from . import NAME
+from .functions import return_to_bash
 from abcli.logging import crash_report
 from abcli import logging
 import logging
@@ -27,7 +28,7 @@ class Session(object):
             "u": "update",
         }
 
-        self.capture_command = ""
+        self.capture_requested = False
 
         self.new_frame = False
         self.frame_image = terraform.poster(None)
@@ -72,17 +73,14 @@ class Session(object):
         return False
 
     def check_camera(self):
-        print("check_camera: 1")
         self.new_frame = False
 
-        if not self.capture_command or not self.capture_enabled:
-            print("check_camera: return")
+        if not self.capture_enabled or (
+            not self.capture_requested and not self.timer["capture"].tick()
+        ):
             return
 
-        print("check_camera: 2")
-        xxx
-        print("check_camera: 3")
-        success, filename, image = camera.capture(self.capture_command)
+        success, filename, image = camera.capture(force=capture_requested)
 
         self.capture_command = ""
 
@@ -113,7 +111,7 @@ class Session(object):
                 return False
 
         if " " in display.key_buffer:
-            self.capture_command = "forced"
+            self.capture_requested = True
 
         display.key_buffer = []
 
@@ -138,8 +136,8 @@ class Session(object):
 
     def process_message(self, message):
         if message.event == "capture":
-            logger.info("{NAME}: capture message received.")
-            self.capture_command = "forced"
+            logger.info(f"{NAME}: capture message received.")
+            self.capture_requested = True
 
         if message.event in "reboot,shutdown".split(","):
             logger.info(f"{NAME}: {message.event} message received.")
