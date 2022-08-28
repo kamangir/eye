@@ -15,7 +15,7 @@ args = parser.parse_args()
 
 success = False
 if args.task == "session":
-    success = start_session()
+    success = session(Session)
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")
 
