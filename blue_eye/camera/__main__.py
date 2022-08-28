@@ -23,7 +23,7 @@ parser.add_argument(
     type=int,
 )
 parser.add_argument(
-    "--output_data_path",
+    "--output_path",
     type=str,
     default="",
 )
@@ -39,7 +39,7 @@ success = False
 if args.task == "capture":
     success, _, _ = instance.capture(
         {
-            "filename": os.path.join(args.output_data_path, "camera.jpg"),
+            "filename": os.path.join(args.output_path, "camera.jpg"),
             "forced": True,
         }
     )
