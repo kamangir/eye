@@ -37,7 +37,6 @@ class Imager(object):
     def filename_of(
         self,
         filename="",
-        name_and_extension="camera.jpg",
     ):
         """produce filename.
 
@@ -56,9 +55,7 @@ class Imager(object):
             if filename
             else os.path.join(
                 self.object_folder,
-                "Data",
-                str(self.frame),
-                name_and_extension,
+                f"{self.frame:05d}.jpg",
             )
         )
 
