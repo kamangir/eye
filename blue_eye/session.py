@@ -15,7 +15,6 @@ class Blue_Eye_Session(Session):
         self.frame_image = terraform.poster(None)
         self.frame_filename = ""
 
-        self.timer = {}
         for name, period in {
             "capture": 60 * 5,
         }.items():
