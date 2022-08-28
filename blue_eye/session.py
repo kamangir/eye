@@ -21,9 +21,9 @@ class Blue_Eye_Session(Session):
         }.items():
             self.add_timer(name, period)
 
-        self.auto_upload = cookie.get("host.session.auto_upload", True)
-        self.outbound_queue = cookie.get("host.session.outbound_queue", "stream")
-        self.capture_enabled = cookie.get("host.session.capture.enabled", True)
+        self.auto_upload = cookie.get("session.auto_upload", True)
+        self.outbound_queue = cookie.get("session.outbound_queue", "stream")
+        self.capture_enabled = cookie.get("session.capture.enabled", True)
 
     def check_camera(self):
         self.new_frame = False
