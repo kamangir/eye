@@ -114,38 +114,33 @@ class Camera(Imager):
 
         self.resolution = []
 
-    def capture(self, options=""):
-        """
-        capture.
-        :param options:
-            . close      : close camera.
-                           default : True
-            . forced     : force capture.
-                           default : False
-            . log        : log.
-                           default : True
-            . open       : open camera.
-                           default : True
-            . save       : save output.
-                           default : True
-            . sign       : sign output.
-                           default : True
-            . filename_of()
-        :return: success, filename, image
-        """
-        options = (
-            Options(options)
-            .default("close", True)
-            .default("forced", False)
-            .default("log", True)
-            .default("open", True)
-            .default("save", True)
-            .default("sign", True)
-        )
+    def capture(
+        self,
+        close_after=True,
+        force=False,
+        log=True,
+        open_before=True,
+        save=True,
+        sign=True,
+    ):
+        """capture.
 
+        Args:
+            close_after (bool, optional): close camera after capture. Defaults to True.
+            force (bool, optional): force capture. Defaults to False.
+            log (bool, optional): log. Defaults to True.
+            open_before (bool, optional): open the camera before capture. Defaults to True.
+            save (bool, optional): save the image. Defaults to True.
+            sign (bool, optional): sign the image. Defaults to True.
+
+        Returns:
+            bool: success.
+            str: filename.
+            image: np.ndarray.
+        """
         success, filename, image = super(Camera, self).capture()
 
-        if options["open"]:
+        if open_before:
             if not self.open():
                 return success, filename, image
 
@@ -153,7 +148,7 @@ class Camera(Imager):
             return success, filename, image
 
         if host.is_rpi():
-            temp = file.auxiliary(self, "png", options)
+            temp = file.auxiliary(self, "png")
             try:
                 self.device.capture(temp)
                 success = True
@@ -172,29 +167,29 @@ class Camera(Imager):
             except:
                 crash_report("camera.capture() failed")
 
-        if options["close"]:
+        if close_after:
             self.close()
 
-        if success and not options["forced"]:
+        if success and not force:
             if self.diff.same(image):
                 return True, "same", None
 
         self.unique_frame += 1
 
-        if success and options["sign"]:
+        if success and sign:
             image = graphics.add_signature(image, [], self.signature(image))
 
-        if success and options["save"]:
-            filename = self.filename_of(options)
+        if success and save:
+            filename = self.filename_of()
 
             if filename:
-                success = file.save_image(filename, image, options)
+                success = file.save_image(filename, image)
 
-        if success and options["log"]:
+        if success and log:
             logger.info(
                 "camera.capture({}): {}{}".format(
-                    "forced" if options["forced"] else "",
-                    "{} - ".format(filename) if filename else "",
+                    "forced" if force else "",
+                    f"{filename} - " if filename else "",
                     string.pretty_size_of_matrix(image),
                 )
             )
@@ -285,7 +280,7 @@ class Camera(Imager):
 
         self.device = None
 
-        if options["log"]:
+        if log:
             logger.info("camera.close()")
 
         return success
@@ -339,7 +334,7 @@ class Camera(Imager):
 
             self.resolution = self.get_resolution()
 
-            if options["log"]:
+            if log:
                 logger.info(
                     "camera.open({})".format(string.pretty_size(self.resolution))
                 )
