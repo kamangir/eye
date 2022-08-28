@@ -14,7 +14,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "--filename",
-    default="info.h264",
+    default=os.path.join(os.getenv("abcli_object_path", ""), "info.h264"),
     type=str,
 )
 parser.add_argument(
@@ -38,35 +38,46 @@ args = parser.parse_args()
 success = False
 if args.task == "capture":
     success, _, _ = instance.capture(
-        {
-            "filename": os.path.join(args.output_path, "camera.jpg"),
-            "forced": True,
-        }
+        filename=os.path.join(args.output_path, "camera.jpg"),
+        forced=True,
     )
 elif args.task == "capture_video":
     success = instance.capture_video(
         args.filename,
         args.length,
-        {"preview": args.preview, "resolution": (728, 600)},
+        preview=args.preview,
+        resolution=(728, 600),
     )
 elif args.task == "preview":
     try:
-        instance.open("log")
+        instance.open(log=True)
 
         while not display.pressed("qe"):
             success_, _, image = instance.capture(
-                "~close,filename=-,forced,~log,~open,~sign,~save"
+                close_after=False,
+                filename="-",
+                forced=True,
+                log=False,
+                open_before=False,
+                sign=False,
+                save=False,
             )
             if not success_:
                 continue
 
-            display.show(image, [], [], "screen,~sign")
+            display.show(
+                image,
+                [],
+                [],
+                screen=True,
+                sign=False,
+            )
 
         success = True
     finally:
-        instance.close("log")
+        instance.close(log=True)
 else:
-    logger.error('camera: unknown task "{}".'.format(args.task))
+    logger.error(f"-{NAME}: {args.task}: command not found.")
 
 if not success:
-    logger.error("camera({}): failed.".format(args.task))
+    logger.error(f"-{NAME}: {args.task}: failed.")

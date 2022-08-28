@@ -96,7 +96,7 @@ class TemplateImager(Imager):
         """
         _, _, image_blank = super(TemplateImager, self).capture()
 
-        filename = self.filename_of(filename=filename)
+        filename = self.filename_of(filename)
 
         return False, filename, image_blank
 
@@ -117,6 +117,7 @@ class Camera(Imager):
     def capture(
         self,
         close_after=True,
+        filename="",
         force=False,
         log=True,
         open_before=True,
@@ -127,6 +128,7 @@ class Camera(Imager):
 
         Args:
             close_after (bool, optional): close camera after capture. Defaults to True.
+            filename (str, optional): filename. Defaults to True.
             force (bool, optional): force capture. Defaults to False.
             log (bool, optional): log. Defaults to True.
             open_before (bool, optional): open the camera before capture. Defaults to True.
@@ -180,7 +182,7 @@ class Camera(Imager):
             image = graphics.add_signature(image, [], self.signature(image))
 
         if success and save:
-            filename = self.filename_of()
+            filename = self.filename_of(filename)
 
             if filename:
                 success = file.save_image(filename, image)
@@ -253,18 +255,18 @@ class Camera(Imager):
 
         return success
 
-    def close(self, options=""):
+    def close(self, log=False):
+        """close camera.
+
+        Args:
+            log (bool, optional): log. Defaults to False.
+
+        Returns:
+            bool: success
         """
-        close camera.
-        :param options:
-            . log : log.
-                    default: False
-        return: success
-        """
-        options = Options(options).default("log", False)
 
         if self.device is None:
-            logger.warning("camera.close(): device is {}, failed.".format(self.device))
+            logger.warning(f"{NAME}.close(): device is {self.device}, failed.")
             return False
 
         success = False
@@ -275,13 +277,13 @@ class Camera(Imager):
                 self.device.release()
             success = True
         except:
-            crash_report("camera.close() failed")
+            crash_report(f"{NAME}.close() failed")
             return False
 
         self.device = None
 
         if log:
-            logger.info("camera.close()")
+            logger.info(f"{NAME}.close()")
 
         return success
 
@@ -300,18 +302,20 @@ class Camera(Imager):
             crash_report("camera.get_resolution() failed")
             return []
 
-    def open(self, options=""):
-        """
-        open camera.
-        :param options:
-            . log        : log.
-                           default: False
-            . resolution : resolution.
-                           default: None
-        return: success
-        """
-        options = Options(options).default("log", False).default("resolution", None)
+    def open(
+        self,
+        log=True,
+        resolution=None,
+    ):
+        """open camera.
 
+        Args:
+            log (bool, optional): log. Defaults to True.
+            resolution (Tuple(int,int), optional): resolution. Defaults to None.
+
+        Returns:
+            bool: success.
+        """
         try:
             if host.is_rpi():
                 from picamera import PiCamera
@@ -322,8 +326,8 @@ class Camera(Imager):
                 # https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/7
                 self.device.resolution = (
                     ((2592, 1944) if self.hi_res else (728, 600))
-                    if options["resolution"] is None
-                    else options["resolution"]
+                    if resolution is None
+                    else resolution
                 )
             else:
                 self.device = cv2.VideoCapture(0)
@@ -335,9 +339,7 @@ class Camera(Imager):
             self.resolution = self.get_resolution()
 
             if log:
-                logger.info(
-                    "camera.open({})".format(string.pretty_size(self.resolution))
-                )
+                logger.info(f"{NAME}.open({string.pretty_size(self.resolution)})")
 
             return True
         except:
