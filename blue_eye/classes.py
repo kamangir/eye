@@ -266,24 +266,31 @@ class Session(object):
 
     def step(
         self,
-        keyboard=True,
-        messages=True,
-        seed=True,
-        switch=True,
-        timers=True,
+        steps="all",
     ):
+        """step session.
+
+        Args:
+            steps (str, optional): steps. Defaults to "all".
+
+        Returns:
+            bool: success.
+        """
+        if steps == "all":
+            steps = "camera,keyboard,messages,seed,switch,timers".split(",")
+
         self.params["iteration"] += 1
 
         hardware.pulse(hardware.looper_pin, 0)
 
         for enabled, step_ in zip(
             [
-                keyboard,
-                messages,
-                timers,
-                switch,
-                seed,
-                camera,
+                "keyboard" in steps,
+                "messages" in steps,
+                "timers" in steps,
+                "switch" in steps,
+                "seed" in steps,
+                "camera" in steps,
             ],
             [
                 self.check_keyboard,
