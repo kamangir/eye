@@ -25,7 +25,7 @@ def return_to_bash(status, content=[]):
 
 
 def start_session(Session, output=""):
-    logger.info(f"{Session.__name__} started  -> {output}")
+    logger.info(f"{Session.__name__} started -> {output}")
 
     try:
         session = Session(output)
@@ -33,14 +33,14 @@ def start_session(Session, output=""):
         while session.step():
             pass
 
-        logger.info(f"{Session.__name__} stopped")
+        logger.info(f"{Session.__name__} stopped.")
     except KeyboardInterrupt:
-        logger.info(f"Ctrl+C - {Session.__name__} stopped")
+        logger.info(f"Ctrl+C - {Session.__name__} stopped.")
         return_to_bash("exit")
     except:
-        crash_report(f"{Session.__name__} failed")
+        crash_report(f"{Session.__name__} failed.")
 
     try:
         session.close()
     except:
-        crash_report(f"{Session.__name__}.close() failed")
+        crash_report(f"{Session.__name__}.close() failed.")

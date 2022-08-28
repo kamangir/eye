@@ -261,11 +261,11 @@ class Camera(Imager):
 
         return success
 
-    def close(self, log=False):
+    def close(self, log=True):
         """close camera.
 
         Args:
-            log (bool, optional): log. Defaults to False.
+            log (bool, optional): log. Defaults to True.
 
         Returns:
             bool: success
@@ -289,7 +289,7 @@ class Camera(Imager):
         self.device = None
 
         if log:
-            logger.info(f"{NAME}.close()")
+            logger.info(f"{NAME}.close().")
 
         return success
 
