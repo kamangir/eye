@@ -12,6 +12,7 @@ from abcli.modules import host
 from abcli.plugins import graphics
 from abcli import string
 from .constants import *
+from blue_eye.algo.diff import Diff
 from abcli.logging import crash_report
 from abcli import logging
 import logging
@@ -27,7 +28,7 @@ class Imager(object):
         self.object_name = os.getenv("abcli_object_name", "")
         self.object_folder = os.getenv("abcli_object_folder", "")
 
-        self.diff = algo.diff(host.cookie.get("camera.diff", 0.1))
+        self.diff = Diff(host.cookie.get("camera.diff", 0.1))
 
     def capture(self):
         self.frame += 1

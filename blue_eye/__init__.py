@@ -1,3 +1,3 @@
 NAME = "blue_eye"
 
-VERSION = "1.47.1"
+VERSION = "1.48.1"
