@@ -1,6 +1,6 @@
 from abcli.modules.hardware import instance as hardware
 from abcli.modules.host import cookie
-from abcli.modules.host.session import Session
+from abcli.modules.session.classes import Session
 from abcli.plugins.storage import instance as storage
 from abcli.modules import terraform
 
@@ -23,7 +23,6 @@ class Blue_Eye_Session(Session):
 
         self.auto_upload = cookie.get("host.session.auto_upload", True)
         self.outbound_queue = cookie.get("host.session.outbound_queue", "stream")
-        self.do_annotate = cookie.get("host.session.capture.annotate", True)
         self.capture_enabled = cookie.get("host.session.capture.enabled", True)
 
     def check_camera(self):
@@ -45,9 +44,6 @@ class Blue_Eye_Session(Session):
         self.frame_image = image
         self.frame_filename = filename
 
-        if self.do_annotate:
-            camera.annotate()
-
         if self.outbound_queue:
             from abcli.plugins.message import Message
 
@@ -58,3 +54,26 @@ class Blue_Eye_Session(Session):
             ).submit()
         elif self.auto_upload:
             storage.upload_file(self.frame_filename)
+
+    def step(
+        self,
+        keyboard=True,
+        messages=True,
+        seed=True,
+        switch=True,
+        timers=True,
+    ):
+        if not super(Blue_Eye_Session, self).step(
+            keyboard,
+            messages,
+            seed,
+            switch,
+            timers,
+        ):
+            return False
+
+        output = self.check_camera()
+        if output in [False, True]:
+            return output
+
+        return True
