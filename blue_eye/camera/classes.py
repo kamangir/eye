@@ -199,35 +199,40 @@ class Camera(Imager):
         return success, filename, image
 
     # https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/6
-    def capture_video(self, filename, length, options=""):
-        """capture video.
+    def capture_video(
+        self,
+        filename,
+        length=10,
+        preview=True,
+        pulse=True,
+        resolution=None,
+    ):
+        """capture video
 
         Args:
             filename (str): filename.
-            length (int): in seconds.
-            options (str, optional): options.
-                preview : show preview. Defaults to True.
-                pulse   : pulse. Default to True.
+            length (int): length in seconds. Default to 10.
+            preview (bool, optional): show preview. Defaults to True.
+            pulse (bool, optional): pulse hardware leds. Defaults to True.
+            resolution (Any, optional): resolution. Defaults to None.
 
         Returns:
-            bool: success
+            bool: success.
         """
-        options = Options(options).default("preview", True).default("pulse", True)
-
-        if not host.is_rpi:
-            logger.error("capture.capture_video() works on rpi.")
+        if not host.is_rpi():
+            logger.error(f"{NAME}.capture_video() only works on rpi.")
             return False
 
-        if not self.open(options):
+        if not self.open(resolution=resolution):
             return False
 
         success = True
         try:
-            if options["preview"]:
+            if preview:
                 self.device.start_preview()
 
             self.device.start_recording(filename)
-            if options["pulse"]:
+            if pulse:
                 for _ in range(int(10 * length)):
                     hardware.pulse("outputs")
                     sleep(0.1)
@@ -235,7 +240,7 @@ class Camera(Imager):
                 sleep(length)
             self.device.stop_recording()
 
-            if options["preview"]:
+            if preview:
                 self.device.stop_preview()
         except:
             crash_report(f"{NAME}.capture_video()")
