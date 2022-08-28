@@ -4,12 +4,13 @@ import numpy as np
 import os
 from time import sleep
 from abcli.modules import objects
-from abcli.display import instance as display
+from abcli.plugins.display import instance as display
 from abcli import file
 from abcli.modules.hardware import instance as hardware
 from abcli.modules import host
 from abcli.plugins import graphics
 from abcli import string
+from . import NAME
 from .constants import *
 from blue_eye.algo.diff import Diff
 from abcli.logging import crash_report
@@ -240,9 +241,7 @@ class Camera(Imager):
             if options["preview"]:
                 self.device.stop_preview()
         except:
-            from abcli.logging import crash_report
-
-            crash_report("camera.capture_video()")
+            crash_report(f"{NAME}.capture_video()")
             success = False
 
         if not self.close():
