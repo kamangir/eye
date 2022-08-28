@@ -4,6 +4,7 @@ from abcli.modules.display import instance as display
 from abcli import file
 from abcli.modules.hardware import instance as hardware
 from abcli.modules import terraform
+from abcli.plugins import storage
 from abcli.plugins.message.messenger import instance as messenger
 from abcli import string
 from abcli.timer import Timer
@@ -203,9 +204,10 @@ class Session(object):
     def check_timers(self):
         if self.timer["display"].tick():
             display.show(
-                self.frame_image,
-                self.signature(),
-                string.pretty_param(self.params),
+                image=self.frame_image,
+                header=self.signature(),
+                sidebar=string.pretty_param(self.params),
+                on_screen=self.output == "screen",
             )
 
         if self.timer["reboot"].tick("wait"):
