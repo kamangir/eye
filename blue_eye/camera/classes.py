@@ -70,7 +70,10 @@ class Imager(object):
         return [
             " | ".join(
                 objects.signature(self.frame)
-                + [string.pretty_size_of_matrix(image), self.__class__.__name__.lower()]
+                + [
+                    string.pretty_shape_of_matrix(image),
+                    self.__class__.__name__.lower(),
+                ]
                 + self.signature_()
             ),
             " | ".join(host.signature()),
@@ -155,7 +158,7 @@ class Camera(Imager):
                 self.device.capture(temp)
                 success = True
             except:
-                crash_report("camera.capture() failed")
+                crash_report(f"{NAME}.capture() failed")
 
             if success:
                 success, image = file.load_image(temp)
@@ -167,7 +170,7 @@ class Camera(Imager):
                     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
             except:
-                crash_report("camera.capture() failed")
+                crash_report(f"{NAME}.capture() failed")
 
         if close_after:
             self.close()
@@ -192,7 +195,7 @@ class Camera(Imager):
                 "camera.capture({}): {}{}".format(
                     "forced" if forced else "",
                     f"{filename} - " if filename else "",
-                    string.pretty_size_of_matrix(image),
+                    string.pretty_shape_of_matrix(image),
                 )
             )
 
@@ -246,8 +249,9 @@ class Camera(Imager):
 
         if success:
             logger.info(
-                "camera.capture_video(): {} -{}-> {}".format(
-                    string.pretty_time(length),
+                "{}.capture_video(): {} -{}-> {}".format(
+                    NAME,
+                    string.pretty_duration(length),
                     string.pretty_bytes(file.size(filename)),
                     filename,
                 )
@@ -339,16 +343,17 @@ class Camera(Imager):
             self.resolution = self.get_resolution()
 
             if log:
-                logger.info(f"{NAME}.open({string.pretty_size(self.resolution)})")
+                logger.info(f"{NAME}.open({string.pretty_shape(self.resolution)})")
 
             return True
         except:
+            crash_report(f"{NAME}.open: failed.")
             return False
 
     def signature_(self):
         return [
             "diff: {:.03f} - {}".format(
                 self.diff.last_diff,
-                string.pretty_time(self.diff.last_same_period, "largest,ms,short"),
+                string.pretty_duration(self.diff.last_same_period, "largest,ms,short"),
             ),
         ]

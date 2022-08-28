@@ -50,7 +50,7 @@ class Diff(object):
 
             logger.info(
                 "diff.same({}): {:.03f} - {}{}".format(
-                    string.pretty_size_of_matrix(image),
+                    string.pretty_shape_of_matrix(image),
                     self.last_diff,
                     ("!same,same".split(","))[int(is_same)],
                     " - {} since last diff.".format(

@@ -248,13 +248,15 @@ class Session(object):
             sorted([timer.signature() for timer in self.timer.values()])
             + (["*"] if self.new_frame else [])
             + (["^"] if self.auto_upload else [])
-            + ([">{}".format(self.outbound_queue)] if self.outbound_queue else [])
-            + (["hat:{}".format(hardware.hat)] if hardware.hat else [])
+            + ([f">{self.outbound_queue}"] if self.outbound_queue else [])
+            + ([f"hat:{hardware.hat}"] if hardware.hat else [])
             + (
                 [
                     "switch:{}".format(
-                        string.pretty_time(
-                            time.time() - self.switch_on_time, "largest,short"
+                        string.pretty_duration(
+                            time.time() - self.switch_on_time,
+                            largest=True,
+                            short=True,
                         )
                     )
                 ]

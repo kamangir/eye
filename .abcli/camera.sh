@@ -5,7 +5,7 @@ function blue_eye_camera() {
 
     if [ $task == "help" ] ; then
         abcli_help_line "blue_eye camera capture image" \
-            "capture an image"
+            "capture an image."
         abcli_help_line "blue_eye camera capture video [--length 10] [--preview 1]" \
             "[preview and] capture [10 s] of video."
         abcli_help_line "blue_eye camera preview" \
