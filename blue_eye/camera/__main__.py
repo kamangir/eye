@@ -69,7 +69,7 @@ elif args.task == "preview":
                 image,
                 [],
                 [],
-                screen=True,
+                on_screen=True,
                 sign=False,
             )
 

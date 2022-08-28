@@ -118,7 +118,7 @@ class Camera(Imager):
         self,
         close_after=True,
         filename="",
-        force=False,
+        forced=False,
         log=True,
         open_before=True,
         save=True,
@@ -129,7 +129,7 @@ class Camera(Imager):
         Args:
             close_after (bool, optional): close camera after capture. Defaults to True.
             filename (str, optional): filename. Defaults to True.
-            force (bool, optional): force capture. Defaults to False.
+            forced (bool, optional): forced capture. Defaults to False.
             log (bool, optional): log. Defaults to True.
             open_before (bool, optional): open the camera before capture. Defaults to True.
             save (bool, optional): save the image. Defaults to True.
@@ -172,7 +172,7 @@ class Camera(Imager):
         if close_after:
             self.close()
 
-        if success and not force:
+        if success and not forced:
             if self.diff.same(image):
                 return True, "same", None
 
@@ -190,7 +190,7 @@ class Camera(Imager):
         if success and log:
             logger.info(
                 "camera.capture({}): {}{}".format(
-                    "forced" if force else "",
+                    "forced" if forced else "",
                     f"{filename} - " if filename else "",
                     string.pretty_size_of_matrix(image),
                 )
