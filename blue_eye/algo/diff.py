@@ -32,7 +32,7 @@ class Diff(object):
             self.last_diff_time = time.time()
 
             logger.info(
-                f"{NAME}.diff.same({string.pretty_size_of_matrix(image)}): initialized."
+                f"{NAME}.diff.same({string.pretty_shape_of_matrix(image)}): initialized."
             )
             return False
 
@@ -49,7 +49,8 @@ class Diff(object):
             is_same = self.last_diff <= self.threshold
 
             logger.info(
-                "diff.same({}): {:.03f} - {}{}".format(
+                "{}.diff.same({}): {:.03f} - {}{}".format(
+                    NAME,
                     string.pretty_shape_of_matrix(image),
                     self.last_diff,
                     ("!same,same".split(","))[int(is_same)],
@@ -72,7 +73,9 @@ class Diff(object):
 
             return is_same
         except:
-            crash_report(f"diff.same({string.pretty_size_of_matrix(image)}) failed")
+            crash_report(
+                f"{NAME}.diff.same({string.pretty_shape_of_matrix(image)}) failed"
+            )
 
         self.previous = None
         return False

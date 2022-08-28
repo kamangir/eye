@@ -86,7 +86,9 @@ class Session(object):
         ):
             return
 
-        success, filename, image = camera.capture(force=capture_requested)
+        success, filename, image = camera.capture(
+            forced=self.capture_requested,
+        )
 
         self.capture_command = ""
 
