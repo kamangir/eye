@@ -1,3 +1,5 @@
+from abcli.modules.session import session
+from blue_eye.session import Blue_Eye_Session
 from blue_eye import NAME
 from abcli import logging
 import logging
@@ -6,6 +8,5 @@ logger = logging.getLogger(__name__)
 
 
 def start_session():
-    logger.info(f"{NAME}: session started.")
-    logger.info(f"{NAME}: session ended.")
+    session(Blue_Eye_Session)
     return True
