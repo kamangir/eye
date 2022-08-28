@@ -4,7 +4,6 @@ import numpy as np
 import os
 from time import sleep
 from abcli.modules import objects
-import abcli.algo as algo
 from abcli.display import instance as display
 from abcli import file
 from abcli.modules.hardware import instance as hardware
