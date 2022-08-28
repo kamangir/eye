@@ -6,8 +6,8 @@ from abcli.modules import terraform
 
 
 class Blue_Eye_Session(Session):
-    def __init__(self):
-        super(Blue_Eye_Session, self).__init__()
+    def __init__(self, output):
+        super(Blue_Eye_Session, self).__init__(output)
 
         self.capture_command = ""
 
