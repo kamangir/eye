@@ -1,3 +1,3 @@
-NAME = "blue_eye"
+NAME = "blue_sbc"
 
-VERSION = "2.82.1"
+VERSION = "2.84.1"
