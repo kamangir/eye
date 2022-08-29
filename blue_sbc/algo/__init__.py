@@ -1,3 +1,3 @@
-NAME = "blue_eye.algo"
+NAME = "blue_sbc.algo"
 
 from .diff import *

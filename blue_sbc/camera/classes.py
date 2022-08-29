@@ -12,7 +12,7 @@ from abcli.plugins import graphics
 from abcli import string
 from . import NAME
 from .constants import *
-from blue_eye.algo.diff import Diff
+from blue_sbc.algo.diff import Diff
 from abcli.logging import crash_report
 from abcli import logging
 import logging
