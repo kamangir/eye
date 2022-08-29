@@ -12,7 +12,7 @@ parser.add_argument(
     help="start",
 )
 parser.add_argument(
-    "output",
+    "--output",
     type=str,
     default="",
     help="file|screen",
