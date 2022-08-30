@@ -4,15 +4,15 @@ import numpy as np
 import os
 from time import sleep
 from abcli.modules import objects
-from abcli.plugins.display import instance as display
 from abcli import file
-from abcli.modules.hardware import instance as hardware
 from abcli.modules import host
 from abcli.plugins import graphics
 from abcli import string
 from . import NAME
 from .constants import *
 from blue_sbc.algo.diff import Diff
+from blue_sbc.display import instance as display
+from blue_sbc.hardware import instance as hardware
 from abcli.logging import crash_report
 from abcli import logging
 import logging

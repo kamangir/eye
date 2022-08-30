@@ -1,8 +1,6 @@
 import time
 from abcli import VERSION
-from abcli.modules.display import instance as display
 from abcli import file
-from abcli.modules.hardware import instance as hardware
 from abcli.modules import terraform
 from abcli.plugins import storage
 from abcli.plugins.message.messenger import instance as messenger
@@ -11,6 +9,8 @@ from abcli.timer import Timer
 from abcli.modules import host
 from . import NAME
 from .functions import return_to_bash
+from blue_sbc.display import instance as display
+from blue_sbc.hardware import instance as hardware
 from abcli.logging import crash_report
 from abcli import logging
 import logging
