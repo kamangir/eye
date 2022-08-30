@@ -19,7 +19,7 @@ function blue_sbc_session() {
 
         abcli_tag set $abcli_object_name session,$abcli_host_name,$(abcli_string_today),$abcli_fullname,open,$abcli_wifi_ssid
 
-        local options="$3"
+        local options="$2"
         local output=""
         if [[ "$abcli_is_mac" == true ]] ; then
             local output="screen"
@@ -36,7 +36,7 @@ function blue_sbc_session() {
         python3 -m blue_sbc.session \
             start \
             $extra_args \
-            ${@:4}
+            ${@:3}
 
         abcli_upload open
 
