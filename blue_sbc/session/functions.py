@@ -7,14 +7,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def return_to_bash(status, content=[]):
+def reply_to_bash(status, content=[]):
     """return to bash with status.
 
     Args:
         status (str): exit/reboot/seed/shutdown/update
         content (list, optional): content of the status. Defaults to [].
     """
-    logger.info(f"session.return_to_bash({status}).")
+    logger.info(f"session.reply_to_bash({status}).")
     file.create(
         os.path.join(
             os.getenv("abcli_path_cookie", ""),
@@ -36,7 +36,7 @@ def start_session(Session, output=""):
         logger.info(f"{Session.__name__} stopped.")
     except KeyboardInterrupt:
         logger.info(f"Ctrl+C - {Session.__name__} stopped.")
-        return_to_bash("exit")
+        reply_to_bash("exit")
     except:
         crash_report(f"{Session.__name__} failed.")
 

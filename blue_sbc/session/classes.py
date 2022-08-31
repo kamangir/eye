@@ -8,7 +8,7 @@ from abcli import string
 from abcli.timer import Timer
 from abcli.modules import host
 from . import NAME
-from .functions import return_to_bash
+from .functions import reply_to_bash
 from blue_sbc.display import instance as display
 from blue_sbc.hardware import instance as hardware
 from abcli.logging import crash_report
@@ -116,7 +116,7 @@ class Session(object):
     def check_keyboard(self):
         for key in display.key_buffer:
             if key in self.keys:
-                return_to_bash(self.keys[key])
+                reply_to_bash(self.keys[key])
                 return False
 
         if " " in display.key_buffer:
@@ -150,13 +150,13 @@ class Session(object):
 
         if message.event in "reboot,shutdown".split(","):
             logger.info(f"{NAME}: {message.event} message received.")
-            return_to_bash(message.event)
+            reply_to_bash(message.event)
             return False
 
         if message.event == "update":
             try:
                 if message.data["version"] > VERSION:
-                    return_to_bash("update")
+                    reply_to_bash("update")
                     return False
             except:
                 crash_report("looper.process_message() bad update message")
@@ -179,7 +179,7 @@ class Session(object):
             return None
 
         logger.info(f"{NAME}: seed {seed_version} detected.")
-        return_to_bash("seed", [seed_filename])
+        reply_to_bash("seed", [seed_filename])
         return False
 
     def check_switch(self):
@@ -194,7 +194,7 @@ class Session(object):
             hardware.pulse("outputs")
 
             if time.time() - self.switch_on_time > 10:
-                return_to_bash("shutdown")
+                reply_to_bash("shutdown")
                 return False
             else:
                 return True
@@ -211,7 +211,7 @@ class Session(object):
             )
 
         if self.timer["reboot"].tick("wait"):
-            return_to_bash("reboot")
+            reply_to_bash("reboot")
             return False
 
         if self.timer["temperature"].tick():
