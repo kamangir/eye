@@ -274,6 +274,28 @@ class Session(object):
             [] if self.model is None else [" | ".join(self.model.signature())]
         )
 
+    @staticmethod
+    def start(output=""):
+        logger.info(f"{NAME}: started -> {output}")
+
+        try:
+            session = Session(output)
+
+            while session.step():
+                pass
+
+            logger.info(f"{NAME}: stopped.")
+        except KeyboardInterrupt:
+            logger.info(f"{NAME}: Ctrl+C: stopped.")
+            reply_to_bash("exit")
+        except:
+            crash_report(f"{NAME} failed.")
+
+        try:
+            session.close()
+        except:
+            crash_report(f"-{NAME}: close(): failed.")
+
     def step(
         self,
         steps="all",
