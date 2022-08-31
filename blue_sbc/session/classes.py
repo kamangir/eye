@@ -21,7 +21,7 @@ if host.cookie.get("camera") == "lepton":
     from blue_sbc.camera.lepton import instance as camera
 else:
     from blue_sbc.camera import instance as camera
-logger.info(f"camera: {camera.__class__.__name__}")
+logger.info(f"{NAME}: camera: {camera.__class__.__name__}")
 
 
 class Session(object):
@@ -143,26 +143,6 @@ class Session(object):
 
         return None
 
-    def process_message(self, message):
-        if message.event == "capture":
-            logger.info(f"{NAME}: capture message received.")
-            self.capture_requested = True
-
-        if message.event in "reboot,shutdown".split(","):
-            logger.info(f"{NAME}: {message.event} message received.")
-            reply_to_bash(message.event)
-            return False
-
-        if message.event == "update":
-            try:
-                if message.data["version"] > VERSION:
-                    reply_to_bash("update")
-                    return False
-            except:
-                crash_report("looper.process_message() bad update message")
-
-        return None
-
     def check_seed(self):
         seed_filename = host.get_seed_filename()
         if not file.exist(seed_filename):
@@ -222,6 +202,26 @@ class Session(object):
     def close(self):
         hardware.release()
 
+    def process_message(self, message):
+        if message.event == "capture":
+            logger.info(f"{NAME}: capture message received.")
+            self.capture_requested = True
+
+        if message.event in "reboot,shutdown".split(","):
+            logger.info(f"{NAME}: {message.event} message received.")
+            reply_to_bash(message.event)
+            return False
+
+        if message.event == "update":
+            try:
+                if message.data["version"] > VERSION:
+                    reply_to_bash("update")
+                    return False
+            except:
+                crash_report(f"-{NAME}: process_message(): bad update message.")
+
+        return None
+
     # https://www.cyberciti.biz/faq/linux-find-out-raspberry-pi-gpu-and-arm-cpu-temperature-command/
     def read_temperature(self):
         if not host.is_rpi():
@@ -236,7 +236,7 @@ class Session(object):
                 try:
                     params["temperature.cpu"] = float(output[0]) / 1000
                 except:
-                    crash_report(f"{NAME}.read_temperature(cpu) failed")
+                    crash_report(f"{NAME}: read_temperature(): failed.")
                     return
 
         self.params.update(params)
