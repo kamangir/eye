@@ -18,7 +18,7 @@ def reply_to_bash(status, content=[]):
     file.create(
         os.path.join(
             os.getenv("abcli_path_cookie", ""),
-            f"session_return_{status}",
+            f"session_reply_{status}",
         ),
         content,
     )

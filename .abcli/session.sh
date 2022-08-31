@@ -41,6 +41,7 @@ function blue_sbc_session() {
         abcli_upload open
 
         abcli_log "blue-sbc: session ended."
+
         return
     fi
 
