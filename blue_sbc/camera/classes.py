@@ -150,7 +150,7 @@ class Camera(Imager):
             return success, filename, image
 
         if host.is_rpi():
-            temp = file.auxiliary(self, "png")
+            temp = file.auxiliary("camera", "png")
             try:
                 self.device.capture(temp)
                 success = True
