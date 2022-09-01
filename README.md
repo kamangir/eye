@@ -22,6 +22,10 @@ and enter,
 }
 ```
 Ignore the first item if there is camera.
+3. Type in to validate the install,
+```
+abcli session start
+```
 
 ## Jetson Nano
 
