@@ -10,8 +10,7 @@
 1. Build the hardware according to [cube](https://github.com/kamangir/blue-bracket/blob/main/designs/cube.md).
 2. Type in,
 ```
-abcli git clone blue-sbc
-abcli init
+abcli git clone blue-sbc install
 abcli cookie edit
 ```
 and enter,
@@ -24,6 +23,7 @@ and enter,
 Ignore the first item if there is camera.
 3. Type in to validate the install,
 ```
+abcli init
 abcli session start
 ```
 
