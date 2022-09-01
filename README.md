@@ -1,15 +1,11 @@
 # blue-sbc
 
-`blue-sbc` is an [abcli](https://github.com/kamangir/awesome-bash-cli) plugin for [Raspberry Pi](#Raspberry-Pi)/[Jeson](#Jetson-Nano) cloud-connected hardware, including camera, that run deep learning vision models through python and TensorFlow ([more examples](https://github.com/kamangir/blue-bracket)).
+`blue-sbc` is an [abcli](https://github.com/kamangir/awesome-bash-cli) plugin for Raspberry Pi/Jeson cloud-connected hardware, including camera, that run deep learning vision models through python and TensorFlow. Click on each design for more info on the hardware setup.
 
-| [![image](https://github.com/kamangir/blue-bracket/raw/main/images/cube-1.jpg)](#Raspberry-Pi) | [![image](https://github.com/kamangir/blue-bracket/raw/main/images/eye_nano-1.jpg)](#Jetson-Nano) | 
+| [![image](https://github.com/kamangir/blue-bracket/raw/main/images/blue3-1.jpg)](https://github.com/kamangir/blue-bracket/blob/main/designs/blue3.md) | [![image](https://github.com/kamangir/blue-bracket/raw/main/images/chenar-grove-1.jpg)](https://github.com/kamangir/blue-bracket/blob/main/designs/chenar-grove.md) | [![image](https://github.com/kamangir/blue-bracket/raw/main/images/cube-1.jpg)](https://github.com/kamangir/blue-bracket/blob/main/designs/cube.md) | [![image](https://github.com/kamangir/blue-bracket/raw/main/images/eye_nano-1.jpg)](https://github.com/kamangir/blue-bracket/blob/main/designs/eye_nano.md) | 
 |---|---|
 
-## Raspberry Pi
-
-Build the hardware according to [cube](https://github.com/kamangir/blue-bracket/blob/main/designs/cube.md).
-
-Type in,
+To install `blue-sbc` open a terminal on the machine and type in,
 ```bash
 abcli git clone blue-sbc install
 abcli cookie edit
@@ -20,6 +16,7 @@ and enter,
     "session": "blue_sbc"
 }
 ```
+
 Optionally, you can also add,
 ```json
 {
@@ -27,6 +24,7 @@ Optionally, you can also add,
     "session.capture.period": 3000,
 }
 ```
+
 For additional control over the camera, display, hardware, and session add from below:
 ```json
 {
@@ -51,8 +49,3 @@ To validate the install, type in:
 abcli init
 abcli session start
 ```
-
-## Jetson Nano
-
-1. Build the hardware according to [eye-nano](https://github.com/kamangir/blue-bracket/blob/main/designs/eye_nano.md).
-2. 🚧
