@@ -7,22 +7,47 @@
 
 ## Raspberry Pi
 
-1. Build the hardware according to [cube](https://github.com/kamangir/blue-bracket/blob/main/designs/cube.md).
-2. Type in,
-```
+Build the hardware according to [cube](https://github.com/kamangir/blue-bracket/blob/main/designs/cube.md).
+
+Type in,
+```bash
 abcli git clone blue-sbc install
 abcli cookie edit
 ```
 and enter,
-```
+```json
 {
-    "session.capture.enabled": false,
     "session": "blue_sbc"
 }
 ```
-Ignore the first item if there is camera.
-3. Type in to validate the install,
+Optionally, you can also add,
+```json
+{
+    "session.capture.enabled": false,
+    "session.capture.period": 3000,
+}
 ```
+For additional control over the camera, display, hardware, and session add from below:
+```json
+{
+    "camera.diff": 0.1,
+    "camera.hi_res": true,
+    "camera.rotation": 0,
+    "camera": "lepton",
+    "display.fullscreen": true,
+    "hardware.hat": "led_switch",
+    "messenger.recipients": "",
+    "session.auto_upload": true,
+    "session.display.period": 4,
+    "session.messenger.period": 60,
+    "session.outbound_queue": "stream",
+    "session.reboot.period": 14400,
+    "session.temperature.period": 300
+}
+```
+
+To validate the install, type in:
+```bash
 abcli init
 abcli session start
 ```
