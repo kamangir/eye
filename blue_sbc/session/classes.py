@@ -204,16 +204,16 @@ class Session(object):
         hardware.release()
 
     def process_message(self, message):
-        if message.event == "capture":
+        if message.subject == "capture":
             logger.info(f"{NAME}: capture message received.")
             self.capture_requested = True
 
-        if message.event in "reboot,shutdown".split(","):
-            logger.info(f"{NAME}: {message.event} message received.")
-            reply_to_bash(message.event)
+        if message.subject in "reboot,shutdown".split(","):
+            logger.info(f"{NAME}: {message.subject} message received.")
+            reply_to_bash(message.subject)
             return False
 
-        if message.event == "update":
+        if message.subject == "update":
             try:
                 if message.data["version"] > VERSION:
                     reply_to_bash("update")
