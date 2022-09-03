@@ -206,7 +206,7 @@ class Session(object):
 
     def process_message(self, message):
         if self.monitor_enabled and message.subject in "bolt,frame".split(","):
-            logger.info(f"{NAME}: message w/ frame received: {message.filename}")
+            logger.info(f"{NAME}: frame received: {message.as_string()}")
             _, self.frame_image = file.load_image(message.filename)
 
         if message.subject == "capture":
