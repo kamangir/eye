@@ -204,6 +204,9 @@ class Session(object):
         hardware.release()
 
     def process_message(self, message):
+        if message.subject in "bolt,frame".split(","):
+            _, self.frame_image = file.load_image(message.filename)
+
         if message.subject == "capture":
             logger.info(f"{NAME}: capture message received.")
             self.capture_requested = True
