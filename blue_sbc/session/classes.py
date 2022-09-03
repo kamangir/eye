@@ -1,12 +1,13 @@
 import time
 from abcli import VERSION
 from abcli import file
+from abcli import string
+from abcli.modules import host
 from abcli.modules import terraform
+from abcli.modules.cookie import cookie
 from abcli.plugins import storage
 from abcli.plugins.message.messenger import instance as messenger
-from abcli import string
 from abcli.timer import Timer
-from abcli.modules import host
 from . import NAME
 from .functions import reply_to_bash
 from blue_sbc.display import instance as display
@@ -17,7 +18,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-if host.cookie.get("camera") == "lepton":
+if cookie.get("camera") == "lepton":
     from blue_sbc.camera.lepton import instance as camera
 else:
     from blue_sbc.camera import instance as camera
@@ -41,9 +42,9 @@ class Session(object):
         self.frame_image = terraform.poster(None)
         self.frame_filename = ""
 
-        self.auto_upload = host.cookie.get("session.auto_upload", True)
-        self.outbound_queue = host.cookie.get("session.outbound_queue", "stream")
-        self.capture_enabled = host.cookie.get("session.capture.enabled", True)
+        self.auto_upload = cookie.get("session.auto_upload", True)
+        self.outbound_queue = cookie.get("session.outbound_queue", "stream")
+        self.capture_enabled = cookie.get("session.capture.enabled", True)
 
         self.output = output
 
@@ -69,7 +70,7 @@ class Session(object):
 
     def add_timer(self, name, period):
         if name not in self.timer:
-            period = host.cookie.get(f"session.{name}.period", period)
+            period = cookie.get(f"session.{name}.period", period)
             self.timer[name] = Timer(period, name)
             logger.info(
                 "session: timer[{}]:{}".format(

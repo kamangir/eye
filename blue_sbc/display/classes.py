@@ -3,8 +3,9 @@ import numpy as np
 import os
 from abcli import file
 from abcli import fullname
-from abcli.modules import objects
 from abcli.modules import host
+from abcli.modules import objects
+from abcli.modules.cookie import cookie
 from abcli.plugins import graphics
 from . import NAME
 from abcli.logging import crash_report
@@ -16,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 class Display(object):
     def __init__(self):
-        self.fullscreen = host.cookie.get("display.fullscreen", True)
+        self.fullscreen = cookie.get("display.fullscreen", True)
 
         self.canvas = None
         self.notifications = []

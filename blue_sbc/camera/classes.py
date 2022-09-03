@@ -6,6 +6,7 @@ from time import sleep
 from abcli.modules import objects
 from abcli import file
 from abcli.modules import host
+from abcli.modules.cookie import cookie
 from abcli.plugins import graphics
 from abcli import string
 from . import NAME
@@ -28,7 +29,7 @@ class Imager(object):
         self.object_name = os.getenv("abcli_object_name", "")
         self.object_folder = os.getenv("abcli_object_folder", "")
 
-        self.diff = Diff(host.cookie.get("camera.diff", 0.1))
+        self.diff = Diff(cookie.get("camera.diff", 0.1))
 
     def capture(self):
         self.frame += 1
@@ -108,8 +109,8 @@ class Camera(Imager):
     def __init__(self):
         super(Camera, self).__init__()
 
-        self.rotation = host.cookie.get("camera.rotation", 0)
-        self.hi_res = host.cookie.get("camera.hi_res", True)
+        self.rotation = cookie.get("camera.rotation", 0)
+        self.hi_res = cookie.get("camera.hi_res", True)
         self.device = None
 
         self.resolution = []

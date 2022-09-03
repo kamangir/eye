@@ -1,6 +1,6 @@
 import math
 import time
-from abcli.modules.host import cookie
+from abcli.modules.cookie import cookie
 from . import NAME
 from abcli import logging
 import logging
