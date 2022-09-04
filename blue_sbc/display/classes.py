@@ -17,8 +17,6 @@ logger = logging.getLogger(__name__)
 
 class Display(object):
     def __init__(self):
-        self.fullscreen = cookie.get("display.fullscreen", True)
-
         self.canvas = None
         self.notifications = []
         self.canvas_size = (640, 480)
@@ -36,7 +34,7 @@ class Display(object):
 
         logger.info(f"{NAME}.create()")
 
-        if self.fullscreen and not host.is_mac():
+        if cookie.get("display.fullscreen", True) and not host.is_mac():
             # https://stackoverflow.com/a/34337534
             cv2.namedWindow(self.title, cv2.WND_PROP_FULLSCREEN)
             cv2.setWindowProperty(

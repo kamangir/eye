@@ -109,7 +109,6 @@ class Camera(Imager):
     def __init__(self):
         super(Camera, self).__init__()
 
-        self.rotation = cookie.get("camera.rotation", 0)
         self.device = None
 
         self.resolution = []
@@ -327,7 +326,7 @@ class Camera(Imager):
                 from picamera import PiCamera
 
                 self.device = PiCamera()
-                self.device.rotation = int(self.rotation)
+                self.device.rotation = int(cookie.get("camera.rotation", 0))
 
                 # https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/7
                 self.device.resolution = (

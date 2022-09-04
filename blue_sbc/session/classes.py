@@ -44,8 +44,6 @@ class Session(object):
 
         self.auto_upload = cookie.get("session.auto_upload", True)
         self.outbound_queue = cookie.get("session.outbound_queue", "stream")
-        self.capture_enabled = cookie.get("session.capture.enabled", True)
-        self.monitor_enabled = cookie.get("session.monitor.enabled", True)
 
         self.output = output
 
@@ -84,7 +82,7 @@ class Session(object):
     def check_camera(self):
         self.new_frame = False
 
-        if not self.capture_enabled or (
+        if not cookie.get("session.capture.enabled", True) or (
             not self.capture_requested and not self.timer["capture"].tick()
         ):
             return
@@ -205,7 +203,9 @@ class Session(object):
         hardware.release()
 
     def process_message(self, message):
-        if self.monitor_enabled and message.subject in "bolt,frame".split(","):
+        if cookie.get(
+            "session.monitor.enabled", True
+        ) and message.subject in "bolt,frame".split(","):
             logger.info(f"{NAME}: frame received: {message.as_string()}")
             _, self.frame_image = file.load_image(message.filename)
 
