@@ -26,9 +26,6 @@ class Imager(object):
         self.frame = -1
         self.unique_frame = -1
 
-        self.object_name = os.getenv("abcli_object_name", "")
-        self.object_folder = os.getenv("abcli_object_folder", "")
-
         self.diff = Diff(cookie.get("camera.diff", 0.1))
 
     def capture(self):
@@ -55,7 +52,7 @@ class Imager(object):
             filename
             if filename
             else os.path.join(
-                self.object_folder,
+                os.getenv("abcli_object_path", ""),
                 f"{self.frame:05d}.jpg",
             )
         )
