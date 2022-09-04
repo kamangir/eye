@@ -9,7 +9,7 @@ To install `blue-sbc`, first install [`abci`](https://github.com/kamangir/awesom
 
 ```bash
 abcli git clone blue-sbc install
-abcli cookie write session blue_sbc
+abcli cookie cp mirror
 abcli init
 abcli session start
 ```
