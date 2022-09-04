@@ -284,6 +284,7 @@ class Session(object):
 
     @staticmethod
     def start(output=""):
+        success = True
         logger.info(f"{NAME}: started -> {output}")
 
         try:
@@ -298,11 +299,15 @@ class Session(object):
             reply_to_bash("exit")
         except:
             crash_report(f"{NAME} failed.")
+            success = False
 
         try:
             session.close()
         except:
             crash_report(f"-{NAME}: close(): failed.")
+            success = False
+
+        return success
 
     def step(
         self,
