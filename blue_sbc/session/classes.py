@@ -203,9 +203,11 @@ class Session(object):
         hardware.release()
 
     def process_message(self, message):
-        if cookie.get(
-            "session.monitor.enabled", True
-        ) and message.subject in "bolt,frame".split(","):
+        if (
+            cookie.get("session.monitor.enabled", True)
+            and message.subject in "bolt,frame".split(",")
+            and not host.is_headless()
+        ):
             logger.info(f"{NAME}: frame received: {message.as_string()}")
             _, self.frame_image = file.load_image(message.filename)
 
