@@ -110,7 +110,6 @@ class Camera(Imager):
         super(Camera, self).__init__()
 
         self.rotation = cookie.get("camera.rotation", 0)
-        self.hi_res = cookie.get("camera.hi_res", True)
         self.device = None
 
         self.resolution = []
@@ -332,7 +331,7 @@ class Camera(Imager):
 
                 # https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/7
                 self.device.resolution = (
-                    ((2592, 1944) if self.hi_res else (728, 600))
+                    ((2592, 1944) if cookie.get("camera.hi_res", True) else (728, 600))
                     if resolution is None
                     else resolution
                 )
