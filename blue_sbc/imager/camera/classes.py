@@ -100,7 +100,8 @@ class Camera(Imager):
 
         if success and log:
             logger.info(
-                "camera.capture({}): {}{}".format(
+                "{}.capture({}): {}{}".format(
+                    NAME,
                     "forced" if forced else "",
                     f"{filename} - " if filename else "",
                     string.pretty_shape_of_matrix(image),
