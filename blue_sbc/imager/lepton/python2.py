@@ -27,10 +27,10 @@ def capture_and_save(path):
             image = capture(False, "/dev/spidev0.0")
             time.sleep(1)
 
-        cv2.imwrite(os.path.join(path, "camera_raw.jpg"), image)
+        cv2.imwrite(os.path.join(path, "image_raw.jpg"), image)
 
         cv2.imwrite(
-            os.path.join(path, "camera.jpg"),
+            os.path.join(path, "image.jpg"),
             cv2.resize(image, (1280, 960), interpolation=cv2.INTER_NEAREST),
         )
 
