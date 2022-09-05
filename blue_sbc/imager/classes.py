@@ -27,9 +27,9 @@ class Imager(object):
 
         self.diff = Diff(cookie.get("camera.diff", 0.1))
 
-    def capture(self):
+    def capture(self, filename):
         self.frame += 1
-        return False, "", np.ones((1, 1, 3), dtype=np.uint8) * 127
+        return False, filename, np.ones((1, 1, 3), dtype=np.uint8) * 127
 
     def filename_of(
         self,

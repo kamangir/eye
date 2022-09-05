@@ -16,10 +16,11 @@ logger = logging.getLogger(__name__)
 class Lepton(Imager):
     def capture(
         self,
+        filename="",
         forced=True,
         sign=True,
     ):
-        success, filename, image = super(Lepton, self).capture()
+        success, filename, image = super(Lepton, self).capture(filename)
 
         temp_dir = path.auxiliary("lepton")
         success = host.shell(
@@ -36,16 +37,16 @@ class Lepton(Imager):
             image = graphics.add_signature(image, [], self.signature(image))
 
         if success:
-            filename = self.filename_of()
+            filename = self.filename_of(filename)
 
             if filename:
                 success = file.save_image(filename, image)
 
-        if success:
-            success = file.copy(
-                f"{temp_dir}/image_raw.jpg",
-                f"{file.path(filename)}/image_raw.jpg",
-            )
+                if success:
+                    success = file.copy(
+                        f"{temp_dir}/image_raw.jpg",
+                        f"{file.path(filename)}/image_raw.jpg",
+                    )
 
         if success:
             logger.info(

@@ -51,7 +51,7 @@ class Camera(Imager):
             str: filename.
             image: np.ndarray.
         """
-        success, filename, image = super(Camera, self).capture()
+        success, filename, image = super(Camera, self).capture(filename)
 
         if open_before:
             if not self.open():
