@@ -44,7 +44,7 @@ class Imager(object):
         Returns:
             str: filename
         """
-        if "filename" == "-":
+        if filename == "-":
             return ""
 
         filename = (
