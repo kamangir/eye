@@ -14,7 +14,11 @@ logger = logging.getLogger(__name__)
 
 
 class Lepton(Imager):
-    def capture(self, sign=True):
+    def capture(
+        self,
+        forced=True,
+        sign=True,
+    ):
         success, filename, image = super(Lepton, self).capture()
 
         temp_dir = path.auxiliary("lepton")

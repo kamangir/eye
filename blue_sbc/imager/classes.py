@@ -81,12 +81,18 @@ class TemplateImager(Imager):
     def __init__(self):
         pass
 
-    def capture(self, filename="", sign=True):
+    def capture(
+        self,
+        filename="",
+        forced=True,
+        sign=True,
+    ):
         """capture.
 
         Args:
             filename (str, optional): filename. Defaults to "": use timestamp.
             sign (bool, optional): sign output. Defaults to True.
+            forced (bool, optional): forced capture. Defaults to False.
 
         Returns:
             bool: success.
@@ -95,7 +101,10 @@ class TemplateImager(Imager):
 
         filename = self.filename_of(filename)
 
-        return False, filename, image_blank
+        # TODO: capture the image here
+        image = image_blank
+
+        return True, filename, image
 
     def signature_(self):
         return ["device_name"]
