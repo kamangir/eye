@@ -25,7 +25,7 @@ class Lepton(Imager):
         success = host.shell(
             f"python python2.py capture --output_path {temp_dir}",
             work_dir="{}/blue-sbc/blue_sbc/imager/lepton".format(
-                os.getenv("bolt_path_git", "")
+                os.getenv("abcli_path_git", "")
             ),
         )
 
