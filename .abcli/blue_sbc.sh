@@ -9,6 +9,8 @@ function blue_sbc() {
 
     if [ $task == "help" ] ; then
         blue_sbc_camera $@
+        blue_sbc_hardware $@
+        blue_sbc_lepton $@
         blue_sbc_session $@
         return
     fi
