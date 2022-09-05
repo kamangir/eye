@@ -17,7 +17,9 @@ function blue_sbc_session() {
     if [ "$task" == "start" ] ; then
         abcli_log "blue-sbc: session started."
 
-        abcli_tag set $abcli_object_name session,$abcli_host_name,$(abcli_string_today),$abcli_fullname,open,$abcli_wifi_ssid
+        abcli_tag set \
+            $abcli_object_name \
+            open,session,$abcli_hostname,$(abcli_string_today),$(abcli_cookie read session.object.tags)
 
         local options="$2"
         local output=""
