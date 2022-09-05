@@ -10,7 +10,7 @@ from abcli.plugins.message.messenger import instance as messenger
 from abcli.timer import Timer
 from . import NAME
 from .functions import reply_to_bash
-from blue_sbc.display import instance as display
+from blue_sbc.screen.display import instance as display
 from blue_sbc.hardware import instance as hardware
 from blue_sbc.imager import imager
 from abcli.logging import crash_report

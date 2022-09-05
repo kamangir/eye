@@ -1,19 +1,11 @@
-import argparse
-import cv2
 import numpy as np
 import os
-from time import sleep
 from abcli.modules import objects
 from abcli import file
 from abcli.modules import host
 from abcli.modules.cookie import cookie
-from abcli.plugins import graphics
 from abcli import string
-from . import NAME
 from blue_sbc.algo.diff import Diff
-from blue_sbc.display import instance as display
-from blue_sbc.hardware import instance as hardware
-from abcli.logging import crash_report
 from abcli import logging
 import logging
 
@@ -38,8 +30,7 @@ class Imager(object):
         """produce filename.
 
         Args:
-            filename           : filename. Default to "".
-            name_and_extension : name and extension. Default to "camera.jpg".
+            filename : filename. Default to "".
 
         Returns:
             str: filename

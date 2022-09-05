@@ -8,6 +8,7 @@ from abcli.modules import objects
 from abcli.modules.cookie import cookie
 from abcli.plugins import graphics
 from . import NAME
+from blue_sbc.screen import Screen
 from abcli.logging import crash_report
 import abcli.logging
 import logging
@@ -15,8 +16,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class Display(object):
+class Display(Screen):
     def __init__(self):
+        super(Display, self).__init__()
+
         self.canvas = None
         self.notifications = []
         self.canvas_size = (640, 480)

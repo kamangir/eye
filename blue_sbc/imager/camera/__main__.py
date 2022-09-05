@@ -1,5 +1,5 @@
 import argparse
-from blue_sbc.display import instance as display
+from blue_sbc.screen.display import instance as display
 from . import *
 from abcli import logging
 import logging
