@@ -10,4 +10,4 @@ NAME = "blue_sbc.screen"
 # if screen_name == "display":
 from .display import instance as screen
 
-logger.info(f"{NAME}: imager: {screen.__class__.__name__}")
+logger.info(f"{NAME}: screen: {screen.__class__.__name__}")
