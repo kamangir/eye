@@ -5,7 +5,7 @@ function blue_sbc_camera() {
 
     if [ $task == "help" ] ; then
         abcli_help_line "blue_sbc camera capture image" \
-            "capture an image."
+            "capture an image from camera."
         abcli_help_line "blue_sbc camera capture video [--length 10] [--preview 1]" \
             "[preview and] capture [10 s] of video."
         abcli_help_line "blue_sbc camera preview" \
