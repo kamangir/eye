@@ -12,7 +12,7 @@ function blue_sbc_camera() {
             "preview camera."
 
         if [ "$(abcli_keyword_is $2 verbose)" == true ] ; then
-            python3 -m blue_sbc.camera --help
+            python3 -m blue_sbc.imager.camera --help
         fi
 
         return
@@ -23,11 +23,11 @@ function blue_sbc_camera() {
         local capture_video=$(abcli_option_int "$options" "video" 0)
 
         if [ "$capture_video" == "1" ] ; then
-            python3 -m blue_sbc.camera \
+            python3 -m blue_sbc.imager.camera \
                 capture_video \
                 ${@:3}
         else
-            python3 -m blue_sbc.camera \
+            python3 -m blue_sbc.imager.camera \
                 capture \
                 --output_path $abcli_object_path\ \
                 ${@:3}
@@ -37,7 +37,7 @@ function blue_sbc_camera() {
     fi
 
     if [ "$task" == "preview" ] ; then
-        python3 -m blue_sbc.camera \
+        python3 -m blue_sbc.imager.camera \
             preview \
             ${@:2}
         return

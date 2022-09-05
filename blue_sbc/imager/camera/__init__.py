@@ -1,4 +1,4 @@
-NAME = "blue_sbc.camera"
+NAME = "blue_sbc.imager.camera"
 
 from .classes import *
 

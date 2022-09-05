@@ -19,9 +19,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 if cookie.get("camera") == "lepton":
-    from blue_sbc.camera.lepton import instance as camera
+    from blue_sbc.imager.lepton import instance as camera
 else:
-    from blue_sbc.camera import instance as camera
+    from blue_sbc.imager.camera import instance as camera
 logger.info(f"{NAME}: camera: {camera.__class__.__name__}")
 
 
