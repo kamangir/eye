@@ -8,7 +8,7 @@ from abcli.modules import objects
 from abcli.modules.cookie import cookie
 from abcli.plugins import graphics
 from . import NAME
-from blue_sbc.screen import Screen
+from blue_sbc.screen.classes import Screen
 from abcli.logging import crash_report
 import abcli.logging
 import logging
