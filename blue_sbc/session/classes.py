@@ -18,11 +18,11 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-if cookie.get("camera") == "lepton":
-    from blue_sbc.imager.lepton import instance as camera
+if cookie.get("session.imager") == "lepton":
+    from blue_sbc.imager.lepton import instance as imager
 else:
-    from blue_sbc.imager.camera import instance as camera
-logger.info(f"{NAME}: camera: {camera.__class__.__name__}")
+    from blue_sbc.imager.camera import instance as imager
+logger.info(f"{NAME}: imager: {imager.__class__.__name__}")
 
 
 class Session(object):
@@ -79,15 +79,15 @@ class Session(object):
             return True
         return False
 
-    def check_camera(self):
+    def check_imager(self):
         self.new_frame = False
 
-        if not cookie.get("session.capture.enabled", True) or (
-            not self.capture_requested and not self.timer["capture"].tick()
+        if not cookie.get("session.imager.enabled", True) or (
+            not self.capture_requested and not self.timer["imager"].tick()
         ):
             return
 
-        success, filename, image = camera.capture(
+        success, filename, image = imager.capture(
             forced=self.capture_requested,
         )
 
@@ -322,7 +322,7 @@ class Session(object):
             bool: success.
         """
         if steps == "all":
-            steps = "camera,keyboard,messages,seed,switch,timers".split(",")
+            steps = "imager,keyboard,messages,seed,switch,timers".split(",")
 
         self.params["iteration"] += 1
 
@@ -335,7 +335,7 @@ class Session(object):
                 "timers" in steps,
                 "switch" in steps,
                 "seed" in steps,
-                "camera" in steps,
+                "imager" in steps,
             ],
             [
                 self.check_keyboard,
@@ -343,7 +343,7 @@ class Session(object):
                 self.check_timers,
                 self.check_switch,
                 self.check_seed,
-                self.check_camera,
+                self.check_imager,
             ],
         ):
             if not enabled:
