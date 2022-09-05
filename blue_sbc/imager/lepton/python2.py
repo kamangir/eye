@@ -64,7 +64,7 @@ if __name__ == "__main__":
     if args.task == "capture":
         success = capture_and_save(args.output_path)
     else:
-        print(f"-lepton: {args.task}: command not found.")
+        print("-lepton: {}: command not found.".format(args.task))
 
     if not success:
-        print(f"-lepton: {args.task}: failed.")
+        print("-lepton: {}: failed.".format(args.task))
