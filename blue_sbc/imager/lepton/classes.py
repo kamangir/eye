@@ -53,7 +53,7 @@ class Lepton(Imager):
                 "{}.capture(): {}{}".format(
                     NAME,
                     "{} - ".format(filename) if filename else "",
-                    string.pretty_size_of_matrix(image),
+                    string.pretty_shape_of_matrix(image),
                 )
             )
 
