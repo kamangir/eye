@@ -12,17 +12,12 @@ from . import NAME
 from .functions import reply_to_bash
 from blue_sbc.display import instance as display
 from blue_sbc.hardware import instance as hardware
+from blue_sbc.imager import imager
 from abcli.logging import crash_report
 from abcli import logging
 import logging
 
 logger = logging.getLogger(__name__)
-
-if cookie.get("session.imager") == "lepton":
-    from blue_sbc.imager.lepton import instance as imager
-else:
-    from blue_sbc.imager.camera import instance as imager
-logger.info(f"{NAME}: imager: {imager.__class__.__name__}")
 
 
 class Session(object):
@@ -59,7 +54,7 @@ class Session(object):
 
         self.timer = {}
         for name, period in {
-            "capture": 60 * 5,
+            "imager": 60 * 5,
             "display": 4,
             "messenger": 60,
             "reboot": 60 * 60 * 4,
@@ -72,8 +67,10 @@ class Session(object):
             period = cookie.get(f"session.{name}.period", period)
             self.timer[name] = Timer(period, name)
             logger.info(
-                "session: timer[{}]:{}".format(
-                    name, string.pretty_frequency(1 / period)
+                "{}: timer[{}]:{}".format(
+                    NAME,
+                    name,
+                    string.pretty_frequency(1 / period),
                 )
             )
             return True

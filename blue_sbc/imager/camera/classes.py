@@ -10,7 +10,7 @@ from abcli import string
 from . import NAME
 from .constants import *
 from blue_sbc.hardware import instance as hardware
-from blue_sbc.imager import Imager
+from blue_sbc.imager.classes import Imager
 from abcli.logging import crash_report
 from abcli import logging
 import logging
