@@ -87,9 +87,17 @@ class Display(Screen):
         as_file=False,
         on_screen=False,
         sign=True,
+        interpolation=cv2.INTER_LINEAR,
     ):
         super(Display, self).show(
-            image, session, header, sidebar, as_file, on_screen, sign
+            image,
+            session,
+            header,
+            sidebar,
+            as_file,
+            on_screen,
+            sign,
+            interpolation,
         )
 
         self.notifications = self.notifications[-5:]
@@ -127,7 +135,7 @@ class Display(Screen):
                         cv2.resize(
                             self.canvas,
                             dsize=self.canvas_size,
-                            interpolation=cv2.INTER_LINEAR,
+                            interpolation=interpolation,
                         ),
                         cv2.COLOR_BGR2RGB,
                     ),

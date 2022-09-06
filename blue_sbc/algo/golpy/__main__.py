@@ -1,4 +1,5 @@
 import argparse
+import cv2
 import time
 from . import *
 from blue_sbc.screen.display import instance as display
@@ -53,6 +54,7 @@ if args.task == "simulate":
                     image=255 * golpy.grid(),
                     on_screen=True,
                     sign=False,
+                    interpolation=cv2.INTER_NEAREST,
                 )
             else:
                 golpy.print()

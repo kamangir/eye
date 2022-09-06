@@ -1,3 +1,4 @@
+import cv2
 import time
 from blue_sbc.screen.classes import Screen
 from blue_sbc.algo.golpy import GoLpy
@@ -15,9 +16,17 @@ class Scroll_Phat_HD(Screen):
         as_file=False,
         on_screen=False,
         sign=True,
+        interpolation=cv2.INTER_LINEAR,
     ):
         super(Scroll_Phat_HD, self).show(
-            image, session, header, sidebar, as_file, on_screen, sign
+            image,
+            session,
+            header,
+            sidebar,
+            as_file,
+            on_screen,
+            sign,
+            interpolation,
         )
 
         if session.add_timer("scroll_phat_hd", 1.0 / 3):
