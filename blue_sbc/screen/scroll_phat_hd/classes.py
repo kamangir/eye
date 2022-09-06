@@ -17,7 +17,7 @@ class Scroll_Phat_HD(Screen):
         sign=True,
     ):
         super(Scroll_Phat_HD, self).show(
-            self, image, session, header, sidebar, as_file, on_screen, sign
+            image, session, header, sidebar, as_file, on_screen, sign
         )
 
         if session.add_timer("scroll_phat_hd", 1.0 / 3):
