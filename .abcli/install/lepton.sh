@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-function lepton_install() {
+function abcli_install_lepton() {
     sudo apt-get update --allow-releaseinfo-change
 
     cd ~
