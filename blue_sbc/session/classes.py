@@ -179,7 +179,7 @@ class Session(object):
         return None
 
     def check_timers(self):
-        if self.timer["display"].tick():
+        if self.timer["screen"].tick():
             screen.show(
                 image=self.frame_image,
                 session=self,
