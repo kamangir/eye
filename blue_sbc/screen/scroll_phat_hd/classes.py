@@ -8,6 +8,7 @@ golpy = GoLpy(7, 17)
 class Scroll_Phat_HD(Screen):
     def show(
         self,
+        session,
         image,
         header=[],
         sidebar=[],
@@ -16,16 +17,16 @@ class Scroll_Phat_HD(Screen):
         sign=True,
     ):
         super(Scroll_Phat_HD, self).show(
-            self, image, header, sidebar, as_file, on_screen, sign
+            self, session, image, header, sidebar, as_file, on_screen, sign
         )
 
-        if looper.add_timer("scroll_phat_hd", 1.0 / 3):
+        if session.add_timer("scroll_phat_hd", 1.0 / 3):
             golpy.re_init()
 
         if looper.state.get("monitor.updated", False):
             golpy.init(looper.frame_image)
 
-        if looper.timer["scroll_phat_hd"].tick():
+        if session.timer["scroll_phat_hd"].tick():
             import scrollphathd
 
             for x in range(0, 17):

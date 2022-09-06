@@ -4,6 +4,7 @@ class Screen(object):
 
     def show(
         self,
+        session,
         image,
         header=[],
         sidebar=[],
@@ -14,6 +15,7 @@ class Screen(object):
         """
         show
         :param image: image
+        :param session: session
         :param header: header
         :param sidebar: sidebar
         :param options:

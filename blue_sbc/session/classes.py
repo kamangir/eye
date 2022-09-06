@@ -182,6 +182,7 @@ class Session(object):
         if self.timer["display"].tick():
             screen.show(
                 image=self.frame_image,
+                session=self,
                 header=self.signature(),
                 sidebar=string.pretty_param(self.params),
                 on_screen=self.output == "screen",
