@@ -207,7 +207,7 @@ class Session(object):
             and not host.is_headless()
         ):
             logger.info(f"{NAME}: frame received: {message.as_string()}")
-            _, self.frame_image = file.load_image(message.filename)
+            self.new_frame, self.frame_image = file.load_image(message.filename)
 
         if message.subject == "capture":
             logger.info(f"{NAME}: capture message received.")
