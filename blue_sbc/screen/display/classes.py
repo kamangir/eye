@@ -24,8 +24,6 @@ class Display(Screen):
         self.notifications = []
         self.canvas_size = (640, 480)
 
-        self.key_buffer = []
-
         self.title = fullname()
 
         self.created = False
@@ -81,22 +79,18 @@ class Display(Screen):
         return filename if file.save_image(filename, self.canvas) else ""
 
     def show(
-        self, image, header=[], sidebar=[], as_file=False, on_screen=False, sign=True
+        self,
+        image,
+        header=[],
+        sidebar=[],
+        as_file=False,
+        on_screen=False,
+        sign=True,
     ):
-        """
-        show
-        :param image: image
-        :param header: header
-        :param sidebar: sidebar
-        :param options:
-            . as_file   : save as file
-                       default : False
-            . on_screen : show on screen
-                       default : False
-            . sign   : sign image.
-                       default : True
-        :return: self
-        """
+        super(Display, self).show(
+            self, image, header, sidebar, as_file, on_screen, sign
+        )
+
         self.notifications = self.notifications[-5:]
 
         if not as_file and not on_screen:

@@ -1,0 +1,43 @@
+import time
+from blue_sbc.screen.classes import Screen
+from blue_sbc.algo.golpy import GoLpy
+
+golpy = GoLpy(7, 17)
+
+
+class Scroll_Phat_HD(Screen):
+    def show(
+        self,
+        image,
+        header=[],
+        sidebar=[],
+        as_file=False,
+        on_screen=False,
+        sign=True,
+    ):
+        super(Scroll_Phat_HD, self).show(
+            self, image, header, sidebar, as_file, on_screen, sign
+        )
+
+        if looper.add_timer("scroll_phat_hd", 1.0 / 3):
+            golpy.re_init()
+
+        if looper.state.get("monitor.updated", False):
+            golpy.init(looper.frame_image)
+
+        if looper.timer["scroll_phat_hd"].tick():
+            import scrollphathd
+
+            for x in range(0, 17):
+                for y in range(0, 7):
+                    scrollphathd.set_pixel(x, y, golpy.grid(x, y))
+
+            time.sleep(0.01)
+            scrollphathd.show()
+
+            if golpy.blank():
+                golpy.re_init()
+            else:
+                golpy.progress()
+
+        return self
