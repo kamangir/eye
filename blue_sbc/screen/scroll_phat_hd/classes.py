@@ -23,8 +23,8 @@ class Scroll_Phat_HD(Screen):
         if session.add_timer("scroll_phat_hd", 1.0 / 3):
             golpy.re_init()
 
-        if looper.state.get("monitor.updated", False):
-            golpy.init(looper.frame_image)
+        if session.new_frame:
+            golpy.init(session.frame_image)
 
         if session.timer["scroll_phat_hd"].tick():
             import scrollphathd
