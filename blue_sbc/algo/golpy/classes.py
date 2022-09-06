@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from . import NAME
 from .legacy import get_demo, grid_print, progress
 from abcli import file
 from abcli import string
@@ -37,7 +38,7 @@ class GoLpy(object):
                 input, 0, 1, cv2.THRESH_BINARY + cv2.THRESH_OTSU
             )
 
-        logger.info("GoLpy.init({})".format(string.pretty_size_of_matrix(self.buffer)))
+        logger.info(f"{NAME}.init({string.pretty_shape_of_matrix(self.buffer)})")
 
         self.input = np.copy(self.buffer)
 
