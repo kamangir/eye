@@ -1,7 +1,9 @@
 #! /usr/bin/env bash
 
 function abcli_install_scroll_phat_hd() {
-    echo "wip"
+    pushd $abcli_path_home/git > /dev/null
+    git clone https://github.com/pimoroni/scroll-phat-hd
+    popd > /dev/null
 }
 
 if [ "$(abcli cookie read session.screen display)" == "scroll_phat_hd" ] ; then
