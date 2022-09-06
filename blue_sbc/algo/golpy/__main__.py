@@ -49,7 +49,11 @@ if args.task == "simulate":
                     break
                 if display.pressed(" "):
                     golpy.re_init()
-                display.show(255 * golpy.grid(), [], [], on_screen=True, sign=False)
+                display.show(
+                    image=255 * golpy.grid(),
+                    on_screen=True,
+                    sign=False,
+                )
             else:
                 golpy.print()
 

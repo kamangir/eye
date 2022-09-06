@@ -80,8 +80,8 @@ class Display(Screen):
 
     def show(
         self,
-        session,
         image,
+        session=None,
         header=[],
         sidebar=[],
         as_file=False,
@@ -89,7 +89,7 @@ class Display(Screen):
         sign=True,
     ):
         super(Display, self).show(
-            self, session, image, header, sidebar, as_file, on_screen, sign
+            self, image, session, header, sidebar, as_file, on_screen, sign
         )
 
         self.notifications = self.notifications[-5:]

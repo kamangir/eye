@@ -43,8 +43,6 @@ elif args.task == "preview":
 
             display.show(
                 image,
-                [],
-                [],
                 on_screen=True,
                 sign=False,
             )

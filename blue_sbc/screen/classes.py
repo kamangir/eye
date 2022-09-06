@@ -4,27 +4,12 @@ class Screen(object):
 
     def show(
         self,
-        session,
         image,
+        session=None,
         header=[],
         sidebar=[],
         as_file=False,
         on_screen=False,
         sign=True,
     ):
-        """
-        show
-        :param image: image
-        :param session: session
-        :param header: header
-        :param sidebar: sidebar
-        :param options:
-            . as_file   : save as file
-                       default : False
-            . on_screen : show on screen
-                       default : False
-            . sign   : sign image.
-                       default : True
-        :return: self
-        """
         return self
