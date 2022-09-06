@@ -10,7 +10,7 @@ from abcli.plugins.message.messenger import instance as messenger
 from abcli.timer import Timer
 from . import NAME
 from .functions import reply_to_bash
-from blue_sbc.display import instance as display
+from blue_sbc.screen import screen
 from blue_sbc.hardware import instance as hardware
 from blue_sbc.imager import imager
 from abcli.logging import crash_report
@@ -55,9 +55,9 @@ class Session(object):
         self.timer = {}
         for name, period in {
             "imager": 60 * 5,
-            "display": 4,
             "messenger": 60,
             "reboot": 60 * 60 * 4,
+            "screen": 4,
             "temperature": 300,
         }.items():
             self.add_timer(name, period)
@@ -111,15 +111,15 @@ class Session(object):
             storage.upload_file(self.frame_filename)
 
     def check_keyboard(self):
-        for key in display.key_buffer:
+        for key in screen.key_buffer:
             if key in self.keys:
                 reply_to_bash(self.keys[key])
                 return False
 
-        if " " in display.key_buffer:
+        if " " in screen.key_buffer:
             self.capture_requested = True
 
-        display.key_buffer = []
+        screen.key_buffer = []
 
         return None
 
@@ -145,7 +145,7 @@ class Session(object):
         if not file.exist(seed_filename):
             return None
 
-        success, content = file.load_json(f"{seed_filename}.json")
+        success, content = file.load_json(file.set_extension(seed_filename, "json"))
         if not success:
             return None
 
@@ -179,9 +179,10 @@ class Session(object):
         return None
 
     def check_timers(self):
-        if self.timer["display"].tick():
-            display.show(
+        if self.timer["screen"].tick():
+            screen.show(
                 image=self.frame_image,
+                session=self,
                 header=self.signature(),
                 sidebar=string.pretty_param(self.params),
                 on_screen=self.output == "screen",
@@ -206,7 +207,7 @@ class Session(object):
             and not host.is_headless()
         ):
             logger.info(f"{NAME}: frame received: {message.as_string()}")
-            _, self.frame_image = file.load_image(message.filename)
+            self.new_frame, self.frame_image = file.load_image(message.filename)
 
         if message.subject == "capture":
             logger.info(f"{NAME}: capture message received.")

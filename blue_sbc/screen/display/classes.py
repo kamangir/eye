@@ -8,6 +8,7 @@ from abcli.modules import objects
 from abcli.modules.cookie import cookie
 from abcli.plugins import graphics
 from . import NAME
+from blue_sbc.screen.classes import Screen
 from abcli.logging import crash_report
 import abcli.logging
 import logging
@@ -15,13 +16,13 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class Display(object):
+class Display(Screen):
     def __init__(self):
+        super(Display, self).__init__()
+
         self.canvas = None
         self.notifications = []
         self.canvas_size = (640, 480)
-
-        self.key_buffer = []
 
         self.title = fullname()
 
@@ -78,22 +79,27 @@ class Display(object):
         return filename if file.save_image(filename, self.canvas) else ""
 
     def show(
-        self, image, header=[], sidebar=[], as_file=False, on_screen=False, sign=True
+        self,
+        image,
+        session=None,
+        header=[],
+        sidebar=[],
+        as_file=False,
+        on_screen=False,
+        sign=True,
+        interpolation=cv2.INTER_LINEAR,
     ):
-        """
-        show
-        :param image: image
-        :param header: header
-        :param sidebar: sidebar
-        :param options:
-            . as_file   : save as file
-                       default : False
-            . on_screen : show on screen
-                       default : False
-            . sign   : sign image.
-                       default : True
-        :return: self
-        """
+        super(Display, self).show(
+            image,
+            session,
+            header,
+            sidebar,
+            as_file,
+            on_screen,
+            sign,
+            interpolation,
+        )
+
         self.notifications = self.notifications[-5:]
 
         if not as_file and not on_screen:
@@ -129,7 +135,7 @@ class Display(object):
                         cv2.resize(
                             self.canvas,
                             dsize=self.canvas_size,
-                            interpolation=cv2.INTER_LINEAR,
+                            interpolation=interpolation,
                         ),
                         cv2.COLOR_BGR2RGB,
                     ),
