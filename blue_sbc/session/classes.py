@@ -145,7 +145,7 @@ class Session(object):
         if not file.exist(seed_filename):
             return None
 
-        success, content = file.load_json(f"{seed_filename}.json")
+        success, content = file.load_json(file.set_extension(seed_filename, "json"))
         if not success:
             return None
 
