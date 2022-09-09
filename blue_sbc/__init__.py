@@ -1,3 +1,3 @@
 NAME = "blue_sbc"
 
-VERSION = "2.251.1"
+VERSION = "2.252.1"
