@@ -22,7 +22,7 @@ function blue_sbc_camera() {
         local options=$2
         local capture_video=$(abcli_option_int "$options" "video" 0)
 
-        if [ "$capture_video" == "1" ] ; then
+        if [ "$capture_video" == 1 ] ; then
             python3 -m blue_sbc.imager.camera \
                 capture_video \
                 ${@:3}
