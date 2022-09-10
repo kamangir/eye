@@ -43,7 +43,7 @@ class Imager(object):
             if filename
             else os.path.join(
                 os.getenv("abcli_object_path", ""),
-                f"{self.frame:05d}.jpg",
+                f"{self.frame:016d}.jpg",
             )
         )
 
