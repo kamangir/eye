@@ -11,7 +11,7 @@ from abcli.timer import Timer
 from . import NAME
 from .functions import reply_to_bash
 from blue_sbc.screen import screen
-from blue_sbc.hardware import instance as hardware
+from blue_sbc.hat import instance as hat
 from blue_sbc.imager import imager
 from abcli.logging import crash_report
 from abcli import logging
@@ -93,7 +93,7 @@ class Session(object):
         if not filename or filename == "same" or not success:
             return
 
-        hardware.pulse(hardware.data_pin)
+        hat.pulse(hat.data_pin)
 
         self.new_frame = True
         self.frame_image = image
@@ -131,7 +131,7 @@ class Session(object):
 
         _, self.messages = messenger.request()
         if self.messages:
-            hardware.pulse(hardware.incoming_pin)
+            hat.pulse(hat.incoming_pin)
 
         for message in self.messages:
             output = self.process_message(message)
@@ -149,7 +149,7 @@ class Session(object):
         if not success:
             return None
 
-        hardware.pulse("outputs")
+        hat.pulse("outputs")
 
         seed_version = content.get("version", "")
         if seed_version <= VERSION:
@@ -160,7 +160,7 @@ class Session(object):
         return False
 
     def check_switch(self):
-        if hardware.activated(hardware.switch_pin):
+        if hat.activated(hat.switch_pin):
             if self.switch_on_time is None:
                 self.switch_on_time = time.time()
                 logger.info("{NAME}: switch_on_time was set.")
@@ -168,7 +168,7 @@ class Session(object):
             self.switch_on_time = None
 
         if self.switch_on_time is not None:
-            hardware.pulse("outputs")
+            hat.pulse("outputs")
 
             if time.time() - self.switch_on_time > 10:
                 reply_to_bash("shutdown")
@@ -198,7 +198,7 @@ class Session(object):
         return None
 
     def close(self):
-        hardware.release()
+        hat.release()
 
     def process_message(self, message):
         if (
@@ -259,7 +259,7 @@ class Session(object):
             + (["*"] if self.new_frame else [])
             + (["^"] if self.auto_upload else [])
             + ([f">{self.outbound_queue}"] if self.outbound_queue else [])
-            + ([f"hat:{hardware.hat}"] if hardware.hat else [])
+            + ([f"hat:{hat.kind}"] if hat.kind else [])
             + (
                 [
                     "switch:{}".format(
@@ -324,7 +324,7 @@ class Session(object):
 
         self.params["iteration"] += 1
 
-        hardware.pulse(hardware.looper_pin, 0)
+        hat.pulse(hat.looper_pin, 0)
 
         for enabled, step_ in zip(
             [

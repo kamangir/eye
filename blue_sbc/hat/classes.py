@@ -8,11 +8,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class Hardware(object):
+class Hat(object):
     def __init__(self):
         logger.info(f"{NAME}.init().")
 
-        self.hat = cookie.get("hardware.hat", "led_switch")
+        self.kind = cookie.get("hat.kind", "led_switch")
 
         self.switch_pin = -1
 
@@ -150,9 +150,9 @@ class Hardware(object):
         return self
 
 
-class RPi_or_Jetson(Hardware):
+class Led_Switch_Hat(Hat):
     def __init__(self, is_rpi=True):
-        super(RPi_or_Jetson, self).__init__()
+        super(Led_Switch_Hat, self).__init__()
 
         self.is_rpi = is_rpi
 
@@ -252,11 +252,11 @@ class RPi_or_Jetson(Hardware):
         return self
 
 
-class Jetson(RPi_or_Jetson):
+class Jetson_Led_Switch_Hat(Led_Switch_Hat):
     def __init__(self):
-        super(Jetson, self).__init__(False)
+        super(Jetson_Led_Switch_Hat, self).__init__(False)
 
 
-class RPi(RPi_or_Jetson):
+class RPi_Led_Switch_Hat(Led_Switch_Hat):
     def __init__(self):
-        super(RPi, self).__init__(True)
+        super(RPi_Led_Switch_Hat, self).__init__(True)
