@@ -39,7 +39,7 @@ class Hat(object):
         if pin == -1:
             return False
 
-        if self.hat != "led_switch":
+        if self.kind != "led_switch":
             return False
 
         if pin in [

@@ -28,7 +28,7 @@ class Led_Switch_Hat(Hat):
             self.red_led_pin = 7
 
             GPIO.setmode(GPIO.BOARD)  # numbers GPIOs by physical location
-        elif self.hat == "led_switch":
+        elif self.kind == "led_switch":
             import Jetson.GPIO as GPIO
 
             self.switch_pin = 7
