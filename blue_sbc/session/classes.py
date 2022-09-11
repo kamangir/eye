@@ -11,7 +11,7 @@ from abcli.timer import Timer
 from . import NAME
 from .functions import reply_to_bash
 from blue_sbc.screen import screen
-from blue_sbc.hat import instance as hat
+from blue_sbc.hat import hat
 from blue_sbc.imager import imager
 from abcli.logging import crash_report
 from abcli import logging

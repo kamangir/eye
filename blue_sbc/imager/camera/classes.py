@@ -9,7 +9,7 @@ from abcli.plugins import graphics
 from abcli import string
 from . import NAME
 from .constants import *
-from blue_sbc.hat import instance as hat
+from blue_sbc.hat import hat
 from blue_sbc.imager.classes import Imager
 from abcli.logging import crash_report
 from abcli import logging
