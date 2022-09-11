@@ -9,6 +9,8 @@ NAME = "blue_sbc.screen"
 screen_name = cookie.get("session.screen", "display")
 if screen_name == "scroll_phat_hd":
     from .scroll_phat_hd import instance as screen
+elif screen_name == "template":
+    from .template import instance as screen
 else:
     from .display import instance as screen
 
