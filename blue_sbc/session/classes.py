@@ -199,6 +199,7 @@ class Session(object):
 
     def close(self):
         hat.release()
+        screen.release()
 
     def process_message(self, message):
         if (

@@ -13,6 +13,8 @@ elif screen_name == "scroll_phat_hd":
     from .scroll_phat_hd import instance as screen
 elif screen_name == "template":
     from .template import instance as screen
+if screen_name == "unicorn_16x16":
+    from .unicorn_16x16 import instance as screen
 else:
     from .display import instance as screen
 

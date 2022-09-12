@@ -1,4 +1,8 @@
 import cv2
+from abcli import logging
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Screen(object):
@@ -7,6 +11,9 @@ class Screen(object):
         self.interpolation = cv2.INTER_LINEAR
         self.sign_images = True
         self.size = (16, 16)
+
+    def release(self):
+        logger.info(f"{self.__class__.__name__}.release()")
 
     def show(
         self,
