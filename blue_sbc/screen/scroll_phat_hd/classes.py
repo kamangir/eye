@@ -13,20 +13,12 @@ class Scroll_Phat_HD(Screen):
         session,
         header=[],
         sidebar=[],
-        as_file=False,
-        on_screen=False,
-        sign=True,
-        interpolation=cv2.INTER_LINEAR,
     ):
         super(Scroll_Phat_HD, self).show(
             image,
             session,
             header,
             sidebar,
-            as_file,
-            on_screen,
-            sign,
-            interpolation,
         )
 
         if session.add_timer("scroll_phat_hd", 1.0 / 3):

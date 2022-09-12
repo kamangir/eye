@@ -43,6 +43,9 @@ if args.task == "simulate":
     golpy = GoLpy(args.height, args.width)
     golpy.init(args.input)
 
+    display.interpolation = cv2.INTER_NEAREST
+    display.sign_images = False
+
     try:
         while True:
             if args.display:
@@ -50,12 +53,7 @@ if args.task == "simulate":
                     break
                 if display.pressed(" "):
                     golpy.re_init()
-                display.show(
-                    image=255 * golpy.grid(),
-                    on_screen=True,
-                    sign=False,
-                    interpolation=cv2.INTER_NEAREST,
-                )
+                display.show(image=255 * golpy.grid())
             else:
                 golpy.print()
 

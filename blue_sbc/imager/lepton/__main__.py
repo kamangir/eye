@@ -32,6 +32,7 @@ if args.task == "capture":
         forced=True,
     )
 elif args.task == "preview":
+    display.sign_images = False
     try:
         while not display.pressed("qe"):
             success_, _, image = instance.capture(
@@ -41,11 +42,7 @@ elif args.task == "preview":
             if not success_:
                 continue
 
-            display.show(
-                image,
-                on_screen=True,
-                sign=False,
-            )
+            display.show(image)
 
         success = True
     finally:

@@ -180,13 +180,13 @@ class Session(object):
 
     def check_timers(self):
         if self.timer["screen"].tick():
-            screen.show(
-                image=self.frame_image,
-                session=self,
-                header=self.signature(),
-                sidebar=string.pretty_param(self.params),
-                on_screen=self.output == "screen",
-            )
+            if self.output == "screen":
+                screen.show(
+                    image=self.frame_image,
+                    session=self,
+                    header=self.signature(),
+                    sidebar=string.pretty_param(self.params),
+                )
 
         if self.timer["reboot"].tick("wait"):
             reply_to_bash("reboot")

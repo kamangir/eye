@@ -7,7 +7,9 @@ logger = logging.getLogger(__name__)
 NAME = "blue_sbc.screen"
 
 screen_name = cookie.get("session.screen", "display")
-if screen_name == "scroll_phat_hd":
+if screen_name == "adafruit_rgb_matrix":
+    from .adafruit_rgb_matrix import instance as screen
+elif screen_name == "scroll_phat_hd":
     from .scroll_phat_hd import instance as screen
 elif screen_name == "template":
     from .template import instance as screen

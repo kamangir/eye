@@ -84,30 +84,19 @@ class Display(Screen):
         session=None,
         header=[],
         sidebar=[],
-        as_file=False,
-        on_screen=False,
-        sign=True,
-        interpolation=cv2.INTER_LINEAR,
     ):
         super(Display, self).show(
             image,
             session,
             header,
             sidebar,
-            as_file,
-            on_screen,
-            sign,
-            interpolation,
         )
 
         self.notifications = self.notifications[-5:]
 
-        if not as_file and not on_screen:
-            return self
-
         self.canvas = np.copy(image)
 
-        if sign:
+        if self.sign_images:
             self.canvas = graphics.add_signature(
                 self.canvas,
                 self.signature() + header,
@@ -119,35 +108,31 @@ class Display(Screen):
                 self.notifications,
             )
 
-        if as_file:
-            self.save()
+        self.create()
 
-        if on_screen:
-            self.create()
+        try:
+            if len(self.canvas.shape) == 2:
+                self.canvas = np.stack(3 * [self.canvas], axis=2)
 
-            try:
-                if len(self.canvas.shape) == 2:
-                    self.canvas = np.stack(3 * [self.canvas], axis=2)
-
-                cv2.imshow(
-                    self.title,
-                    cv2.cvtColor(
-                        cv2.resize(
-                            self.canvas,
-                            dsize=self.canvas_size,
-                            interpolation=interpolation,
-                        ),
-                        cv2.COLOR_BGR2RGB,
+            cv2.imshow(
+                self.title,
+                cv2.cvtColor(
+                    cv2.resize(
+                        self.canvas,
+                        dsize=self.canvas_size,
+                        interpolation=self.interpolation,
                     ),
-                )
-            except:
-                crash_report(f"{NAME}.show() failed.")
+                    cv2.COLOR_BGR2RGB,
+                ),
+            )
+        except:
+            crash_report(f"{NAME}.show() failed.")
 
-            key = cv2.waitKey(1)
-            if key not in [-1, 255]:
-                key = chr(key).lower()
-                logger.info(f"{NAME}.show(): key: '{key}'")
-                self.key_buffer.append(key)
+        key = cv2.waitKey(1)
+        if key not in [-1, 255]:
+            key = chr(key).lower()
+            logger.info(f"{NAME}.show(): key: '{key}'")
+            self.key_buffer.append(key)
 
         return self
 

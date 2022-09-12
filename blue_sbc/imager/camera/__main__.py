@@ -50,6 +50,7 @@ elif args.task == "capture_video":
         resolution=(728, 600),
     )
 elif args.task == "preview":
+    display.sign_images = False
     try:
         instance.open(log=True)
 
@@ -66,11 +67,7 @@ elif args.task == "preview":
             if not success_:
                 continue
 
-            display.show(
-                image,
-                on_screen=True,
-                sign=False,
-            )
+            display.show(image)
 
         success = True
     finally:
