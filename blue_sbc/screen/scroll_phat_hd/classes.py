@@ -23,7 +23,13 @@ class Scroll_Phat_HD(Screen):
         )
         import scrollphathd
 
-        image_scaled = cv2.resize(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY), self.size)
+        image_scaled = cv2.resize(
+            cv2.cvtColor(
+                image,
+                cv2.COLOR_BGR2GRAY,
+            ),
+            self.size,
+        )
 
         for x in range(0, 17):
             for y in range(0, 7):
