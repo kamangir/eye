@@ -1,12 +1,13 @@
 import cv2
 import time
 from blue_sbc.screen.classes import Screen
-from blue_sbc.algo.golpy import GoLpy
-
-golpy = GoLpy(7, 17)
 
 
 class Scroll_Phat_HD(Screen):
+    def __init__(self):
+        super(Scroll_Phat_HD, self).__init__()
+        self.size = (7, 17)
+
     def show(
         self,
         image,
@@ -20,26 +21,15 @@ class Scroll_Phat_HD(Screen):
             header,
             sidebar,
         )
+        import scrollphathd
 
-        if session.add_timer("scroll_phat_hd", 1.0 / 3):
-            golpy.re_init()
+        image_scaled = cv2.resize(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY), self.size)
 
-        if session.new_frame:
-            golpy.init(session.frame_image)
+        for x in range(0, 17):
+            for y in range(0, 7):
+                scrollphathd.set_pixel(x, y, image_scaled[x, y])
 
-        if session.timer["scroll_phat_hd"].tick():
-            import scrollphathd
-
-            for x in range(0, 17):
-                for y in range(0, 7):
-                    scrollphathd.set_pixel(x, y, golpy.grid(x, y))
-
-            time.sleep(0.01)
-            scrollphathd.show()
-
-            if golpy.blank():
-                golpy.re_init()
-            else:
-                golpy.progress()
+        time.sleep(0.01)
+        scrollphathd.show()
 
         return self
