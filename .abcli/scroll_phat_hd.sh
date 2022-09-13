@@ -10,9 +10,10 @@ function blue_sbc_scroll_phat_hd() {
     fi
 
     if [ "$task" == "validate" ] ; then
-        pushd $bolt_path_git/scroll-phat-hd//examples > /dev/null
+        pushd $abcli_path_git/scroll-phat-hd/examples > /dev/null
         python3 plasma.py
         popd > /dev/null
+        return
     fi
 
     abcli_log_error "-blue-sbc: scroll_phat_hd: $task: command not found."
