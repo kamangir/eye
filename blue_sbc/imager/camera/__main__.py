@@ -54,7 +54,7 @@ elif args.task == "preview":
     try:
         instance.open(
             log=True,
-            resolution=screen.size,
+            resolution=(320, 240),
         )
 
         while not screen.pressed("qe"):
