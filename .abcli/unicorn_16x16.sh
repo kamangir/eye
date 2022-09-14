@@ -10,7 +10,7 @@ function blue_sbc_unicorn_16x16() {
     fi
 
     if [ "$task" == "validate" ] ; then
-        pushd $bolt_path_git/unicorn-hat-hd/examples > /dev/null
+        pushd $abcli_path_git/unicorn-hat-hd/examples > /dev/null
         python3 rainbow.py
         popd > /dev/null
     fi
