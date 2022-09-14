@@ -1,5 +1,5 @@
 import argparse
-from blue_sbc.screen.display import instance as display
+from blue_sbc.screen import screen
 from . import *
 from abcli import logging
 import logging
@@ -50,11 +50,11 @@ elif args.task == "capture_video":
         resolution=(728, 600),
     )
 elif args.task == "preview":
-    display.sign_images = False
+    screen.sign_images = False
     try:
         instance.open(log=True)
 
-        while not display.pressed("qe"):
+        while not screen.pressed("qe"):
             success_, _, image = instance.capture(
                 close_after=False,
                 filename="-",
@@ -67,9 +67,10 @@ elif args.task == "preview":
             if not success_:
                 continue
 
-            display.show(image)
+            screen.show(image)
 
         success = True
+
     finally:
         instance.close(log=True)
 else:
