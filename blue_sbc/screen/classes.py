@@ -12,6 +12,9 @@ class Screen(object):
         self.sign_images = True
         self.size = (16, 16)
 
+    def pressed(self, keys):
+        return False
+
     def release(self):
         logger.info(f"{self.__class__.__name__}.release()")
 
