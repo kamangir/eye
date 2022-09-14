@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-function abcli_install_Unicorn_16x16() {
+function abcli_install_unicorn_16x16() {
     pushd $abcli_path_git > /dev/null
     git clone https://github.com/pimoroni/unicorn-hat-hd
     popd > /dev/null
@@ -12,5 +12,5 @@ function abcli_install_Unicorn_16x16() {
 }
 
 if [ "$(abcli cookie read session.screen display)" == "unicorn_16x16" ] ; then
-    abcli_install_module Unicorn_16x16 101
+    abcli_install_module unicorn_16x16 101
 fi
