@@ -11,7 +11,7 @@ class Scroll_Phat_HD(Screen):
     def show(
         self,
         image,
-        session,
+        session=None,
         header=[],
         sidebar=[],
     ):

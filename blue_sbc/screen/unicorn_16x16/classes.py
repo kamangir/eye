@@ -23,7 +23,7 @@ class Unicorn_16x16(Screen):
     def show(
         self,
         image,
-        session,
+        session=None,
         header=[],
         sidebar=[],
     ):
