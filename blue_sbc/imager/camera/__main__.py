@@ -52,7 +52,10 @@ elif args.task == "capture_video":
 elif args.task == "preview":
     screen.sign_images = False
     try:
-        instance.open(log=True)
+        instance.open(
+            log=True,
+            resolution=screen.size,
+        )
 
         while not screen.pressed("qe"):
             success_, _, image = instance.capture(

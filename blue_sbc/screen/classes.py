@@ -10,7 +10,7 @@ class Screen(object):
         self.key_buffer = []
         self.interpolation = cv2.INTER_LINEAR
         self.sign_images = True
-        self.size = (16, 16)
+        self.size = None
 
     def pressed(self, keys):
         return False
