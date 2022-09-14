@@ -7,7 +7,7 @@ function abcli_install_Unicorn_16x16() {
 
     # https://github.com/pimoroni/unicorn-hat-hd
     sudo raspi-config nonint do_spi 0
-    sudo apt-get install python3-pip python3-dev python3-spidev
+    sudo apt-get --yes --force-yes install python3-pip python3-dev python3-spidev
     sudo pip3 install unicornhathd
 }
 
