@@ -66,6 +66,9 @@ elif args.task == "preview":
 
         success = True
 
+    except KeyboardInterrupt:
+        logger.info("Ctrl+C, stopping.")
+
     finally:
         instance.close(log=True)
 else:
