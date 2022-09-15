@@ -11,17 +11,11 @@ parser.add_argument(
     type=str,
     help="start",
 )
-parser.add_argument(
-    "--output",
-    type=str,
-    default="",
-    help="file|screen",
-)
 args = parser.parse_args()
 
 success = False
 if args.task == "start":
-    success = Session.start(output=args.output)
+    success = Session.start()
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")
 

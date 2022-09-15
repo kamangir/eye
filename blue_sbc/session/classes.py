@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class Session(object):
-    def __init__(self, output=""):
+    def __init__(self):
         super(Session, self).__init__()
 
         self.keys = {
@@ -39,8 +39,6 @@ class Session(object):
 
         self.auto_upload = cookie.get("session.auto_upload", True)
         self.outbound_queue = cookie.get("session.outbound_queue", "stream")
-
-        self.output = output
 
         self.messages = []
 
@@ -180,13 +178,12 @@ class Session(object):
 
     def check_timers(self):
         if self.timer["screen"].tick():
-            if self.output == "screen":
-                screen.show(
-                    image=self.frame_image,
-                    session=self,
-                    header=self.signature(),
-                    sidebar=string.pretty_param(self.params),
-                )
+            screen.show(
+                image=self.frame_image,
+                session=self,
+                header=self.signature(),
+                sidebar=string.pretty_param(self.params),
+            )
 
         if self.timer["reboot"].tick("wait"):
             reply_to_bash("reboot")
@@ -282,12 +279,12 @@ class Session(object):
         )
 
     @staticmethod
-    def start(output=""):
+    def start():
         success = True
-        logger.info(f"{NAME}: started -> {output}")
+        logger.info(f"{NAME}: started.")
 
         try:
-            session = Session(output)
+            session = Session()
 
             while session.step():
                 pass
