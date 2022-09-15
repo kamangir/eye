@@ -34,13 +34,7 @@ elif args.task == "preview":
     display.sign_images = False
     try:
         while not display.pressed("qe"):
-            success_, _, image = instance.capture(
-                filename="-",
-                sign=False,
-            )
-            if not success_:
-                continue
-
+            _, image = instance.capture()
             display.show(image)
 
         success = True

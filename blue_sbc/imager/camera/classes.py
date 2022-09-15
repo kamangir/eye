@@ -29,7 +29,6 @@ class Camera(Imager):
         close_after=True,
         log=True,
         open_before=True,
-        save=True,
     ):
         """capture.
 

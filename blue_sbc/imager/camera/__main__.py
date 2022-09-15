@@ -57,17 +57,11 @@ elif args.task == "preview":
         )
 
         while not screen.pressed("qe"):
-            success_, _, image = instance.capture(
+            _, image = instance.capture(
                 close_after=False,
-                filename="-",
                 log=False,
                 open_before=False,
-                sign=False,
-                save=False,
             )
-            if not success_:
-                continue
-
             screen.show(image)
 
         success = True
