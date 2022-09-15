@@ -13,6 +13,7 @@ function blue_sbc_unicorn_16x16() {
         pushd $abcli_path_git/unicorn-hat-hd/examples > /dev/null
         python3 rainbow.py
         popd > /dev/null
+        return
     fi
 
     abcli_log_error "-blue-sbc: unicorn_16x16: $task: command not found."
