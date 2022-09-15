@@ -267,43 +267,43 @@ class Session(object):
         )
 
     def signature(self):
-        return (
-            host.signature()
-            + objects.signature(self.frame)
-            + sorted([timer.signature() for timer in self.timer.values()])
-            + (["*"] if self.new_frame else [])
-            + (["^"] if self.auto_upload else [])
-            + ([f">{self.outbound_queue}"] if self.outbound_queue else [])
-            + ([f"hat:{hat.kind}"] if hat.kind else [])
-            + (
-                [
-                    "switch:{}".format(
-                        string.pretty_duration(
-                            time.time() - self.switch_on_time,
-                            largest=True,
-                            short=True,
+        return [
+            " | ".join(host.signature()),
+            " | ".join(objects.signature(self.frame)),
+            " | ".join(sorted([timer.signature() for timer in self.timer.values()])),
+            " | ".join(
+                (["*"] if self.new_frame else [])
+                + (["^"] if self.auto_upload else [])
+                + ([f">{self.outbound_queue}"] if self.outbound_queue else [])
+                + ([f"hat:{hat.kind}"] if hat.kind else [])
+                + (
+                    [
+                        "switch:{}".format(
+                            string.pretty_duration(
+                                time.time() - self.switch_on_time,
+                                largest=True,
+                                short=True,
+                            )
                         )
-                    )
-                ]
-                if self.switch_on_time is not None
-                else []
-            )
-            + [
-                "diff: {:.03f} - {}".format(
-                    self.diff.last_diff,
-                    string.pretty_duration(
-                        self.diff.last_same_period,
-                        largest=True,
-                        include_ms=True,
-                        short=True,
+                    ]
+                    if self.switch_on_time is not None
+                    else []
+                )
+                + [
+                    "diff: {:.03f} - {}".format(
+                        self.diff.last_diff,
+                        string.pretty_duration(
+                            self.diff.last_same_period,
+                            largest=True,
+                            include_ms=True,
+                            short=True,
+                        ),
                     ),
-                ),
-            ]
-            + [
-                string.pretty_shape_of_matrix(self.frame_image),
-            ]
-            + ([] if self.model is None else self.model.signature())
-        )
+                    string.pretty_shape_of_matrix(self.frame_image),
+                ]
+                + ([] if self.model is None else self.model.signature())
+            ),
+        ]
 
     @staticmethod
     def start():
