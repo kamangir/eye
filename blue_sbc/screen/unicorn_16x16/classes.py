@@ -35,15 +35,18 @@ class Unicorn_16x16(Screen):
         )
         import unicornhathd
 
-        image_scaled = cv2.resize(image, self.size)
+        image_ = cv2.resize(image, self.size)
+
+        image_ = cv2.rotate(image_, cv2.ROTATE_90_COUNTERCLOCKWISE)
+
         for x in range(0, 16):
             for y in range(0, 16):
                 unicornhathd.set_pixel(
                     x,
                     y,
-                    image_scaled[x, y, 0],
-                    image_scaled[x, y, 1],
-                    image_scaled[x, y, 2],
+                    image_[x, y, 0],
+                    image_[x, y, 1],
+                    image_[x, y, 2],
                 )
 
         unicornhathd.show()
