@@ -87,8 +87,6 @@ class Camera(Imager):
             if self.diff.same(image):
                 return True, "same", None
 
-        self.unique_frame += 1
-
         if success and sign:
             image = graphics.add_signature(image, [], self.signature(image))
 

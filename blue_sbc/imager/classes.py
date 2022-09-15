@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 class Imager(object):
     def __init__(self):
         self.frame = -1
-        self.unique_frame = -1
 
         self.diff = Diff(cookie.get("camera.diff", 0.1))
 
