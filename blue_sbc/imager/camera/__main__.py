@@ -39,8 +39,7 @@ args = parser.parse_args()
 success = False
 if args.task == "capture":
     success, _, _ = instance.capture(
-        filename=os.path.join(args.output_path, "camera.jpg"),
-        forced=True,
+        filename=os.path.join(args.output_path, "camera.jpg")
     )
 elif args.task == "capture_video":
     success = instance.capture_video(
@@ -61,7 +60,6 @@ elif args.task == "preview":
             success_, _, image = instance.capture(
                 close_after=False,
                 filename="-",
-                forced=True,
                 log=False,
                 open_before=False,
                 sign=False,

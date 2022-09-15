@@ -5,7 +5,6 @@ from abcli import file
 from abcli.modules import host
 from abcli.modules.cookie import cookie
 from abcli import string
-from blue_sbc.algo.diff import Diff
 from abcli import logging
 import logging
 
@@ -15,8 +14,6 @@ logger = logging.getLogger(__name__)
 class Imager(object):
     def __init__(self):
         self.frame = -1
-
-        self.diff = Diff(cookie.get("camera.diff", 0.1))
 
     def capture(self, filename):
         self.frame += 1
@@ -74,7 +71,6 @@ class TemplateImager(Imager):
     def capture(
         self,
         filename="",
-        forced=True,
         sign=True,
     ):
         """capture.
@@ -82,7 +78,6 @@ class TemplateImager(Imager):
         Args:
             filename (str, optional): filename. Defaults to "": use timestamp.
             sign (bool, optional): sign output. Defaults to True.
-            forced (bool, optional): forced capture. Defaults to False.
 
         Returns:
             bool: success.

@@ -10,8 +10,9 @@ from abcli.plugins.message.messenger import instance as messenger
 from abcli.timer import Timer
 from . import NAME
 from .functions import reply_to_bash
-from blue_sbc.screen import screen
+from blue_sbc.algo.diff import Diff
 from blue_sbc.hat import hat
+from blue_sbc.screen import screen
 from blue_sbc.imager import imager
 from abcli.logging import crash_report
 from abcli import logging
@@ -30,6 +31,8 @@ class Session(object):
             "s": "shutdown",
             "u": "update",
         }
+
+        self.diff = Diff(cookie.get("session.imager.diff", 0.1))
 
         self.capture_requested = False
 
@@ -81,13 +84,13 @@ class Session(object):
             return
         if not self.capture_requested and not self.timer["imager"].tick():
             return
-
-        success, filename, image = imager.capture(
-            forced=self.capture_requested,
-        )
         self.capture_requested = False
 
-        if not filename or filename == "same" or not success:
+        success, filename, image = imager.capture()
+        if not success:
+            return
+
+        if self.diff.same(image):
             return
 
         hat.pulse(hat.data_pin)

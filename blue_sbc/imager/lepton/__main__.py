@@ -29,7 +29,6 @@ success = False
 if args.task == "capture":
     success, _, _ = instance.capture(
         filename=os.path.join(args.output_path, "camera.jpg"),
-        forced=True,
     )
 elif args.task == "preview":
     display.sign_images = False

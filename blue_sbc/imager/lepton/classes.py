@@ -17,7 +17,6 @@ class Lepton(Imager):
     def capture(
         self,
         filename="",
-        forced=True,
         sign=True,
     ):
         success, filename, image = super(Lepton, self).capture(filename)

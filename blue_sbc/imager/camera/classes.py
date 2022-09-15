@@ -29,7 +29,6 @@ class Camera(Imager):
         self,
         close_after=True,
         filename="",
-        forced=False,
         log=True,
         open_before=True,
         save=True,
@@ -40,7 +39,6 @@ class Camera(Imager):
         Args:
             close_after (bool, optional): close camera after capture. Defaults to True.
             filename (str, optional): filename. Defaults to True.
-            forced (bool, optional): forced capture. Defaults to False.
             log (bool, optional): log. Defaults to True.
             open_before (bool, optional): open the camera before capture. Defaults to True.
             save (bool, optional): save the image. Defaults to True.
@@ -83,10 +81,6 @@ class Camera(Imager):
         if close_after:
             self.close()
 
-        if success and not forced:
-            if self.diff.same(image):
-                return True, "same", None
-
         if success and sign:
             image = graphics.add_signature(image, [], self.signature(image))
 
@@ -100,7 +94,6 @@ class Camera(Imager):
             logger.info(
                 "{}.capture({}): {}{}".format(
                     NAME,
-                    "forced" if forced else "",
                     f"{filename} - " if filename else "",
                     string.pretty_shape_of_matrix(image),
                 )
