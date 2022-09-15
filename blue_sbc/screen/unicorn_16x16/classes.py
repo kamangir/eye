@@ -37,7 +37,7 @@ class Unicorn_16x16(Screen):
 
         image_ = cv2.resize(image, self.size)
 
-        image_ = cv2.rotate(image_, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        image_ = cv2.rotate(image_, cv2.ROTATE_90_CLOCKWISE)
 
         for x in range(0, 16):
             for y in range(0, 16):
