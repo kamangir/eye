@@ -77,16 +77,15 @@ class Session(object):
     def check_imager(self):
         self.new_frame = False
 
-        if not cookie.get("session.imager.enabled", True) or (
-            not self.capture_requested and not self.timer["imager"].tick()
-        ):
+        if not cookie.get("session.imager.enabled", True):
+            return
+        if not self.capture_requested and not self.timer["imager"].tick():
             return
 
         success, filename, image = imager.capture(
             forced=self.capture_requested,
         )
-
-        self.capture_command = ""
+        self.capture_requested = False
 
         if not filename or filename == "same" or not success:
             return
