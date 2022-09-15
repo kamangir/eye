@@ -1,3 +1,4 @@
+import os
 import time
 from abcli import VERSION
 from abcli import file
@@ -5,6 +6,7 @@ from abcli import string
 from abcli.modules import host
 from abcli.modules import terraform
 from abcli.modules.cookie import cookie
+from abcli.modules import objects
 from abcli.plugins import storage
 from abcli.plugins.message.messenger import instance as messenger
 from abcli.timer import Timer
@@ -36,6 +38,7 @@ class Session(object):
 
         self.capture_requested = False
 
+        self.frame = 0
         self.new_frame = False
         self.frame_image = terraform.poster(None)
         self.frame_filename = ""
@@ -86,14 +89,24 @@ class Session(object):
             return
         self.capture_requested = False
 
-        success, filename, image = imager.capture()
+        success, image = imager.capture()
         if not success:
             return
 
-        if self.diff.same(image):
+        hat.pulse(hat.data_pin)
+
+        if not self.diff.same(image):
             return
 
-        hat.pulse(hat.data_pin)
+        self.frame += 1
+
+        filename = os.path.join(
+            os.getenv("abcli_object_path", ""),
+            f"{self.frame:016d}.jpg",
+        )
+
+        if not file.save_image(filename, image):
+            return
 
         self.new_frame = True
         self.frame_image = image
@@ -253,9 +266,11 @@ class Session(object):
             )
         )
 
-    def signature_(self):
+    def signature(self):
         return (
-            sorted([timer.signature() for timer in self.timer.values()])
+            host.signature()
+            + objects.signature(self.frame)
+            + sorted([timer.signature() for timer in self.timer.values()])
             + (["*"] if self.new_frame else [])
             + (["^"] if self.auto_upload else [])
             + ([f">{self.outbound_queue}"] if self.outbound_queue else [])
@@ -284,11 +299,10 @@ class Session(object):
                     ),
                 ),
             ]
-        )
-
-    def signature(self):
-        return [" | ".join(self.signature_())] + (
-            [] if self.model is None else [" | ".join(self.model.signature())]
+            + [
+                string.pretty_shape_of_matrix(self.frame_image),
+            ]
+            + ([] if self.model is None else self.model.signature())
         )
 
     @staticmethod

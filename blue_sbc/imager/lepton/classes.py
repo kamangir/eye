@@ -1,3 +1,4 @@
+import numpy as np
 import os
 import os.path
 from abcli import file
@@ -14,12 +15,9 @@ logger = logging.getLogger(__name__)
 
 
 class Lepton(Imager):
-    def capture(
-        self,
-        filename="",
-        sign=True,
-    ):
-        success, filename, image = super(Lepton, self).capture(filename)
+    def capture(self):
+        success = True
+        image = np.ones((1, 1, 3), dtype=np.uint8) * 127
 
         temp_dir = path.auxiliary("lepton")
         success = host.shell(
@@ -32,28 +30,7 @@ class Lepton(Imager):
         if success:
             success, image = file.load_image(f"{temp_dir}/image.jpg")
 
-        if success and sign:
-            image = graphics.add_signature(image, [], self.signature(image))
-
         if success:
-            filename = self.filename_of(filename)
+            logger.info(f"{NAME}.capture(): {string.pretty_shape_of_matrix(image)}")
 
-            if filename:
-                success = file.save_image(filename, image)
-
-                if success:
-                    success = file.copy(
-                        f"{temp_dir}/image_raw.jpg",
-                        f"{file.path(filename)}/image_raw.jpg",
-                    )
-
-        if success:
-            logger.info(
-                "{}.capture(): {}{}".format(
-                    NAME,
-                    "{} - ".format(filename) if filename else "",
-                    string.pretty_shape_of_matrix(image),
-                )
-            )
-
-        return success, filename, image
+        return success, image

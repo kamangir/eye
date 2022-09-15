@@ -1,5 +1,6 @@
 import argparse
 import cv2
+import numpy as np
 import os
 from time import sleep
 from abcli import file
@@ -20,43 +21,37 @@ logger = logging.getLogger(__name__)
 
 class Camera(Imager):
     def __init__(self):
-        super(Camera, self).__init__()
-
         self.device = None
         self.resolution = []
 
     def capture(
         self,
         close_after=True,
-        filename="",
         log=True,
         open_before=True,
         save=True,
-        sign=True,
     ):
         """capture.
 
         Args:
             close_after (bool, optional): close camera after capture. Defaults to True.
-            filename (str, optional): filename. Defaults to True.
             log (bool, optional): log. Defaults to True.
             open_before (bool, optional): open the camera before capture. Defaults to True.
             save (bool, optional): save the image. Defaults to True.
-            sign (bool, optional): sign the image. Defaults to True.
 
         Returns:
             bool: success.
-            str: filename.
             image: np.ndarray.
         """
-        success, filename, image = super(Camera, self).capture(filename)
+        success = False
+        image = np.ones((1, 1, 3), dtype=np.uint8) * 127
 
         if open_before:
             if not self.open():
-                return success, filename, image
+                return success, image
 
         if self.device is None:
-            return success, filename, image
+            return success, image
 
         if host.is_rpi():
             temp = file.auxiliary("camera", "png")
@@ -64,7 +59,7 @@ class Camera(Imager):
                 self.device.capture(temp)
                 success = True
             except:
-                crash_report(f"{NAME}.capture() failed")
+                crash_report(f"{NAME}.capture() failed.")
 
             if success:
                 success, image = file.load_image(temp)
@@ -76,30 +71,15 @@ class Camera(Imager):
                     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
             except:
-                crash_report(f"{NAME}.capture() failed")
+                crash_report(f"{NAME}.capture() failed.")
 
         if close_after:
             self.close()
 
-        if success and sign:
-            image = graphics.add_signature(image, [], self.signature(image))
-
-        if success and save:
-            filename = self.filename_of(filename)
-
-            if filename:
-                success = file.save_image(filename, image)
-
         if success and log:
-            logger.info(
-                "{}.capture({}): {}".format(
-                    NAME,
-                    f"{filename} - " if filename else "",
-                    string.pretty_shape_of_matrix(image),
-                )
-            )
+            logger.info(f"{NAME}.capture(): {string.pretty_shape_of_matrix(image)}")
 
-        return success, filename, image
+        return success, image
 
     # https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/6
     def capture_video(
