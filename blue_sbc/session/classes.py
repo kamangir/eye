@@ -273,6 +273,17 @@ class Session(object):
                 if self.switch_on_time is not None
                 else []
             )
+            + [
+                "diff: {:.03f} - {}".format(
+                    self.diff.last_diff,
+                    string.pretty_duration(
+                        self.diff.last_same_period,
+                        largest=True,
+                        include_ms=True,
+                        short=True,
+                    ),
+                ),
+            ]
         )
 
     def signature(self):

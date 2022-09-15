@@ -92,7 +92,7 @@ class Camera(Imager):
 
         if success and log:
             logger.info(
-                "{}.capture({}): {}{}".format(
+                "{}.capture({}): {}".format(
                     NAME,
                     f"{filename} - " if filename else "",
                     string.pretty_shape_of_matrix(image),
@@ -254,11 +254,3 @@ class Camera(Imager):
         except:
             crash_report(f"{NAME}.open: failed.")
             return False
-
-    def signature_(self):
-        return [
-            "diff: {:.03f} - {}".format(
-                self.diff.last_diff,
-                string.pretty_duration(self.diff.last_same_period, "largest,ms,short"),
-            ),
-        ]
