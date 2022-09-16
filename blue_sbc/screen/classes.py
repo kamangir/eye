@@ -27,7 +27,7 @@ class Screen(object):
         self.buffer[y, x] = 255 - self.buffer[y, x]
 
         self.animated = False
-        self.show(self, self.buffer)
+        self.show(self.buffer)
         self.animated = True
 
     def pressed(self, keys):
