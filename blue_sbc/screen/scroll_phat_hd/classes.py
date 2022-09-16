@@ -22,9 +22,9 @@ class Scroll_Phat_HD(Screen):
 
         super(Scroll_Phat_HD, self).show(image_, session, header, sidebar)
 
-        for x in range(0, 17):
-            for y in range(0, 7):
-                scrollphathd.set_pixel(x, y, image_[x, y])
+        for y in range(0, 17):
+            for x in range(0, 7):
+                scrollphathd.set_pixel(y, x, image_[y, x])
 
         time.sleep(0.01)
         scrollphathd.show()

@@ -206,6 +206,8 @@ class Session(object):
                 header=self.signature(),
                 sidebar=string.pretty_param(self.params),
             )
+        else:
+            screen.animate()
 
         if self.timer["reboot"].tick("wait"):
             reply_to_bash("reboot")
