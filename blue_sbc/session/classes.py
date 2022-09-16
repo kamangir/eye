@@ -96,7 +96,7 @@ class Session(object):
 
         hat.pulse(hat.data_pin)
 
-        if not self.diff.same(image):
+        if self.diff.same(image):
             return
 
         self.frame += 1
