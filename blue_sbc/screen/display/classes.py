@@ -99,7 +99,8 @@ class Display(Screen):
         if self.sign_images:
             self.canvas = graphics.add_signature(
                 self.canvas,
-                self.signature() + header,
+                header=header,
+                footer=host.signature(),
             )
 
             self.canvas = graphics.add_sidebar(
@@ -135,9 +136,3 @@ class Display(Screen):
             self.key_buffer.append(key)
 
         return self
-
-    def signature(self):
-        return [
-            " | ".join(host.signature()),
-            " | ".join(objects.signature()),
-        ]

@@ -275,7 +275,6 @@ class Session(object):
 
     def signature(self):
         return [
-            " | ".join(host.signature()),
             " | ".join(objects.signature(self.frame)),
             " | ".join(sorted([timer.signature() for timer in self.timer.values()])),
             " | ".join(
