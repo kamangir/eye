@@ -8,6 +8,7 @@ from abcli.modules import terraform
 from abcli.modules.cookie import cookie
 from abcli.modules import objects
 from abcli.plugins import storage
+from abcli.plugins.graphics import add_signature
 from abcli.plugins.message.messenger import instance as messenger
 from abcli.timer import Timer
 from . import NAME
@@ -99,6 +100,12 @@ class Session(object):
             return
 
         self.frame += 1
+
+        image = add_signature(
+            image,
+            [" | ".join(objects.signature())],
+            [" | ".join(host.signature())],
+        )
 
         filename = os.path.join(
             os.getenv("abcli_object_path", ""),
