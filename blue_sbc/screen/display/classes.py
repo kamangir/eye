@@ -78,19 +78,8 @@ class Display(Screen):
 
         return filename if file.save_image(filename, self.canvas) else ""
 
-    def show(
-        self,
-        image,
-        session=None,
-        header=[],
-        sidebar=[],
-    ):
-        super(Display, self).show(
-            image,
-            session,
-            header,
-            sidebar,
-        )
+    def show(self, image, session=None, header=[], sidebar=[]):
+        super(Display, self).show(image, session, header, sidebar)
 
         self.notifications = self.notifications[-5:]
 
