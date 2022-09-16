@@ -11,6 +11,7 @@ class Unicorn_16x16(Screen):
     def __init__(self):
         super(Unicorn_16x16, self).__init__()
         self.size = (16, 16)
+        self.animated = True
 
     def release(self):
         super(Unicorn_16x16, self).release()
@@ -20,24 +21,18 @@ class Unicorn_16x16(Screen):
 
         unicornhathd.off()
 
-    def show(
-        self,
-        image,
-        session=None,
-        header=[],
-        sidebar=[],
-    ):
-        super(Unicorn_16x16, self).show(
-            image,
-            session,
-            header,
-            sidebar,
-        )
+    def show(self, image, session=None, header=[], sidebar=[]):
         import unicornhathd
 
-        image_ = cv2.resize(image, self.size)
+        image_ = cv2.rotate(
+            cv2.resize(
+                image,
+                self.size,
+            ),
+            cv2.ROTATE_90_CLOCKWISE,
+        )
 
-        image_ = cv2.rotate(image_, cv2.ROTATE_90_CLOCKWISE)
+        super(Unicorn_16x16, self).show(image_, session, header, sidebar)
 
         for x in range(0, 16):
             for y in range(0, 16):

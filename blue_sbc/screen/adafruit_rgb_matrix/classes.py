@@ -8,6 +8,7 @@ class Adafruit_Rgb_Matrix(Screen):
     def __init__(self):
         super(Adafruit_Rgb_Matrix, self).__init__()
         self.size = (32, 32)
+        self.animated = True
 
         from rgbmatrix import RGBMatrix, RGBMatrixOptions
 
@@ -19,17 +20,11 @@ class Adafruit_Rgb_Matrix(Screen):
 
         self.matrix = RGBMatrix(options=options)
 
-    def show(
-        self,
-        image,
-        session,
-        header=[],
-        sidebar=[],
-    ):
-        super(Adafruit_Rgb_Matrix, self).show(image, session, header, sidebar)
+    def show(self, image, session, header=[], sidebar=[]):
+        image_ = cv2.resize(image, self.size)
 
-        self.matrix.SetImage(
-            Image.fromarray(cv2.resize(image, self.size)).convert("RGB")
-        )
+        super(Adafruit_Rgb_Matrix, self).show(image_, session, header, sidebar)
+
+        self.matrix.SetImage(Image.fromarray(image_).convert("RGB"))
 
         return self

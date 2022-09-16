@@ -12,6 +12,9 @@ class Screen(object):
         self.sign_images = True
         self.size = None
 
+        self.animated = False
+        self.buffer = None
+
     def pressed(self, keys):
         return False
 
