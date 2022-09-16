@@ -103,7 +103,7 @@ class Session(object):
 
         image = add_signature(
             image,
-            [" | ".join(objects.signature())],
+            [" | ".join(objects.signature(self.frame))],
             [" | ".join(host.signature())],
         )
 

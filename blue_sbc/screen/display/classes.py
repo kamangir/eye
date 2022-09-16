@@ -100,7 +100,7 @@ class Display(Screen):
             self.canvas = graphics.add_signature(
                 self.canvas,
                 header=header,
-                footer=host.signature(),
+                footer=[" | ".join(host.signature())],
             )
 
             self.canvas = graphics.add_sidebar(
