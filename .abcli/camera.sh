@@ -20,7 +20,7 @@ function blue_sbc_camera() {
 
     if [ "$task" == "capture" ] ; then
         local options=$2
-        local capture_video=$(abcli_option_int "$options" "video" 0)
+        local capture_video=$(abcli_option_int "$options" video 0)
 
         if [ "$capture_video" == 1 ] ; then
             python3 -m blue_sbc.imager.camera \
