@@ -11,5 +11,5 @@ function abcli_install_adafruit_rgb_matrix() {
 }
 
 if [ "$(abcli cookie read session.screen display)" == "adafruit_rgb_matrix" ] ; then
-    abcli_install_module adafruit_rgb_matrix 105
+    abcli_install_module adafruit_rgb_matrix 106
 fi
