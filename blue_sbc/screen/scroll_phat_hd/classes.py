@@ -24,7 +24,7 @@ class Scroll_Phat_HD(Screen):
 
         for y in range(0, 17):
             for x in range(0, 7):
-                scrollphathd.set_pixel(y, x, image_[y, x])
+                scrollphathd.set_pixel(y, x, image_[y, x] / 255.0)
 
         time.sleep(0.01)
         scrollphathd.show()
