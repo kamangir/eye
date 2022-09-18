@@ -1,6 +1,5 @@
 import cv2
 from PIL import Image
-import time
 from blue_sbc.screen.classes import Screen
 
 
