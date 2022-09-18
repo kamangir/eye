@@ -13,14 +13,16 @@ class Scroll_Phat_HD(Screen):
         import scrollphathd
 
         image_ = cv2.resize(
-            cv2.cvtColor(
-                image,
-                cv2.COLOR_BGR2GRAY,
-            ),
+            image,
             self.size,
         )
 
         super(Scroll_Phat_HD, self).show(image_, session, header, sidebar)
+
+        image_ = cv2.cvtColor(
+            image_,
+            cv2.COLOR_BGR2GRAY,
+        )
 
         for y in range(0, 17):
             for x in range(0, 7):
