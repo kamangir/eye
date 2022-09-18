@@ -10,7 +10,7 @@ function blue_sbc_adafruit_rgb_matrix() {
     fi
 
     if [ "$task" == "validate" ] ; then
-        pushd $bolt_path_git/Raspberry-Pi-Installer-Scripts/rpi-rgb-led-matrix/examples-api-use > /dev/null
+        pushd $abcli_path_git/Raspberry-Pi-Installer-Scripts/rpi-rgb-led-matrix/examples-api-use > /dev/null
         sudo ./demo -D0
         popd > /dev/null
     fi

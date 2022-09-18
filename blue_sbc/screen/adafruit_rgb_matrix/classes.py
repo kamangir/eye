@@ -19,7 +19,7 @@ class Adafruit_Rgb_Matrix(Screen):
 
         self.matrix = RGBMatrix(options=options)
 
-    def show(self, image, session, header=[], sidebar=[]):
+    def show(self, image, session=None, header=[], sidebar=[]):
         image_ = cv2.resize(image, self.size)
 
         super(Adafruit_Rgb_Matrix, self).show(image_, session, header, sidebar)
