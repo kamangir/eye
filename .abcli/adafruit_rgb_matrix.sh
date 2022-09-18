@@ -4,7 +4,7 @@ function blue_sbc_adafruit_rgb_matrix() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ $task == "help" ] ; then
-        abcli_help_line "blue_sbc adafruit_rgb_matrix validate" \
+        abcli_show_usage "blue_sbc adafruit_rgb_matrix validate" \
             "validate adafruit_rgb_matrix."
         return
     fi

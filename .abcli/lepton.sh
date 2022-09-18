@@ -4,9 +4,9 @@ function blue_sbc_lepton() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ $task == "help" ] ; then
-        abcli_help_line "blue_sbc lepton capture image" \
+        abcli_show_usage "blue_sbc lepton capture image" \
             "capture an image from lepton."
-        abcli_help_line "blue_sbc lepton preview" \
+        abcli_show_usage "blue_sbc lepton preview" \
             "preview lepton."
 
         if [ "$(abcli_keyword_is $2 verbose)" == true ] ; then

@@ -4,7 +4,7 @@ function blue_sbc_unicorn_16x16() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ $task == "help" ] ; then
-        abcli_help_line "blue_sbc unicorn_16x16 validate" \
+        abcli_show_usage "blue_sbc unicorn_16x16 validate" \
             "validate unicorn_16x16."
         return
     fi

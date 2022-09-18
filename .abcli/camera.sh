@@ -4,11 +4,11 @@ function blue_sbc_camera() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ $task == "help" ] ; then
-        abcli_help_line "blue_sbc camera capture image" \
+        abcli_show_usage "blue_sbc camera capture image" \
             "capture an image from camera."
-        abcli_help_line "blue_sbc camera capture video [--length 10] [--preview 1]" \
+        abcli_show_usage "blue_sbc camera capture video [--length 10] [--preview 1]" \
             "[preview and] capture [10 s] of video."
-        abcli_help_line "blue_sbc camera preview" \
+        abcli_show_usage "blue_sbc camera preview" \
             "preview camera."
 
         if [ "$(abcli_keyword_is $2 verbose)" == true ] ; then

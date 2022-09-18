@@ -4,7 +4,7 @@ function blue_sbc_golpy() {
     local task=$(abcli_unpack_keyword $1 simulate)
 
     if [ "$task" == "help" ] ; then
-        abcli_help_line "blue_sbc golpy simulate [--display 1]" \
+        abcli_show_usage "blue_sbc golpy simulate [--display 1]" \
             "simulate golpy [on display]."
 
         if [ "$(abcli_keyword_is $2 verbose)" == true ] ; then

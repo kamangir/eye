@@ -4,11 +4,11 @@ function blue_sbc_hat() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ "$task" == "help" ] ; then
-        abcli_help_line "blue_sbc hat input" \
+        abcli_show_usage "blue_sbc hat input" \
             "read hat inputs."
-        abcli_help_line "blue_sbc hat output <10101010>" \
+        abcli_show_usage "blue_sbc hat output <10101010>" \
             "activate hat outputs to 10101010."
-        abcli_help_line "blue_sbc hat validate" \
+        abcli_show_usage "blue_sbc hat validate" \
             "validate hat."
 
 

@@ -4,7 +4,7 @@ function blue_sbc_scroll_phat_hd() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ $task == "help" ] ; then
-        abcli_help_line "blue_sbc scroll_phat_hd validate" \
+        abcli_show_usage "blue_sbc scroll_phat_hd validate" \
             "validate scroll_phat_hd."
         return
     fi
