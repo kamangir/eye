@@ -1,4 +1,6 @@
 from abcli.modules.cookie import cookie
+from abcli.modules import host
+from .classes import Screen
 import abcli.logging
 import logging
 
@@ -15,6 +17,8 @@ elif screen_name == "template":
     from .template import instance as screen
 elif screen_name == "unicorn_16x16":
     from .unicorn_16x16 import instance as screen
+elif host.is_headless():
+    screen = Screen()
 else:
     from .display import instance as screen
 
