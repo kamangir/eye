@@ -1,9 +1,9 @@
 #! /usr/bin/env bash
 
-function abcli_install_headless_rpi() {
+function abcli_install_rpi() {
     # https://docs.donkeycar.com/guide/robot_sbc/setup_raspberry_pi/
     sudo apt-get update
-    sudo apt-get upgrade
+    sudo apt-get -y upgrade
 
     sudo apt-get --yes --force-yes install build-essential python3 python3-dev python3-pip \
         python3-virtualenv python3-numpy python3-picamera python3-pandas python3-rpi.gpio \
@@ -56,6 +56,6 @@ function abcli_install_headless_rpi() {
     fi
 }
 
-if [ "$abcli_is_headless" == true ] ; then
-    abcli_install_module headless_rpi 108
+if [ "$abcli_is_rpi" == true ] ; then
+    abcli_install_module rpi 109
 fi
