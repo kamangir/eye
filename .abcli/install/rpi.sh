@@ -41,11 +41,11 @@ function abcli_install_rpi() {
 
     sudo apt --yes --force-yes install python3-opencv
 
-    pip install PyMySQL==0.10.1
-    pip install tqdm
-    pip install boto3
-    pip install dill
-    pip install imutils
+    pip3 install PyMySQL==0.10.1
+    pip3 install tqdm
+    pip3 install boto3
+    pip3 install dill
+    pip3 install imutils
 
     # https://rtcbot.readthedocs.io/en/latest/installing.html
     # pip install rtcbot
