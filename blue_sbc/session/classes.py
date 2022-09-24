@@ -105,7 +105,7 @@ class Session(object):
         image = add_signature(
             image,
             [" | ".join(objects.signature(self.frame))],
-            [" | ".join([f"bsbc-{blue_sbc_VERSION}"] + host.signature())],
+            [" | ".join(host.signature())],
         )
 
         filename = os.path.join(
