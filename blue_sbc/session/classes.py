@@ -1,6 +1,6 @@
 import os
 import time
-from abcli import VERSION
+from abcli import VERSION as abcli_VERSION
 from abcli import file
 from abcli import string
 from abcli.modules import host
@@ -13,6 +13,7 @@ from abcli.plugins.message.messenger import instance as messenger
 from abcli.timer import Timer
 from . import NAME
 from .functions import reply_to_bash
+from blue_sbc import VERSION as blue_sbc_VERSION
 from blue_sbc.algo.diff import Diff
 from blue_sbc.hat import hat
 from blue_sbc.screen import screen
@@ -104,7 +105,7 @@ class Session(object):
         image = add_signature(
             image,
             [" | ".join(objects.signature(self.frame))],
-            [" | ".join(host.signature())],
+            [" | ".join([f"bsbc-{blue_sbc_VERSION}"] + host.signature())],
         )
 
         filename = os.path.join(
@@ -172,7 +173,7 @@ class Session(object):
         hat.pulse("outputs")
 
         seed_version = content.get("version", "")
-        if seed_version <= VERSION:
+        if seed_version <= abcli_VERSION:
             return None
 
         logger.info(f"{NAME}: seed {seed_version} detected.")
@@ -242,7 +243,7 @@ class Session(object):
 
         if message.subject == "update":
             try:
-                if message.data["version"] > VERSION:
+                if message.data["version"] > abcli_VERSION:
                     reply_to_bash("update")
                     return False
             except:
