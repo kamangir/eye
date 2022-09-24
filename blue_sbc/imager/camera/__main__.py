@@ -11,7 +11,7 @@ parser.add_argument(
     "task",
     type=str,
     default="",
-    help="capture/capture_video/preview",
+    help="capture|capture_video|preview",
 )
 parser.add_argument(
     "--filename",
@@ -32,7 +32,7 @@ parser.add_argument(
     "--preview",
     default="1",
     type=int,
-    help="0/1",
+    help="0|1",
 )
 args = parser.parse_args()
 
