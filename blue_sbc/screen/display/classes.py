@@ -100,6 +100,17 @@ class Display(Screen):
 
         self.create()
 
+        self.update_gui()
+
+        key = cv2.waitKey(1)
+        if key not in [-1, 255]:
+            key = chr(key).lower()
+            logger.info(f"{NAME}.show(): key: '{key}'")
+            self.key_buffer.append(key)
+
+        return self
+
+    def update_gui(self):
         try:
             if len(self.canvas.shape) == 2:
                 self.canvas = np.stack(3 * [self.canvas], axis=2)
@@ -116,12 +127,4 @@ class Display(Screen):
                 ),
             )
         except:
-            crash_report(f"{NAME}.show() failed.")
-
-        key = cv2.waitKey(1)
-        if key not in [-1, 255]:
-            key = chr(key).lower()
-            logger.info(f"{NAME}.show(): key: '{key}'")
-            self.key_buffer.append(key)
-
-        return self
+            crash_report(f"{NAME}.update_gui() failed.")
