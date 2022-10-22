@@ -19,8 +19,9 @@ function blue_sbc() {
         return
     fi
 
-    if [[ $(type -t blue_sbc_$task) == "function" ]] ; then
-        blue_sbc_$task ${@:2}
+    local function_name=blue_sbc_$task
+    if [[ $(type -t $function_name) == "function" ]] ; then
+        $function_name ${@:2}
         return
     fi
 
