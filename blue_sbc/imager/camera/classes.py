@@ -213,7 +213,14 @@ class Camera(Imager):
 
                 # https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/7
                 self.device.resolution = (
-                    ((2592, 1944) if cookie.get("camera.hi_res", True) else (728, 600))
+                    (
+                        (2592, 1944)
+                        if cookie.get("camera.hi_res", True)
+                        else (
+                            cookie.get("camera.width", 728),
+                            cookie.get("camera.height", 600),
+                        )
+                    )
                     if resolution is None
                     else resolution
                 )
