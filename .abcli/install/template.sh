@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 function abcli_install_blue_sbc_template() {
-    abcli_log "Installing..."
+    abcli_log "wip"
 }
 
 if [ "$(abcli cookie read session.screen display)" == "blue_sbc_template" ] ; then
