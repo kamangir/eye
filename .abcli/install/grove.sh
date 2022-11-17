@@ -12,6 +12,15 @@ function abcli_install_grove() {
     cd grove.py
     sudo pip3 install .
 
+    # https://learn.adafruit.com/program-an-avr-or-arduino-using-raspberry-pi-gpio-pins/installation
+    sudo apt-get --yes --force-yes install avrdude
+
+    # https://wiki.seeedstudio.com/Grove-Chainable_RGB_LED/
+    cd ..
+    git clone https://github.com/DexterInd/GrovePi.git
+    cd GrovePi/Firmware
+    sudo ./firmware_update.sh
+
     popd > /dev/null
 }
 
