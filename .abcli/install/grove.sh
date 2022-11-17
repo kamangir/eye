@@ -12,5 +12,5 @@ function abcli_install_grove() {
 }
 
 if [ "$(abcli cookie read hat.type else)" == "grove" ] ; then
-    abcli_install_module grove 105
+    abcli_install_module grove 106
 fi
