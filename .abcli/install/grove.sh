@@ -8,6 +8,8 @@ function abcli_install_grove() {
         --output grove_install.sh
     sudo bash ./grove_install.sh
 
+    git clone https://github.com/Seeed-Studio/grove.py
+
     popd > /dev/null
 }
 
