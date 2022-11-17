@@ -7,7 +7,7 @@ function abcli_install_grove() {
         --output grove_install.sh
     #  | sudo bash -s -
 
-    popd > /dev/nul
+    popd > /dev/null
 }
 
 if [ "$(abcli cookie read hat.type else)" == "grove" ] ; then

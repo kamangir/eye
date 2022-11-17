@@ -1,6 +1,8 @@
 #! /usr/bin/env bash
 
 function abcli_install_rpi() {
+    pushd $abcli_path_git > /dev/null
+
     # https://docs.donkeycar.com/guide/robot_sbc/setup_raspberry_pi/
     sudo apt-get update
     sudo apt-get -y upgrade
@@ -54,6 +56,8 @@ function abcli_install_rpi() {
     if [[ $PATH != *"/home/pi/.local/bin"* ]]; then
         export PATH=/home/pi/.local/bin:$PATH
     fi
+
+    popd > /dev/null
 }
 
 if [ "$abcli_is_rpi" == true ] ; then
