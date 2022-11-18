@@ -1,10 +1,14 @@
 #! /usr/bin/env bash
 
+function grove() {
+    blue_sbc_grove $@
+}
+
 function blue_sbc_grove() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ $task == "help" ] ; then
-        abcli_show_usage "blue_sbc grove validate${ABCUL}[button]" \
+        abcli_show_usage "grove validate$ABCUL[button]" \
             "validate grove."
 
         if [ "$(abcli_keyword_is $2 verbose)" == true ] ; then
