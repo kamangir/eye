@@ -28,8 +28,10 @@ function blue_sbc_grove() {
             return
         fi
 
-        abcli_log "validating grove $what: $filename"
-        pushd $abcli_path_git/grove.py/grove > /dev/null
+        local grove_path=$abcli_path_git/grove.py/grove
+
+        abcli_log "validating grove $what: $grove_path/$filename"
+        pushd $grove_path > /dev/null
         python3 $filename
         popd > /dev/null
 
