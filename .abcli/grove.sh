@@ -16,6 +16,7 @@ function blue_sbc_grove() {
 
     if [ "$task" == "validate" ] ; then
         local what=$(abcli_clarify_input $2 button)
+        abcli_log "validating grove $what..."
 
         if [ "$what" == "button" ]; then
             pushd $abcli_path_git/grove.py/grove > /dev/null
