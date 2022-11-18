@@ -11,6 +11,7 @@ function blue_sbc() {
         blue_sbc_adafruit_rgb_matrix $@
         blue_sbc_camera $@
         blue_sbc_golpy $@
+        blue_sbc_grove $@
         blue_sbc_hat $@
         blue_sbc_lepton $@
         blue_sbc_scroll_phat_hd $@
