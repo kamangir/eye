@@ -12,6 +12,9 @@ function abcli_install_grove() {
     cd grove.py
     sudo pip3 install -e .
 
+    # https://learn.adafruit.com/scanning-i2c-addresses/raspberry-pi
+    sudo apt-get install i2c-tools
+
     # https://learn.adafruit.com/program-an-avr-or-arduino-using-raspberry-pi-gpio-pins/installation
     # sudo apt-get --yes --force-yes install avrdude
 

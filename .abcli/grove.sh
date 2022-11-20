@@ -8,6 +8,8 @@ function blue_sbc_grove() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ $task == "help" ] ; then
+        abcli_show_usage "grove info" \
+            "show grove info."
         abcli_show_usage "grove validate [adc|button]" \
             "validate grove."
 
@@ -15,6 +17,12 @@ function blue_sbc_grove() {
             python3 -m blue_sbc.hat --help
         fi
 
+        return
+    fi
+
+    if [ "$task" == "info" ] ; then
+        # https://learn.adafruit.com/scanning-i2c-addresses/raspberry-pi
+        i2cdetect -y 1
         return
     fi
 
