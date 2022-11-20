@@ -29,10 +29,12 @@ function blue_sbc_grove() {
     if [ "$task" == "validate" ] ; then
         local what=$(abcli_clarify_input $2 button)
 
+        local args=""
         if [ "$what" == "adc" ]; then
             local filename=adc.py
         elif [ "$what" == "button" ]; then
             local filename=grove_button.py
+            local args="24"
         else
             abcli_log_error "-blue-sbc: grove: $task: $what: hardware not found."
             return
@@ -40,9 +42,9 @@ function blue_sbc_grove() {
 
         local grove_path=$abcli_path_git/grove.py/grove
 
-        abcli_log "validating grove $what: $grove_path/$filename"
+        abcli_log "validating grove $what: $grove_path/$filename $args"
         pushd $grove_path > /dev/null
-        python3 $filename
+        python3 $filename $args
         popd > /dev/null
 
         return
