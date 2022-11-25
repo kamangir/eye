@@ -10,7 +10,7 @@ function blue_sbc_grove() {
     if [ $task == "help" ] ; then
         abcli_show_usage "grove info" \
             "show grove info."
-        abcli_show_usage "grove validate [adc|button]" \
+        abcli_show_usage "grove validate [adc|button|oled_128x64]" \
             "validate grove."
 
         if [ "$(abcli_keyword_is $2 verbose)" == true ] ; then
@@ -31,12 +31,15 @@ function blue_sbc_grove() {
 
         local args=""
         if [ "$what" == "adc" ]; then
-            local filename=adc.py
+            local filename="adc.py"
         elif [ "$what" == "button" ]; then
-            local filename=grove_button.py
+            local filename="grove_button.py"
             local args="24"
+        elif [ "$what" == "oled_128x64" ]; then
+            local filename="grove_oled_display_128x64.py"
+            local args=""
         else
-            abcli_log_error "-blue-sbc: grove: $task: $what: hardware not found."
+            abcli_log_error "- blue-sbc: grove: $task: $what: hardware not found."
             return
         fi
 
