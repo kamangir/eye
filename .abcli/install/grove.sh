@@ -12,18 +12,15 @@ function abcli_install_grove() {
     cd grove.py
     sudo pip3 install -e .
 
-    # https://learn.adafruit.com/scanning-i2c-addresses/raspberry-pi
-    sudo apt-get install i2c-tools
+    # https://wiki.seeedstudio.com/Grove-OLED-Yellow%26Blue-Display-0.96-%28SSD1315%29_V1.0/
+    sudo apt-get install -y python-smbus
+    sudo apt-get install -y i2c-tools
+    sudo pip3 install Adafruit-BBIO
+    sudo pip3 install Adafruit-SSD1306
 
-    # https://learn.adafruit.com/program-an-avr-or-arduino-using-raspberry-pi-gpio-pins/installation
-    # sudo apt-get --yes --force-yes install avrdude
-
-    # https://wiki.seeedstudio.com/Grove-Chainable_RGB_LED/
-    # cd ..
-    # git clone https://github.com/DexterInd/GrovePi.git
-    # cd GrovePi/Firmware
-    # sudo ./firmware_update.sh
-
+    cd ..
+    git clone https://github.com/IcingTomato/Seeed_Python_SSD1315.git
+    
     popd > /dev/null
 }
 
