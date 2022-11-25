@@ -37,7 +37,7 @@ function blue_sbc_grove() {
             local filename="grove_button.py"
             local args="24"
         elif [ "$what" == "oled_128x64" ]; then
-            local filepath="Seeed_Python_SSD1315"
+            local filepath="Seeed_Python_SSD1315/examples"
             local filename="animate.py"
         else
             abcli_log_error "- blue-sbc: grove: $task: $what: hardware not found."
