@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 class Grove_screen(Screen):
     def __init__(self):
-        super(Grove, self).__init__()
+        super(Grove_screen, self).__init__()
         # https://wiki.seeedstudio.com/Grove-OLED_Display_0.96inch/
         self.size = (64, 128)
 
