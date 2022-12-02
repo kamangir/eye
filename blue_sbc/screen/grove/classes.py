@@ -6,6 +6,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+BUTTON = 24
+
 
 class Grove(Screen):
     def __init__(self):
@@ -13,9 +15,10 @@ class Grove(Screen):
         # https://wiki.seeedstudio.com/Grove-OLED_Display_0.96inch/
         self.size = (64, 128)
 
-        self.button = GroveButton(24)
+        self.button = GroveButton(BUTTON)
         self.button.on_press = grove_button_on_press
         self.button.on_release = grove_button_on_release
+        logger.info(f"grove.button: {self.button.pin}")
 
     def show(self, image, session=None, header=[], sidebar=[]):
         image_ = cv2.resize(
