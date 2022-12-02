@@ -6,9 +6,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class Grove_screen(Screen):
+class Grove_Screen(Screen):
     def __init__(self):
-        super(Grove_screen, self).__init__()
+        super(Grove_Screen, self).__init__()
         # https://wiki.seeedstudio.com/Grove-OLED_Display_0.96inch/
         self.size = (64, 128)
 
@@ -18,7 +18,7 @@ class Grove_screen(Screen):
             self.size,
         )
 
-        super(Grove_screen, self).show(image_, session, header, sidebar)
+        super(Grove_Screen, self).show(image_, session, header, sidebar)
 
         # TODO: show image_
 
