@@ -40,9 +40,12 @@ def grove_button_on_press(screen, t):
 def grove_button_on_release(screen, t):
     logger.info(f"grove.button: released after {string.pretty_duration(t)}.")
 
-    key = " "
-    if t > 3:
+    if t > 10:
         key = "s"
+    elif t > 3:
+        key = "u"
+    else:
+        key = " "
 
     screen.key_buffer.append(key)
     logger.info(f"{screen.__class__.__name__}: '{key}'")
