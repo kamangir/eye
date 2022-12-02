@@ -1,11 +1,8 @@
 from blue_sbc.hat.hat import Hat
-from abcli import string
 from abcli import logging
 import logging
 
 logger = logging.getLogger(__name__)
-
-BUTTON = 24
 
 
 class Grove_Hat(Hat):

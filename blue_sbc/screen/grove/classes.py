@@ -7,6 +7,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+BUTTON = 24
+
 
 class Grove_Screen(Screen):
     def __init__(self):
