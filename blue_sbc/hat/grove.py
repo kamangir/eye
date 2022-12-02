@@ -15,7 +15,6 @@ class Grove_Hat(Hat):
         self.button = GroveButton(BUTTON)
         self.button.on_press = grove_button_on_press
         self.button.on_release = grove_button_on_release
-        logger.info(f"grove.button: {self.button.pin}")
 
     def input(self, pin):
         return False
