@@ -1,4 +1,5 @@
 from abcli.modules import host
+from abcli.modules.cookie import cookie
 import abcli.logging
 import logging
 
