@@ -1,5 +1,5 @@
 NAME = "blue_sbc.screen.grove"
 
-from .classes import Grove
+from .classes import Grove_screen
 
-instance = Grove()
+instance = Grove_screen()
