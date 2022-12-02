@@ -22,4 +22,4 @@ hat = (
     else Hat()
 )
 
-logger.info(f"{NAME}: hat: {hat.__class__.__name__}")
+logger.info(f"{NAME}: {hat.__class__.__name__}")
