@@ -17,7 +17,7 @@ elif screen_name == "template":
     from .template import instance as screen
 elif screen_name == "unicorn_16x16":
     from .unicorn_16x16 import instance as screen
-elif cookie.get("hat.type", "else") == "grove":
+elif cookie.get("hat.kind", "else") == "grove":
     from .grove import instance as screen
 elif host.is_headless():
     screen = Screen()

@@ -14,7 +14,7 @@ from .led_switch import *
 
 hat = (
     Grove_Hat()
-    if cookie.get("hat.type", "else") == "grove"
+    if cookie.get("hat.kind", "else") == "grove"
     else RPi_Led_Switch_Hat()
     if host.is_rpi()
     else Jetson_Led_Switch_Hat()
