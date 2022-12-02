@@ -18,7 +18,7 @@ class Grove_screen(Screen):
             self.size,
         )
 
-        super(Grove, self).show(image_, session, header, sidebar)
+        super(Grove_screen, self).show(image_, session, header, sidebar)
 
         # TODO: show image_
 
