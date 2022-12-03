@@ -56,6 +56,8 @@ class Session(object):
 
         self.state = {}
 
+        self.application = None
+
         self.switch_on_time = None
 
         self.timer = {}
@@ -315,16 +317,18 @@ class Session(object):
         ]
 
     @staticmethod
-    def start(thing=None):
+    def start(application=None):
+        self.application = application
+
         success = True
-        logger.info(f"{NAME}: started: {thing.__class__.__name__}.")
+        logger.info(f"{NAME}: started: {application.__class__.__name__}.")
 
         try:
             session = Session()
 
             while session.step():
-                if thing is not None:
-                    thing.step()
+                if application is not None:
+                    application.step()
 
             logger.info(f"{NAME}: stopped.")
         except KeyboardInterrupt:
