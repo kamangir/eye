@@ -13,7 +13,7 @@ class Grove_Hat(Hat):
         return False
 
     def output(self, pin, output):
-        print(f"grove_hat.output({pin})")
+        print(f"grove_hat.output({pin},{output})")
         return self
 
     def release(self):

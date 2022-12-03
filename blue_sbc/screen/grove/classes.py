@@ -58,8 +58,6 @@ class Grove_Screen(Screen):
     def show(self, image, session=None, header=[], sidebar=[]):
         content = " | ".join(header)
 
-        print(content)
-
         self.draw.rectangle(
             (0, 0, self.display.width, self.display.height),
             outline=0,
