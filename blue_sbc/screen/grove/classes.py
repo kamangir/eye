@@ -56,7 +56,7 @@ class Grove_Screen(Screen):
         self.font = ImageFont.load_default()
 
     def show(self, image, session=None, header=[], sidebar=[]):
-        content = " | ".join(header + footer)
+        content = " | ".join(header)
 
         print(content)
 
