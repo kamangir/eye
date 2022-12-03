@@ -318,17 +318,17 @@ class Session(object):
 
     @staticmethod
     def start(application=None):
-        self.application = application
-
         success = True
         logger.info(f"{NAME}: started: {application.__class__.__name__}.")
 
         try:
             session = Session()
 
+            session.application = application
+
             while session.step():
-                if application is not None:
-                    application.step()
+                if session.application is not None:
+                    session.application.step()
 
             logger.info(f"{NAME}: stopped.")
         except KeyboardInterrupt:
