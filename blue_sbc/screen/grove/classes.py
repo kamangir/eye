@@ -56,18 +56,29 @@ class Grove_Screen(Screen):
         self.font = ImageFont.load_default()
 
     def show(self, image, session=None, header=[], sidebar=[]):
+        content = " | ".join(
+            [thing.strip() for thing in header.split("|") + footer.split("|")]
+        )
+
+        print(content)
+
         self.draw.rectangle(
             (0, 0, self.display.width, self.display.height),
             outline=0,
             fill=0,
         )
-        for index in range(min(4, len(header))):
+
+        char_length = 21
+        while content:
+
             self.draw.text(
                 (0, self.top + 8 * index),
-                header[index],
+                content[:char_length],
                 font=self.font,
                 fill=255,
             )
+
+            content = content[char_length:]
 
         self.display.image(self.image)
         self.display.display()
