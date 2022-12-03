@@ -9,8 +9,6 @@ logger = logging.getLogger(__name__)
 
 BUTTON = 24
 
-RST = None  # on the PiOLED this pin isnt used
-
 
 class Grove_Screen(Screen):
     def __init__(self):
