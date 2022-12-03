@@ -91,6 +91,10 @@ def grove_button_on_press(screen, t):
 def grove_button_on_release(screen, t):
     logger.info(f"grove.button: released after {string.pretty_duration(t)}.")
 
+    if t > 60:
+        logger.info("long press, ignored.")
+        return
+
     if t > 10:
         key = "s"
     elif t > 3:
