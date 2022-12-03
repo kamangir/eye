@@ -56,6 +56,8 @@ class Session(object):
 
         self.state = {}
 
+        self.application = None
+
         self.switch_on_time = None
 
         self.timer = {}
@@ -101,6 +103,9 @@ class Session(object):
             return
 
         self.frame += 1
+
+        if self.application is not None:
+            self.application.process_image(self.frame, image)
 
         image = add_signature(
             image,
@@ -155,9 +160,15 @@ class Session(object):
             hat.pulse(hat.incoming_pin)
 
         for message in self.messages:
+
             output = self.process_message(message)
             if output in [True, False]:
                 return output
+
+            if self.application is not None:
+                output = self.application.process_message(message)
+                if output in [True, False]:
+                    return output
 
         return None
 
@@ -201,13 +212,16 @@ class Session(object):
 
     def check_timers(self):
         if self.timer["screen"].tick():
-            screen.show(
-                image=self.frame_image,
-                session=self,
-                header=self.signature(),
-                sidebar=string.pretty_param(self.params),
-            )
-        else:
+            if self.application is None:
+                screen.show(
+                    image=self.frame_image,
+                    session=self,
+                    header=self.signature(),
+                    sidebar=string.pretty_param(self.params),
+                )
+            else:
+                self.application.update_screen(self)
+        elif self.application is None:
             screen.animate()
 
         if self.timer["reboot"].tick("wait"):
@@ -315,15 +329,18 @@ class Session(object):
         ]
 
     @staticmethod
-    def start():
+    def start(application=None):
         success = True
-        logger.info(f"{NAME}: started.")
+        logger.info(f"{NAME}: started: {application.__class__.__name__}.")
 
         try:
             session = Session()
 
+            session.application = application
+
             while session.step():
-                pass
+                if session.application is not None:
+                    session.application.step(session)
 
             logger.info(f"{NAME}: stopped.")
         except KeyboardInterrupt:

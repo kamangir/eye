@@ -1,4 +1,5 @@
 from abcli.modules import host
+from abcli.modules.cookie import cookie
 import abcli.logging
 import logging
 
@@ -11,11 +12,13 @@ from .led_switch import *
 
 
 hat = (
-    RPi_Led_Switch_Hat()
+    Hat()
+    if cookie.get("hat.kind", "else") == "grove"
+    else RPi_Led_Switch_Hat()
     if host.is_rpi()
     else Jetson_Led_Switch_Hat()
     if host.is_jetson()
     else Hat()
 )
 
-logger.info(f"{NAME}: hat: {hat.__class__.__name__}")
+logger.info(f"{NAME}: {hat.__class__.__name__}")
