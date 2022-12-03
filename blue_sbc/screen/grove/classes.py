@@ -28,7 +28,7 @@ class Grove_Screen(Screen):
 
         super(Grove_Screen, self).show(image_, session, header, sidebar)
 
-        # TODO: show image_
+        print(header)
 
         return self
 
