@@ -203,13 +203,16 @@ class Session(object):
 
     def check_timers(self):
         if self.timer["screen"].tick():
-            screen.show(
-                image=self.frame_image,
-                session=self,
-                header=self.signature(),
-                sidebar=string.pretty_param(self.params),
-            )
-        else:
+            if self.application is None:
+                screen.show(
+                    image=self.frame_image,
+                    session=self,
+                    header=self.signature(),
+                    sidebar=string.pretty_param(self.params),
+                )
+            else:
+                self.application.update_screen(self)
+        elif self.application is None:
             screen.animate()
 
         if self.timer["reboot"].tick("wait"):
@@ -328,7 +331,7 @@ class Session(object):
 
             while session.step():
                 if session.application is not None:
-                    session.application.step()
+                    session.application.step(session)
 
             logger.info(f"{NAME}: stopped.")
         except KeyboardInterrupt:
