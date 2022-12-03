@@ -70,7 +70,7 @@ class Grove_Screen(Screen):
             outline=0,
             fill=0,
         )
-        for index in range(4):
+        for index in range(min(4, len(header))):
             self.draw.text(
                 (0, self.top + 8 * index),
                 header[index],
