@@ -56,11 +56,6 @@ class Grove_Screen(Screen):
         self.font = ImageFont.load_default()
 
     def show(self, image, session=None, header=[], sidebar=[]):
-        image_ = cv2.resize(
-            image,
-            self.size,
-        )
-
         super(Grove_Screen, self).show(image_, session, header, sidebar)
 
         print(header)
@@ -78,7 +73,7 @@ class Grove_Screen(Screen):
                 fill=255,
             )
 
-        self.display.image(image)
+        self.display.image(self.image)
         self.display.display()
 
         return self
