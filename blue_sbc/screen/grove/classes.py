@@ -78,6 +78,9 @@ class Grove_Screen(Screen):
                 fill=255,
             )
 
+        self.display.image(image)
+        self.display.display()
+
         return self
 
 
