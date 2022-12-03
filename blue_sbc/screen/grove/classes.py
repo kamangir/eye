@@ -2,12 +2,6 @@ import cv2
 from blue_sbc.screen.classes import Screen
 from grove.grove_button import GroveButton
 from abcli import string
-import Adafruit_GPIO.SPI as SPI
-import Adafruit_SSD1306
-
-from PIL import Image
-from PIL import ImageDraw
-from PIL import ImageFont
 from abcli import logging
 import logging
 
@@ -27,61 +21,6 @@ class Grove_Screen(Screen):
         self.button = GroveButton(BUTTON)
         self.button.on_press = lambda t: grove_button_on_press(self, t)
         self.button.on_release = lambda t: grove_button_on_release(self, t)
-
-        # https://github.com/IcingTomato/Seeed_Python_SSD1315/blob/master/examples/stats.py
-        self.display = Adafruit_SSD1306.SSD1306_128_64(rst=RST)
-
-        self.display.begin()
-        self.display.clear()
-        self.display.display()
-
-        self.image = Image.new(
-            "1",
-            (self.display.width, self.display.height),
-        )
-
-        self.draw = ImageDraw.Draw(self.image)
-
-        # Draw a black filled box to clear the image.
-        self.draw.rectangle(
-            (0, 0, self.display.width, self.display.height),
-            outline=0,
-            fill=0,
-        )
-
-        self.padding = -2
-        self.top = self.padding
-        self.bottom = self.display.height - self.padding
-
-        self.font = ImageFont.load_default()
-
-    def show(self, image, session=None, header=[], sidebar=[]):
-        content = " | ".join(header)
-
-        self.draw.rectangle(
-            (0, 0, self.display.width, self.display.height),
-            outline=0,
-            fill=0,
-        )
-
-        char_length = 21
-        row = 0
-        while content:
-
-            self.draw.text(
-                (0, self.top + 8 * row),
-                content[:char_length],
-                font=self.font,
-                fill=255,
-            )
-
-            content = content[char_length:]
-            row += 1
-
-        self.display.image(self.image)
-        self.display.display()
-
-        return self
 
 
 def grove_button_on_press(screen, t):
