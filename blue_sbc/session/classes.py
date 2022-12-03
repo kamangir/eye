@@ -315,15 +315,16 @@ class Session(object):
         ]
 
     @staticmethod
-    def start():
+    def start(thing=None):
         success = True
-        logger.info(f"{NAME}: started.")
+        logger.info(f"{NAME}: started: {thing.__class__.__name__}.")
 
         try:
             session = Session()
 
             while session.step():
-                pass
+                if thing is not None:
+                    thing.step()
 
             logger.info(f"{NAME}: stopped.")
         except KeyboardInterrupt:
