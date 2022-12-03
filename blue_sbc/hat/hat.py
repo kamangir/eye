@@ -36,7 +36,7 @@ class Hat(object):
         :param pin: pin number
         :return: True / False
         """
-        if pin == -1:
+        if pin < 0:
             return False
 
         if self.kind != "led_switch":
@@ -74,7 +74,7 @@ class Hat(object):
                 self.red_switch_pin,
                 self.trigger_pin,
             ]
-            if pin != -1
+            if pin > 0
         ]
 
     def output(self, pin, output):
@@ -98,7 +98,7 @@ class Hat(object):
                 self.green_led_pin,
                 self.red_led_pin,
             ]
-            if pin != -1
+            if pin > 0
         ]
 
     def pulse(self, pin=None, frequency=None):
