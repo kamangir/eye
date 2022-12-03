@@ -104,6 +104,9 @@ class Session(object):
 
         self.frame += 1
 
+        if self.application is not None:
+            self.application.process_image(self.frame, image)
+
         image = add_signature(
             image,
             [" | ".join(objects.signature(self.frame))],
@@ -157,9 +160,15 @@ class Session(object):
             hat.pulse(hat.incoming_pin)
 
         for message in self.messages:
+
             output = self.process_message(message)
             if output in [True, False]:
                 return output
+
+            if self.application is not None:
+                output = self.application.process_message(message)
+                if output in [True, False]:
+                    return output
 
         return None
 
