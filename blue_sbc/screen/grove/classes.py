@@ -35,23 +35,23 @@ class Grove_Screen(Screen):
         self.display.clear()
         self.display.display()
 
-        self.width = display.width
-        self.height = display.height
-        self.image = Image.new("1", (self.width, self.height))
+        self.image = Image.new(
+            "1",
+            (self.display.width, self.display.height),
+        )
 
         self.draw = ImageDraw.Draw(self.image)
 
         # Draw a black filled box to clear the image.
         self.draw.rectangle(
-            (0, 0, self.width, self.height),
+            (0, 0, self.display.width, self.display.height),
             outline=0,
             fill=0,
         )
 
         self.padding = -2
         self.top = self.padding
-        self.bottom = self.height - self.padding
-        x = 0
+        self.bottom = self.display.height - self.padding
 
         self.font = ImageFont.load_default()
 
@@ -65,11 +65,18 @@ class Grove_Screen(Screen):
 
         print(header)
 
-        draw.rectangle((0, 0, width, height), outline=0, fill=0)
-        draw.text((x, top), header[0], font=font, fill=255)
-        draw.text((x, top + 8), header[1], font=font, fill=255)
-        draw.text((x, top + 16), header[2], font=font, fill=255)
-        draw.text((x, top + 25), header[3], font=font, fill=255)
+        self.draw.rectangle(
+            (0, 0, self.display.width, self.display.height),
+            outline=0,
+            fill=0,
+        )
+        for index in range(4):
+            self.draw.text(
+                (0, self.top + 8 * index),
+                header[index],
+                font=self.font,
+                fill=255,
+            )
 
         return self
 
