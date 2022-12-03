@@ -56,10 +56,6 @@ class Grove_Screen(Screen):
         self.font = ImageFont.load_default()
 
     def show(self, image, session=None, header=[], sidebar=[]):
-        super(Grove_Screen, self).show(image_, session, header, sidebar)
-
-        print(header)
-
         self.draw.rectangle(
             (0, 0, self.display.width, self.display.height),
             outline=0,
