@@ -67,16 +67,18 @@ class Grove_Screen(Screen):
         )
 
         char_length = 21
+        row = 0
         while content:
 
             self.draw.text(
-                (0, self.top + 8 * index),
+                (0, self.top + 8 * row),
                 content[:char_length],
                 font=self.font,
                 fill=255,
             )
 
             content = content[char_length:]
+            row += 1
 
         self.display.image(self.image)
         self.display.display()
