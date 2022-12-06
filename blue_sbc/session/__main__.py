@@ -37,7 +37,7 @@ if args.task == "start":
         except:
             crash_report(f"-{NAME}: importing {args.application}.Application: failed.")
 
-    if success:
+    if success or not args.application:
         logger.info(f"blue-sbc.session.start({application.__class__.__name__})")
 
         success = Session.start(application)
