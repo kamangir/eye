@@ -14,7 +14,7 @@ parser.add_argument(
     help="start",
 )
 parser.add_argument(
-    "application",
+    "--application",
     type=str,
     default="",
 )
