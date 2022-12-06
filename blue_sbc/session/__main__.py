@@ -27,8 +27,11 @@ if args.task == "start":
         try:
             # https://stackoverflow.com/a/13598111/17619982
             module = importlib.import_module(args.application, package=None)
+            logger.info(f"loaded {args.application}: {module}")
 
             application = module.Application()
+            logger.info(f"created an {application}.")
+
             success = True
         except:
             crash_report(f"-{NAME}: importing {args.application}.Application: failed.")
