@@ -24,6 +24,7 @@ success = False
 if args.task == "start":
     application = None
     if args.application:
+        logger.info(f"session.application: {args.application}")
         try:
             # https://stackoverflow.com/a/13598111/17619982
             module = importlib.import_module(args.application, package=None)
