@@ -16,6 +16,7 @@ function blue_sbc() {
         blue_sbc_lepton $@
         blue_sbc_scroll_phat_hd $@
         blue_sbc_session $@
+        blue_sbc_sparkfun_top_phat $@
         blue_sbc_unicorn_16x16 $@
         return
     fi
