@@ -32,7 +32,7 @@ def grove_button_on_release(screen, t):
         logger.info("long press, ignored.")
         return
 
-    if t > 10:
+    if t > 5:
         key = "s"
     elif t > 3:
         key = "u"
