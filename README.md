@@ -9,7 +9,7 @@ To install `blue-sbc`, first install [`abcli`](https://github.com/kamangir/aweso
 
 ```bash
 abcli git clone blue-sbc install
-abcli cookie cp <cookie-name>
+abcli cookie copy <cookie-name>
 abcli init
 abcli session start
 ```
