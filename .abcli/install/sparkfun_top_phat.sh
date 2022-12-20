@@ -13,5 +13,5 @@ function abcli_install_sparkfun_top_phat() {
 }
 
 if [ "$(abcli cookie read hat.kind else)" == "sparkfun-top-phat" ] ; then
-    abcli_install_module sparkfun_qwiic 101
+    abcli_install_module sparkfun_top_phat 104
 fi
