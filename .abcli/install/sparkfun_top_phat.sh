@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-function abcli_install_sparkfun_qwiic() {
+function abcli_install_sparkfun_top_phat() {
     # https://learn.sparkfun.com/tutorials/sparkfun-top-phat-hookup-guide/button-controller
     sudo pip3 install sparkfun-qwiic
 

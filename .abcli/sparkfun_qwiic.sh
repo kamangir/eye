@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
 
-function blue_sbc_sparkfun_qwiic() {
+function blue_sbc_sparkfun_top_phat() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ $task == "help" ] ; then
-        abcli_show_usage "blue_sbc sparkfun_qwiic validate" \
-            "validate sparkfun_qwiic."
+        abcli_show_usage "blue_sbc sparkfun_top_phat validate" \
+            "validate sparkfun_top_phat."
         return
     fi
 
@@ -16,5 +16,5 @@ function blue_sbc_sparkfun_qwiic() {
         return
     fi
 
-    abcli_log_error "-blue-sbc: sparkfun_qwiic: $task: command not found."
+    abcli_log_error "-blue-sbc: sparkfun_top_phat: $task: command not found."
 }
