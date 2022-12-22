@@ -1,5 +1,5 @@
 import cv2
-from blue_sbc.screen.classes import Screen
+from blue_sbc.hat.screen.classes import Screen
 from grove.grove_button import GroveButton
 from abcli import string
 from abcli import logging

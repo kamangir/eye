@@ -1,6 +1,6 @@
 import cv2
 from PIL import Image
-from blue_sbc.screen.classes import Screen
+from blue_sbc.hat.screen.classes import Screen
 
 
 class Adafruit_Rgb_Matrix(Screen):

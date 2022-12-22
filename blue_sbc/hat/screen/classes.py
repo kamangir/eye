@@ -1,13 +1,14 @@
 import copy
 import cv2
 import random
+from blue_sbc.hat.hat import Hat
 from abcli import logging
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-class Screen(object):
+class Screen(Hat):
     def __init__(self):
         self.key_buffer = []
         self.interpolation = cv2.INTER_LINEAR

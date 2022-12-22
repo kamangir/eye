@@ -1,5 +1,5 @@
 import cv2
-from blue_sbc.screen.classes import Screen
+from blue_sbc.hat.screen.classes import Screen
 
 
 class Sparkfun_Top_phat(Screen):

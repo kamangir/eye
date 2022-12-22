@@ -1,15 +1,16 @@
-from blue_sbc.hat.hat import Hat
+from blue_sbc.hat.screen import Screen
+from abcli.modules import host
 from abcli import logging
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-class Led_Switch_Hat(Hat):
-    def __init__(self, is_rpi=True):
+class Led_Switch_Hat(Screen):
+    def __init__(self):
         super(Led_Switch_Hat, self).__init__()
 
-        self.is_rpi = is_rpi
+        self.is_rpi = host.is_rpi()
 
         if self.is_rpi:
             import RPi.GPIO as GPIO
@@ -28,7 +29,7 @@ class Led_Switch_Hat(Hat):
             self.red_led_pin = 7
 
             GPIO.setmode(GPIO.BOARD)  # numbers GPIOs by physical location
-        elif self.kind == "led_switch":
+        else:
             import Jetson.GPIO as GPIO
 
             self.switch_pin = 7
@@ -107,13 +108,3 @@ class Led_Switch_Hat(Hat):
             GPIO.setup(pin, what, pull_up_down=pull_up_down)
 
         return self
-
-
-class Jetson_Led_Switch_Hat(Led_Switch_Hat):
-    def __init__(self):
-        super(Jetson_Led_Switch_Hat, self).__init__(False)
-
-
-class RPi_Led_Switch_Hat(Led_Switch_Hat):
-    def __init__(self):
-        super(RPi_Led_Switch_Hat, self).__init__(True)

@@ -28,7 +28,7 @@ class Hat(object):
 
         self.base_led_frequency = 10
 
-        self.history = {}
+        self.pin_history = {}
 
     def activated(self, pin):
         """
@@ -120,8 +120,8 @@ class Hat(object):
 
             return self
 
-        self.history[pin] = (
-            not bool(self.history.get(pin, False))
+        self.pin_history[pin] = (
+            not bool(self.pin_history.get(pin, False))
             if frequency is None
             else (lambda x: x - math.floor(x))(
                 time.time() * (self.base_led_frequency + frequency)
@@ -129,7 +129,7 @@ class Hat(object):
             >= 0.5
         )
 
-        return self.output(pin, self.history[pin])
+        return self.output(pin, self.pin_history[pin])
 
     def release(self):
         """

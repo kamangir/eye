@@ -1,4 +1,4 @@
-NAME = "blue_sbc.screen.unicorn_16x16"
+NAME = "blue_sbc.hat.unicorn_16x16"
 
 from .classes import Unicorn_16x16
 

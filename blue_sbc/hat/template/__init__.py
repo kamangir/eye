@@ -1,4 +1,4 @@
-NAME = "blue_sbc.screen.template"
+NAME = "blue_sbc.hat.template"
 
 from .classes import Template
 

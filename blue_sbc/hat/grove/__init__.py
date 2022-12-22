@@ -1,4 +1,4 @@
-NAME = "blue_sbc.screen.grove"
+NAME = "blue_sbc.hat.grove"
 
 from .classes import Grove_Screen
 
