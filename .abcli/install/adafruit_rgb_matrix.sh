@@ -10,6 +10,6 @@ function abcli_install_adafruit_rgb_matrix() {
     sudo setcap 'cap_sys_nice=eip' /usr/bin/python3.7
 }
 
-if [ "$(abcli cookie read hat.kind other)" == "adafruit_rgb_matrix" ] ; then
+if [ "$(abcli cookie read hardware.kind other)" == "adafruit_rgb_matrix" ] ; then
     abcli_install_module adafruit_rgb_matrix 106
 fi

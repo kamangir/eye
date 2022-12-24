@@ -15,10 +15,6 @@ function blue_sbc_grove() {
         abcli_show_usage "grove validate oled_128x64$ABCUL[animate|buttons|image|shapes|stats]" \
             "validate grove oled_128x64."
 
-        if [ "$(abcli_keyword_is $2 verbose)" == true ] ; then
-            python3 -m blue_sbc.hat --help
-        fi
-
         return
     fi
 
