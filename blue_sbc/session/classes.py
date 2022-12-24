@@ -136,15 +136,15 @@ class Session(object):
             storage.upload_file(self.frame_filename)
 
     def check_keyboard(self):
-        for key in screen.key_buffer:
+        for key in hardware.key_buffer:
             if key in self.keys:
                 reply_to_bash(self.keys[key])
                 return False
 
-        if " " in screen.key_buffer:
+        if " " in hardware.key_buffer:
             self.capture_requested = True
 
-        screen.key_buffer = []
+        hardware.key_buffer = []
 
         return None
 
@@ -212,7 +212,7 @@ class Session(object):
     def check_timers(self):
         if self.timer["screen"].tick():
             if self.application is None:
-                screen.show(
+                hardware.show(
                     image=self.frame_image,
                     session=self,
                     header=self.signature(),
@@ -221,7 +221,7 @@ class Session(object):
             else:
                 self.application.update_screen(self)
         elif self.application is None:
-            screen.animate()
+            hardware.animate()
 
         if self.timer["reboot"].tick("wait"):
             reply_to_bash("reboot")

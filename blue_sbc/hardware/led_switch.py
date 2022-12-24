@@ -1,4 +1,4 @@
-from blue_sbc.hardware.screen import Screen
+from .basic_hat import Basic_Hat
 from abcli.modules import host
 from abcli import logging
 import logging
@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class Led_Switch_Hat(Screen):
+class Led_Switch_Hat(Basic_Hat):
     def __init__(self):
         super(Led_Switch_Hat, self).__init__()
 

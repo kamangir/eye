@@ -1,6 +1,5 @@
 import cv2
-import time
-from blue_sbc.hardware.screen.classes import Screen
+from .screen import Screen
 from abcli import logging
 import logging
 

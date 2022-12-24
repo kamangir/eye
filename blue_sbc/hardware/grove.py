@@ -1,6 +1,5 @@
 import cv2
-from blue_sbc.hardware.screen.classes import Screen
-from grove.grove_button import GroveButton
+from .screen import Screen
 from abcli import string
 from abcli import logging
 import logging
@@ -10,9 +9,12 @@ logger = logging.getLogger(__name__)
 BUTTON = 24
 
 
-class Grove_Screen(Screen):
+class Grove(Screen):
     def __init__(self):
-        super(Grove_Screen, self).__init__()
+        super(Grove, self).__init__()
+
+        from grove.grove_button import GroveButton
+
         # https://wiki.seeedstudio.com/Grove-OLED_Display_0.96inch/
         self.size = (64, 128)
 

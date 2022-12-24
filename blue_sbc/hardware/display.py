@@ -6,7 +6,7 @@ from abcli.modules import host
 from abcli.modules.cookie import cookie
 from abcli.plugins import graphics
 from . import NAME
-from blue_sbc.hardware.screen.classes import Screen
+from .screen import Screen
 from abcli.logging import crash_report
 import abcli.logging
 import logging

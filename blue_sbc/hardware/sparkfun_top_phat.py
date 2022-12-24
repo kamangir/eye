@@ -1,10 +1,10 @@
 import cv2
-from blue_sbc.hardware.screen.classes import Screen
+from .screen import Screen
 
 
-class Template(Screen):
+class Sparkfun_Top_phat(Screen):
     def __init__(self):
-        super(Template, self).__init__()
+        super(Sparkfun_Top_phat, self).__init__()
         self.size = (7, 17)
         self.animated = True
 
@@ -13,7 +13,7 @@ class Template(Screen):
             self.size,
         )
 
-        super(Template, self).show(image_, session, header, sidebar)
+        super(Sparkfun_Top_phat, self).show(image_, session, header, sidebar)
 
         # TODO: show image_
 

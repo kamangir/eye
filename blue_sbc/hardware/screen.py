@@ -1,7 +1,7 @@
 import copy
 import cv2
 import random
-from blue_sbc.hardware.hardware import Hardware
+from .hardware import Hardware
 from abcli import logging
 import logging
 
@@ -10,7 +10,6 @@ logger = logging.getLogger(__name__)
 
 class Screen(Hardware):
     def __init__(self):
-        self.key_buffer = []
         self.interpolation = cv2.INTER_LINEAR
         self.sign_images = True
         self.size = None
@@ -30,12 +29,6 @@ class Screen(Hardware):
         self.animated = False
         self.show(self.buffer)
         self.animated = True
-
-    def pressed(self, keys):
-        return False
-
-    def release(self):
-        logger.info(f"{self.__class__.__name__}.release()")
 
     def show(self, image, session=None, header=[], sidebar=[]):
         if self.animated:
