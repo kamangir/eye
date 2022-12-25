@@ -26,6 +26,9 @@ class Display(Prototype_Hat):
 
         self.created = False
 
+        self.sign_images = True
+        self.interpolation = cv2.INTER_LINEAR
+
     def create(self):
         if self.created:
             return

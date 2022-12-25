@@ -12,7 +12,6 @@ class Hardware(object):
 
         self.key_buffer = []
         self.animated = False
-        self.sign_images = True
 
     def animate(self):
         if self.buffer is None:
