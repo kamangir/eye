@@ -12,6 +12,7 @@ class Hardware(object):
 
         self.key_buffer = []
         self.animated = False
+        self.sign_images = True
 
     def animate(self):
         if self.buffer is None:
@@ -30,6 +31,13 @@ class Hardware(object):
 
     def clock(self):
         return self
+
+    def pressed(self, keys):
+        output = bool([key for key in keys if key in self.key_buffer])
+
+        self.key_buffer = [key for key in self.key_buffer if key not in keys]
+
+        return output
 
     def pulse(self, pin=None, frequency=None):
         """

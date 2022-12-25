@@ -49,7 +49,7 @@ elif args.task == "capture_video":
         resolution=(728, 600),
     )
 elif args.task == "preview":
-    screen.sign_images = False
+    hardware.sign_images = False
     try:
         instance.open(
             log=True,
@@ -62,7 +62,7 @@ elif args.task == "preview":
                 log=False,
                 open_before=False,
             )
-            screen.show(image)
+            hardware.update_screen(image, None, [], [])
 
         success = True
 

@@ -12,7 +12,6 @@ class Screen(Hardware):
     def __init__(self):
         super().__init__()
         self.interpolation = cv2.INTER_LINEAR
-        self.sign_images = True
         self.size = None
 
         self.buffer = None
