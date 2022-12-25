@@ -25,7 +25,7 @@ success = False
 if args.task == "start":
     application = None
     if args.application:
-        logger.info(f"blue-sbc-{VERSION}: session.application: {args.application}")
+        logger.info(f"session.application: {args.application}")
         try:
             # https://stackoverflow.com/a/13598111/17619982
             module = importlib.import_module(args.application, package=None)
@@ -39,7 +39,9 @@ if args.task == "start":
             crash_report(f"-{NAME}: importing {args.application}.Application: failed.")
 
     if success or not args.application:
-        logger.info(f"blue-sbc.session.start({application.__class__.__name__})")
+        logger.info(
+            f"blue-sbc-{VERSION}.session.start({application.__class__.__name__})"
+        )
 
         success = Session.start(application)
 else:
