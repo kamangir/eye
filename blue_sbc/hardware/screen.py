@@ -14,23 +14,10 @@ class Screen(Hardware):
         self.sign_images = True
         self.size = None
 
-        self.animated = False
         self.buffer = None
 
-    def animate(self):
-        if self.buffer is None:
-            return self
-
-        y = random.randint(0, self.buffer.shape[0] - 1)
-        x = random.randint(0, self.buffer.shape[1] - 1)
-
-        self.buffer[y, x] = 255 - self.buffer[y, x]
-
-        self.animated = False
-        self.show(self.buffer)
-        self.animated = True
-
-    def show(self, image, session=None, header=[], sidebar=[]):
+    def update_screen(self, image, session, header, sidebar):
         if self.animated:
             self.buffer = copy.deepcopy(image)
-        return self
+
+        return super().update_screen(image, session, header, sidebar)

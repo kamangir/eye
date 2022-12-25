@@ -76,8 +76,27 @@ class Display(Prototype_Hat):
 
         return filename if file.save_image(filename, self.canvas) else ""
 
-    def show(self, image, session=None, header=[], sidebar=[]):
-        super(Display, self).show(image, session, header, sidebar)
+    def update_gui(self):
+        try:
+            if len(self.canvas.shape) == 2:
+                self.canvas = np.stack(3 * [self.canvas], axis=2)
+
+            cv2.imshow(
+                self.title,
+                cv2.cvtColor(
+                    cv2.resize(
+                        self.canvas,
+                        dsize=self.canvas_size,
+                        interpolation=self.interpolation,
+                    ),
+                    cv2.COLOR_BGR2RGB,
+                ),
+            )
+        except:
+            crash_report(f"{NAME}.update_gui() failed.")
+
+    def update_screen(self, image, session, header, sidebar):
+        super().update_screen(image, session, header, sidebar)
 
         self.notifications = self.notifications[-5:]
 
@@ -103,26 +122,7 @@ class Display(Prototype_Hat):
         key = cv2.waitKey(1)
         if key not in [-1, 255]:
             key = chr(key).lower()
-            logger.info(f"{NAME}.show(): key: '{key}'")
+            logger.info(f"{NAME}.update_screen(): key: '{key}'")
             self.key_buffer.append(key)
 
         return self
-
-    def update_gui(self):
-        try:
-            if len(self.canvas.shape) == 2:
-                self.canvas = np.stack(3 * [self.canvas], axis=2)
-
-            cv2.imshow(
-                self.title,
-                cv2.cvtColor(
-                    cv2.resize(
-                        self.canvas,
-                        dsize=self.canvas_size,
-                        interpolation=self.interpolation,
-                    ),
-                    cv2.COLOR_BGR2RGB,
-                ),
-            )
-        except:
-            crash_report(f"{NAME}.update_gui() failed.")

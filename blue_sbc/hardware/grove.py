@@ -59,8 +59,10 @@ class Grove(Screen):
         self.line_count = 8
         self.line_length = 21
 
-    def show(self, image, session=None, header=[], sidebar=[]):
-        content = (" | ".join(session.signature())).split(" | ")
+    def update_screen(self, image, session, header, sidebar):
+        super().update_screen(self, image, session, header, sidebar)
+
+        signature = (" | ".join(session.signature())).split(" | ")
 
         self.draw.rectangle(
             (0, 0, self.display.width, self.display.height),
@@ -68,10 +70,10 @@ class Grove(Screen):
             fill=0,
         )
 
-        for row in range(self.line_count):
+        for row in range(min(len(signature), self.line_count)):
             self.draw.text(
                 (0, self.top + 8 * row),
-                content[row],
+                signature[row],
                 font=self.font,
                 fill=255,
             )

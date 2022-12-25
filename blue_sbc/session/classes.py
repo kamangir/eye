@@ -28,7 +28,7 @@ class Session(object):
     def __init__(self):
         super(Session, self).__init__()
 
-        self.keys = {
+        self.bash_keys = {
             "e": "exit",
             "r": "reboot",
             "s": "shutdown",
@@ -56,8 +56,6 @@ class Session(object):
         self.state = {}
 
         self.application = None
-
-        self.switch_on_time = None
 
         self.timer = {}
         for name, period in {
@@ -137,8 +135,8 @@ class Session(object):
 
     def check_keys(self):
         for key in hardware.key_buffer:
-            if key in self.keys:
-                reply_to_bash(self.keys[key])
+            if key in self.bash_keys:
+                reply_to_bash(self.bash_keys[key])
                 return False
 
         if " " in hardware.key_buffer:
@@ -190,25 +188,6 @@ class Session(object):
         reply_to_bash("seed", [seed_filename])
         return False
 
-    def check_switch(self):
-        if hardware.activated(hardware.switch_pin):
-            if self.switch_on_time is None:
-                self.switch_on_time = time.time()
-                logger.info("{NAME}: switch_on_time was set.")
-        else:
-            self.switch_on_time = None
-
-        if self.switch_on_time is not None:
-            hardware.pulse("outputs")
-
-            if time.time() - self.switch_on_time > 10:
-                reply_to_bash("shutdown")
-                return False
-            else:
-                return True
-
-        return None
-
     def check_timers(self):
         if self.timer["screen"].tick():
             if self.application is None:
@@ -220,7 +199,7 @@ class Session(object):
                 )
             else:
                 self.application.update_screen(self)
-        elif self.application is None:
+        elif hardware.animated:
             hardware.animate()
 
         if self.timer["reboot"].tick("wait"):
@@ -296,20 +275,7 @@ class Session(object):
                 (["*"] if self.new_frame else [])
                 + (["^"] if self.auto_upload else [])
                 + ([f">{self.outbound_queue}"] if self.outbound_queue else [])
-                + [f"hardware:{hardware.kind}"]
-                + (
-                    [
-                        "switch:{}".format(
-                            string.pretty_duration(
-                                time.time() - self.switch_on_time,
-                                largest=True,
-                                short=True,
-                            )
-                        )
-                    ]
-                    if self.switch_on_time is not None
-                    else []
-                )
+                + hardware.signature()
                 + [
                     "diff: {:.03f} - {}".format(
                         self.diff.last_diff,
@@ -380,7 +346,6 @@ class Session(object):
                 "keys" in steps,
                 "messages" in steps,
                 "timers" in steps,
-                "switch" in steps,
                 "seed" in steps,
                 "imager" in steps,
             ],
@@ -388,7 +353,6 @@ class Session(object):
                 self.check_keys,
                 self.check_messages,
                 self.check_timers,
-                self.check_switch,
                 self.check_seed,
                 self.check_imager,
             ],
@@ -398,5 +362,7 @@ class Session(object):
             output = step_()
             if output in [False, True]:
                 return output
+
+            hardware.clock()
 
         return True

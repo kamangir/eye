@@ -1,5 +1,8 @@
 from blue_sbc.hardware.hat.abstract import Abstract_Hat
 from abcli.modules import host
+from abcli import string
+import time
+from . import NAME
 from abcli import logging
 import logging
 
@@ -49,6 +52,26 @@ class Prototype_Hat(Abstract_Hat):
         for pin in self.output_pins:
             self.setup(pin, "output")
             self.output(pin, False)
+
+        self.switch_on_time = None
+
+    def clock(self):
+        super().clock()
+
+        if self.activated(self.switch_pin):
+            if self.switch_on_time is None:
+                self.switch_on_time = time.time()
+                logger.info(f"{NAME}: switch_on_time was set.")
+        else:
+            self.switch_on_time = None
+
+        if self.switch_on_time is not None:
+            self.pulse("outputs")
+
+            if time.time() - self.switch_on_time > 10:
+                self.key_buffer += ["s"]
+
+        return self
 
     def input(self, pin):
         if pin == -1:
@@ -108,3 +131,18 @@ class Prototype_Hat(Abstract_Hat):
             GPIO.setup(pin, what, pull_up_down=pull_up_down)
 
         return self
+
+    def signature(self):
+        return super().signature() + (
+            [
+                "switch:{}".format(
+                    string.pretty_duration(
+                        time.time() - self.switch_on_time,
+                        largest=True,
+                        short=True,
+                    )
+                )
+            ]
+            if self.switch_on_time is not None
+            else []
+        )

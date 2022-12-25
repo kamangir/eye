@@ -8,13 +8,11 @@ class Sparkfun_Top_phat(Screen):
         self.size = (7, 17)
         self.animated = True
 
-    def show(self, image, session=None, header=[], sidebar=[]):
-        image_ = cv2.resize(
-            self.size,
-        )
+    def show(self, image, session, header, sidebar):
+        image = cv2.resize(self.size)
 
-        super(Sparkfun_Top_phat, self).show(image_, session, header, sidebar)
+        super().show(image, session, header, sidebar)
 
-        # TODO: show image_
+        # TODO: show image
 
         return self
