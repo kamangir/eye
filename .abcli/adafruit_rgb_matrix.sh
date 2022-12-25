@@ -13,6 +13,7 @@ function blue_sbc_adafruit_rgb_matrix() {
         pushd $abcli_path_git/Raspberry-Pi-Installer-Scripts/rpi-rgb-led-matrix/examples-api-use > /dev/null
         sudo ./demo -D0
         popd > /dev/null
+        return
     fi
 
     abcli_log_error "-blue-sbc: adafruit_rgb_matrix: $task: command not found."
