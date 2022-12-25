@@ -9,6 +9,8 @@ logger = logging.getLogger(__name__)
 
 class Abstract_Hat(Hardware):
     def __init__(self):
+        super().__init__()
+
         self.switch_pin = -1
 
         self.green_switch_pin = -1

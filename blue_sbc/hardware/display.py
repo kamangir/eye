@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class Display(Prototype_Hat):
     def __init__(self):
-        super(Display, self).__init__()
+        super().__init__()
 
         self.canvas = None
         self.notifications = []

@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 class Prototype_Hat(Abstract_Hat):
     def __init__(self):
-        super(Prototype_Hat, self).__init__()
+        super().__init__()
 
         self.switch_on_time = None
 
