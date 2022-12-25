@@ -135,7 +135,7 @@ class Session(object):
         elif self.auto_upload:
             storage.upload_file(self.frame_filename)
 
-    def check_keyboard(self):
+    def check_keys(self):
         for key in hardware.key_buffer:
             if key in self.keys:
                 reply_to_bash(self.keys[key])
@@ -369,7 +369,7 @@ class Session(object):
             bool: success.
         """
         if steps == "all":
-            steps = "imager,keyboard,messages,seed,switch,timers".split(",")
+            steps = "imager,keys,messages,seed,switch,timers".split(",")
 
         self.params["iteration"] += 1
 
@@ -377,7 +377,7 @@ class Session(object):
 
         for enabled, step_ in zip(
             [
-                "keyboard" in steps,
+                "keys" in steps,
                 "messages" in steps,
                 "timers" in steps,
                 "switch" in steps,
@@ -385,7 +385,7 @@ class Session(object):
                 "imager" in steps,
             ],
             [
-                self.check_keyboard,
+                self.check_keys,
                 self.check_messages,
                 self.check_timers,
                 self.check_switch,
