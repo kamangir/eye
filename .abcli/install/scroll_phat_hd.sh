@@ -9,6 +9,6 @@ function abcli_install_scroll_phat_hd() {
     sudo apt-get install python3-scrollphathd
 }
 
-if [ "$(abcli cookie read session.screen display)" == "scroll_phat_hd" ] ; then
+if [ "$(abcli cookie read hardware.kind other)" == "scroll_phat_hd" ] ; then
     abcli_install_module scroll_phat_hd 102
 fi

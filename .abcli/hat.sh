@@ -13,20 +13,20 @@ function blue_sbc_hat() {
 
 
         if [ "$(abcli_keyword_is $2 verbose)" == true ] ; then
-            python3 -m blue_sbc.hat --help
+            python3 -m blue_sbc.hardware.hat --help
         fi
         return
     fi
 
     if [ "$task" == "input" ] ; then
-        python3 -m blue_sbc.hat \
+        python3 -m blue_sbc.hardware.hat \
             input \
             ${@:2}
         return
     fi
 
     if [ "$task" == "output" ] ; then
-        python3 -m blue_sbc.hat \
+        python3 -m blue_sbc.hardware.hat \
             output \
             --outputs "$2" \
             ${@:3}
@@ -34,7 +34,7 @@ function blue_sbc_hat() {
     fi
 
     if [ "$task" == "validate" ] ; then
-        python3 -m blue_sbc.hat \
+        python3 -m blue_sbc.hardware.hat \
             validate \
             ${@:2}
         return

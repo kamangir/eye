@@ -1,7 +1,7 @@
 import argparse
 import time
 from . import *
-from . import instance as hat
+from .prototype import Prototype_Hat
 from abcli import string
 from abcli import logging
 import logging
@@ -23,6 +23,8 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
+hardware = Prototype_Hat()
+
 success = False
 if args.task == "input":
     logger.info("loop started (Ctrl+C to stop)")
@@ -31,20 +33,20 @@ if args.task == "input":
         while True:
             logger.info(
                 "inputs: {}".format(
-                    ", ".join([str(hat.input(pin)) for pin in hat.input_pins])
+                    ", ".join([str(hardware.input(pin)) for pin in hardware.input_pins])
                 )
             )
             time.sleep(0.1)
     except KeyboardInterrupt:
         logger.info("Ctrl+C, stopping.")
     finally:
-        hat.release()
+        hardware.release()
     success = True
 elif args.task == "output":
-    outputs = args.outputs + len(hat.output_pins) * "1"
-    for index, pin in enumerate(hat.output_pins):
-        hat.output(pin, outputs[index] == "1")
-    hat.release()
+    outputs = args.outputs + len(hardware.output_pins) * "1"
+    for index, pin in enumerate(hardware.output_pins):
+        hardware.output(pin, outputs[index] == "1")
+    hardware.release()
     success = True
 elif args.task == "validate":
     logger.info("loop started (Ctrl+C to stop)")
@@ -54,14 +56,14 @@ elif args.task == "validate":
             activity = False
             for pin, pin_name in zip(
                 [
-                    hat.green_switch_pin,
-                    hat.red_switch_pin,
-                    hat.switch_pin,
-                    hat.trigger_pin,
+                    hardware.green_switch_pin,
+                    hardware.red_switch_pin,
+                    hardware.switch_pin,
+                    hardware.trigger_pin,
                 ],
                 "green_switch_pin,red_switch_pin,switch_pin,trigger_pin".split(","),
             ):
-                if hat.activated(pin):
+                if hardware.activated(pin):
                     logger.info(
                         "{}: {} activated.".format(
                             string.timestamp(ms=True),
@@ -70,15 +72,15 @@ elif args.task == "validate":
                     )
                     activity = True
 
-            for pin in hat.output_pins:
-                hat.output(pin, activity or value)
+            for pin in hardware.output_pins:
+                hardware.output(pin, activity or value)
             time.sleep(0.1)
 
             value = not value
     except KeyboardInterrupt:
         logger.info("Ctrl+C, stopping.")
     finally:
-        hat.release()
+        hardware.release()
     success = True
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")

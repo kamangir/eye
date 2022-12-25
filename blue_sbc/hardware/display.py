@@ -1,14 +1,12 @@
 import cv2
 import numpy as np
-import os
 from abcli import file
 from abcli import fullname
 from abcli.modules import host
-from abcli.modules import objects
 from abcli.modules.cookie import cookie
 from abcli.plugins import graphics
 from . import NAME
-from blue_sbc.screen.classes import Screen
+from .hat.prototype import Prototype_Hat
 from abcli.logging import crash_report
 import abcli.logging
 import logging
@@ -16,9 +14,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class Display(Screen):
+class Display(Prototype_Hat):
     def __init__(self):
-        super(Display, self).__init__()
+        super().__init__()
 
         self.canvas = None
         self.notifications = []
@@ -27,6 +25,9 @@ class Display(Screen):
         self.title = fullname()
 
         self.created = False
+
+        self.sign_images = True
+        self.interpolation = cv2.INTER_LINEAR
 
     def create(self):
         if self.created:
@@ -54,13 +55,6 @@ class Display(Screen):
                 self.canvas_size[1],
             )
 
-    def pressed(self, keys):
-        output = bool([key for key in keys if key in self.key_buffer])
-
-        self.key_buffer = [key for key in self.key_buffer if key not in keys]
-
-        return output
-
     def save(self, filename=""):
         """save self.
 
@@ -78,8 +72,27 @@ class Display(Screen):
 
         return filename if file.save_image(filename, self.canvas) else ""
 
-    def show(self, image, session=None, header=[], sidebar=[]):
-        super(Display, self).show(image, session, header, sidebar)
+    def update_gui(self):
+        try:
+            if len(self.canvas.shape) == 2:
+                self.canvas = np.stack(3 * [self.canvas], axis=2)
+
+            cv2.imshow(
+                self.title,
+                cv2.cvtColor(
+                    cv2.resize(
+                        self.canvas,
+                        dsize=self.canvas_size,
+                        interpolation=self.interpolation,
+                    ),
+                    cv2.COLOR_BGR2RGB,
+                ),
+            )
+        except:
+            crash_report(f"{NAME}.update_gui() failed.")
+
+    def update_screen(self, image, session, header, sidebar):
+        super().update_screen(image, session, header, sidebar)
 
         self.notifications = self.notifications[-5:]
 
@@ -105,26 +118,7 @@ class Display(Screen):
         key = cv2.waitKey(1)
         if key not in [-1, 255]:
             key = chr(key).lower()
-            logger.info(f"{NAME}.show(): key: '{key}'")
+            logger.info(f"{NAME}.update_screen(): key: '{key}'")
             self.key_buffer.append(key)
 
         return self
-
-    def update_gui(self):
-        try:
-            if len(self.canvas.shape) == 2:
-                self.canvas = np.stack(3 * [self.canvas], axis=2)
-
-            cv2.imshow(
-                self.title,
-                cv2.cvtColor(
-                    cv2.resize(
-                        self.canvas,
-                        dsize=self.canvas_size,
-                        interpolation=self.interpolation,
-                    ),
-                    cv2.COLOR_BGR2RGB,
-                ),
-            )
-        except:
-            crash_report(f"{NAME}.update_gui() failed.")

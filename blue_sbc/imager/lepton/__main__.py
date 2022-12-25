@@ -1,5 +1,5 @@
 import argparse
-from blue_sbc.screen.display import instance as display
+from blue_sbc.hardware import hardware
 from . import *
 from abcli import logging
 import logging
@@ -31,11 +31,11 @@ if args.task == "capture":
         filename=os.path.join(args.output_path, "camera.jpg"),
     )
 elif args.task == "preview":
-    display.sign_images = False
+    hardware.sign_images = False
     try:
-        while not display.pressed("qe"):
+        while not hardware.pressed("qe"):
             _, image = instance.capture()
-            display.show(image)
+            hardware.update_screen(image)
 
         success = True
     finally:

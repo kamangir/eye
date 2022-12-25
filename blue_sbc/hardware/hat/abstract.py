@@ -1,16 +1,15 @@
 import math
 import time
-from abcli.modules.cookie import cookie
+from blue_sbc.hardware.hardware import Hardware
 from abcli import logging
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-class Hat(object):
+class Abstract_Hat(Hardware):
     def __init__(self):
-        self.kind = cookie.get("hat.kind", "led_switch")
-        logger.info(f"{self.__class__.__name__}.init({self.kind}).")
+        super().__init__()
 
         self.switch_pin = -1
 
@@ -26,9 +25,7 @@ class Hat(object):
         self.green_led_pin = -1
         self.red_led_pin = -1
 
-        self.base_led_frequency = 10
-
-        self.history = {}
+        self.pin_history = {}
 
     def activated(self, pin):
         """
@@ -36,22 +33,7 @@ class Hat(object):
         :param pin: pin number
         :return: True / False
         """
-        if pin == -1:
-            return False
-
-        if self.kind != "led_switch":
-            return False
-
-        if pin in [
-            self.switch_pin,
-            self.green_switch_pin,
-            self.red_switch_pin,
-        ]:
-            return self.input(pin) == False
-
-        if pin in [
-            self.trigger_pin,
-        ]:
+        if pin in self.input_pins:
             return self.input(pin) == False
 
         return False
@@ -79,7 +61,7 @@ class Hat(object):
 
     def output(self, pin, output):
         """
-        set pin to ouput
+        set pin to output
         :param pin: pin number
         :param output: True / False
         :return: self
@@ -103,11 +85,22 @@ class Hat(object):
 
     def pulse(self, pin=None, frequency=None):
         """
-        pulse pin
-        :param pin: pin number / "outputs"
+        pulse pin.
+        :param pin: pin number / "data" / "incoming" / "loop" / "outputs"
         :param frequency: frequency
         :return: self
         """
+        super().pulse(pin, frequency)
+
+        if pin == "data":
+            pin = self.data_pin
+
+        if pin == "incoming":
+            pin = self.incoming_pin
+
+        if pin == "loop":
+            pin = self.looper_pin
+
         if pin == "outputs":
             for index, pin in enumerate(self.output_pins):
                 self.pulse(pin, index)
@@ -120,16 +113,13 @@ class Hat(object):
 
             return self
 
-        self.history[pin] = (
-            not bool(self.history.get(pin, False))
+        self.pin_history[pin] = (
+            not bool(self.pin_history.get(pin, False))
             if frequency is None
-            else (lambda x: x - math.floor(x))(
-                time.time() * (self.base_led_frequency + frequency)
-            )
-            >= 0.5
+            else (lambda x: x - math.floor(x))(time.time() * (10 + frequency)) >= 0.5
         )
 
-        return self.output(pin, self.history[pin])
+        return self.output(pin, self.pin_history[pin])
 
     def release(self):
         """

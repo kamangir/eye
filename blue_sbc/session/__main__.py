@@ -1,6 +1,7 @@
 import argparse
 from . import *
 import importlib
+from blue_sbc import VERSION
 from abcli.logging import crash_report
 from abcli import logging
 import logging
@@ -38,7 +39,9 @@ if args.task == "start":
             crash_report(f"-{NAME}: importing {args.application}.Application: failed.")
 
     if success or not args.application:
-        logger.info(f"blue-sbc.session.start({application.__class__.__name__})")
+        logger.info(
+            f"blue-sbc-{VERSION}.session.start({application.__class__.__name__})"
+        )
 
         success = Session.start(application)
 else:

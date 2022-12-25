@@ -1,6 +1,6 @@
 import cv2
 import time
-from blue_sbc.screen.classes import Screen
+from .screen import Screen
 
 
 class Scroll_Phat_HD(Screen):
@@ -9,24 +9,24 @@ class Scroll_Phat_HD(Screen):
         self.size = (7, 17)
         self.animated = True
 
-    def show(self, image, session=None, header=[], sidebar=[]):
+    def update_screen(self, image, session, header, sidebar):
         import scrollphathd
 
-        image_ = cv2.resize(
+        image = cv2.resize(
             image,
             self.size,
         )
 
-        super(Scroll_Phat_HD, self).show(image_, session, header, sidebar)
+        super().update_screen(image, session, header, sidebar)
 
-        image_ = cv2.cvtColor(
-            image_,
+        image = cv2.cvtColor(
+            image,
             cv2.COLOR_BGR2GRAY,
         )
 
         for y in range(0, 17):
             for x in range(0, 7):
-                scrollphathd.set_pixel(y, x, image_[y, x] / 255.0)
+                scrollphathd.set_pixel(y, x, image[y, x] / 255.0)
 
         time.sleep(0.01)
         scrollphathd.show()

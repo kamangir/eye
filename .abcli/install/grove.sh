@@ -24,6 +24,6 @@ function abcli_install_grove() {
     popd > /dev/null
 }
 
-if [ "$(abcli cookie read hat.kind else)" == "grove" ] ; then
+if [ "$(abcli cookie read hardware.kind other)" == "grove" ] ; then
     abcli_install_module grove 106
 fi

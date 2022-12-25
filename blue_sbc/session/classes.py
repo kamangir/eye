@@ -15,8 +15,7 @@ from . import NAME
 from .functions import reply_to_bash
 from blue_sbc import VERSION as blue_sbc_VERSION
 from blue_sbc.algo.diff import Diff
-from blue_sbc.hat import hat
-from blue_sbc.screen import screen
+from blue_sbc.hardware import hardware
 from blue_sbc.imager import imager
 from abcli.logging import crash_report
 from abcli import logging
@@ -29,7 +28,7 @@ class Session(object):
     def __init__(self):
         super(Session, self).__init__()
 
-        self.keys = {
+        self.bash_keys = {
             "e": "exit",
             "r": "reboot",
             "s": "shutdown",
@@ -57,8 +56,6 @@ class Session(object):
         self.state = {}
 
         self.application = None
-
-        self.switch_on_time = None
 
         self.timer = {}
         for name, period in {
@@ -97,7 +94,7 @@ class Session(object):
         if not success:
             return
 
-        hat.pulse(hat.data_pin)
+        hardware.pulse("data")
 
         if self.diff.same(image):
             return
@@ -136,16 +133,16 @@ class Session(object):
         elif self.auto_upload:
             storage.upload_file(self.frame_filename)
 
-    def check_keyboard(self):
-        for key in screen.key_buffer:
-            if key in self.keys:
-                reply_to_bash(self.keys[key])
+    def check_keys(self):
+        for key in hardware.key_buffer:
+            if key in self.bash_keys:
+                reply_to_bash(self.bash_keys[key])
                 return False
 
-        if " " in screen.key_buffer:
+        if " " in hardware.key_buffer:
             self.capture_requested = True
 
-        screen.key_buffer = []
+        hardware.key_buffer = []
 
         return None
 
@@ -157,7 +154,7 @@ class Session(object):
 
         _, self.messages = messenger.request()
         if self.messages:
-            hat.pulse(hat.incoming_pin)
+            hardware.pulse("incoming")
 
         for message in self.messages:
 
@@ -181,7 +178,7 @@ class Session(object):
         if not success:
             return None
 
-        hat.pulse("outputs")
+        hardware.pulse("outputs")
 
         seed_version = content.get("version", "")
         if seed_version <= abcli_VERSION:
@@ -191,29 +188,10 @@ class Session(object):
         reply_to_bash("seed", [seed_filename])
         return False
 
-    def check_switch(self):
-        if hat.activated(hat.switch_pin):
-            if self.switch_on_time is None:
-                self.switch_on_time = time.time()
-                logger.info("{NAME}: switch_on_time was set.")
-        else:
-            self.switch_on_time = None
-
-        if self.switch_on_time is not None:
-            hat.pulse("outputs")
-
-            if time.time() - self.switch_on_time > 10:
-                reply_to_bash("shutdown")
-                return False
-            else:
-                return True
-
-        return None
-
     def check_timers(self):
         if self.timer["screen"].tick():
             if self.application is None:
-                screen.show(
+                hardware.update_screen(
                     image=self.frame_image,
                     session=self,
                     header=self.signature(),
@@ -221,8 +199,8 @@ class Session(object):
                 )
             else:
                 self.application.update_screen(self)
-        elif self.application is None:
-            screen.animate()
+        elif hardware.animated:
+            hardware.animate()
 
         if self.timer["reboot"].tick("wait"):
             reply_to_bash("reboot")
@@ -234,8 +212,7 @@ class Session(object):
         return None
 
     def close(self):
-        hat.release()
-        screen.release()
+        hardware.release()
 
     def process_message(self, message):
         if (
@@ -298,20 +275,7 @@ class Session(object):
                 (["*"] if self.new_frame else [])
                 + (["^"] if self.auto_upload else [])
                 + ([f">{self.outbound_queue}"] if self.outbound_queue else [])
-                + ([f"hat:{hat.kind}"] if hat.kind else [])
-                + (
-                    [
-                        "switch:{}".format(
-                            string.pretty_duration(
-                                time.time() - self.switch_on_time,
-                                largest=True,
-                                short=True,
-                            )
-                        )
-                    ]
-                    if self.switch_on_time is not None
-                    else []
-                )
+                + hardware.signature()
                 + [
                     "diff: {:.03f} - {}".format(
                         self.diff.last_diff,
@@ -371,26 +335,24 @@ class Session(object):
             bool: success.
         """
         if steps == "all":
-            steps = "imager,keyboard,messages,seed,switch,timers".split(",")
+            steps = "imager,keys,messages,seed,switch,timers".split(",")
 
         self.params["iteration"] += 1
 
-        hat.pulse(hat.looper_pin, 0)
+        hardware.pulse("loop", 0)
 
         for enabled, step_ in zip(
             [
-                "keyboard" in steps,
+                "keys" in steps,
                 "messages" in steps,
                 "timers" in steps,
-                "switch" in steps,
                 "seed" in steps,
                 "imager" in steps,
             ],
             [
-                self.check_keyboard,
+                self.check_keys,
                 self.check_messages,
                 self.check_timers,
-                self.check_switch,
                 self.check_seed,
                 self.check_imager,
             ],
@@ -400,5 +362,7 @@ class Session(object):
             output = step_()
             if output in [False, True]:
                 return output
+
+            hardware.clock()
 
         return True

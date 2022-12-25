@@ -1,15 +1,22 @@
-from blue_sbc.hat.hat import Hat
+from blue_sbc.hardware.hat.abstract import Abstract_Hat
+from abcli.modules import host
+from abcli import string
+import time
+from . import NAME
 from abcli import logging
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-class Led_Switch_Hat(Hat):
-    def __init__(self, is_rpi=True):
-        super(Led_Switch_Hat, self).__init__()
+class Prototype_Hat(Abstract_Hat):
+    def __init__(self):
+        super().__init__()
 
-        self.is_rpi = is_rpi
+        self.switch_on_time = None
+
+        self.is_jetson = host.is_jetson()
+        self.is_rpi = host.is_rpi()
 
         if self.is_rpi:
             import RPi.GPIO as GPIO
@@ -28,7 +35,8 @@ class Led_Switch_Hat(Hat):
             self.red_led_pin = 7
 
             GPIO.setmode(GPIO.BOARD)  # numbers GPIOs by physical location
-        elif self.kind == "led_switch":
+
+        if self.is_jetson:
             import Jetson.GPIO as GPIO
 
             self.switch_pin = 7
@@ -49,14 +57,34 @@ class Led_Switch_Hat(Hat):
             self.setup(pin, "output")
             self.output(pin, False)
 
+    def clock(self):
+        super().clock()
+
+        if self.activated(self.switch_pin):
+            if self.switch_on_time is None:
+                self.switch_on_time = time.time()
+                logger.info(f"{NAME}: switch_on_time was set.")
+        else:
+            self.switch_on_time = None
+
+        if self.switch_on_time is not None:
+            self.pulse("outputs")
+
+            if time.time() - self.switch_on_time > 10:
+                self.key_buffer += ["s"]
+
+        return self
+
     def input(self, pin):
         if pin == -1:
             return True
 
         if self.is_rpi:
             import RPi.GPIO as GPIO
-        else:
+        elif self.is_jetson:
             import Jetson.GPIO as GPIO
+        else:
+            return False
 
         return GPIO.input(pin) == GPIO.HIGH
 
@@ -66,8 +94,10 @@ class Led_Switch_Hat(Hat):
 
         if self.is_rpi:
             import RPi.GPIO as GPIO
-        else:
+        elif self.is_jetson:
             import Jetson.GPIO as GPIO
+        else:
+            return self
 
         GPIO.output(pin, GPIO.HIGH if output else GPIO.LOW)
         return self
@@ -75,8 +105,11 @@ class Led_Switch_Hat(Hat):
     def release(self):
         if self.is_rpi:
             import RPi.GPIO as GPIO
-        else:
+        elif self.is_jetson:
             import Jetson.GPIO as GPIO
+        else:
+            return self
+
         logger.info(f"{self.__class__.__name__}.release()")
 
         GPIO.cleanup()
@@ -89,8 +122,10 @@ class Led_Switch_Hat(Hat):
 
         if self.is_rpi:
             import RPi.GPIO as GPIO
-        else:
+        elif self.is_jetson:
             import Jetson.GPIO as GPIO
+        else:
+            return self
 
         if what == "output":
             what = GPIO.OUT
@@ -108,12 +143,17 @@ class Led_Switch_Hat(Hat):
 
         return self
 
-
-class Jetson_Led_Switch_Hat(Led_Switch_Hat):
-    def __init__(self):
-        super(Jetson_Led_Switch_Hat, self).__init__(False)
-
-
-class RPi_Led_Switch_Hat(Led_Switch_Hat):
-    def __init__(self):
-        super(RPi_Led_Switch_Hat, self).__init__(True)
+    def signature(self):
+        return super().signature() + (
+            [
+                "switch:{}".format(
+                    string.pretty_duration(
+                        time.time() - self.switch_on_time,
+                        largest=True,
+                        short=True,
+                    )
+                )
+            ]
+            if self.switch_on_time is not None
+            else []
+        )

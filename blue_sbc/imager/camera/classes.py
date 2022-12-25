@@ -10,7 +10,7 @@ from abcli.plugins import graphics
 from abcli import string
 from . import NAME
 from .constants import *
-from blue_sbc.hat import hat
+from blue_sbc.hardware import hardware
 from blue_sbc.imager.classes import Imager
 from abcli.logging import crash_report
 from abcli import logging
@@ -95,7 +95,7 @@ class Camera(Imager):
             filename (str): filename.
             length (int): length in seconds. Default to 10.
             preview (bool, optional): show preview. Defaults to True.
-            pulse (bool, optional): pulse hat leds. Defaults to True.
+            pulse (bool, optional): pulse hardware leds. Defaults to True.
             resolution (Any, optional): resolution. Defaults to None.
 
         Returns:
@@ -116,7 +116,7 @@ class Camera(Imager):
             self.device.start_recording(filename)
             if pulse:
                 for _ in range(int(10 * length)):
-                    hat.pulse("outputs")
+                    hardware.pulse("outputs")
                     sleep(0.1)
             else:
                 sleep(length)
