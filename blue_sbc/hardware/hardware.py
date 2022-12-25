@@ -8,9 +8,7 @@ logger = logging.getLogger(__name__)
 
 class Hardware(object):
     def __init__(self):
-        self.kind = cookie.get("hardware.kind", "prototype_hat")
-
-        logger.info(f"{self.__class__.__name__}.init({self.kind}).")
+        logger.info(f"{self.__class__.__name__}.init().")
 
         self.key_buffer = []
         self.animated = False
@@ -46,7 +44,7 @@ class Hardware(object):
         logger.info(f"{self.__class__.__name__}.release()")
 
     def signature(self):
-        return [f"hardware:{self.kind}"]
+        return [f"hardware:{self.__class__.__name__}"]
 
     def update_screen(self, image, session, header, sidebar):
         return self
