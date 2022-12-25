@@ -30,7 +30,7 @@ class Unicorn_16x16(Screen):
             cv2.ROTATE_90_CLOCKWISE,
         )
 
-        super().show(image, session, header, sidebar)
+        super().update_screen(image, session, header, sidebar)
 
         for x in range(0, 16):
             for y in range(0, 16):
