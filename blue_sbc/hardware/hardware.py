@@ -25,7 +25,7 @@ class Hardware(object):
         self.buffer[y, x] = 255 - self.buffer[y, x]
 
         self.animated = False
-        self.show(self.buffer)
+        self.update_screen(self.buffer, None, [], [])
         self.animated = True
 
     def clock(self):
