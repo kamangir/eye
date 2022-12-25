@@ -13,7 +13,7 @@ if hardware_kind == "adafruit_rgb_matrix":
 elif hardware_kind == "grove":
     from .grove import Grove as Hardware_Class
 elif hardware_kind == "prototype_switch_hat":
-    from .hat.prototype import Prototype_Switch_Hat as Hardware_Class
+    from .hat.prototype import Prototype_Hat as Hardware_Class
 elif hardware_kind == "scroll_phat_hd":
     from .scroll_phat_hd import Scroll_Phat_HD as Hardware_Class
 elif hardware_kind == "sparkfun-top-phat":
