@@ -88,7 +88,7 @@ class Abstract_Hat(Hardware):
         :param frequency: frequency
         :return: self
         """
-        super().pulse(self, pin, frequency)
+        super().pulse(pin, frequency)
 
         if pin == "data":
             pin = self.data_pin
