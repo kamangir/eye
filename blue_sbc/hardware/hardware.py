@@ -1,5 +1,5 @@
 import random
-from abcli.modules.cookie import cookie
+from blue_sbc import VERSION
 from abcli import logging
 import logging
 
@@ -51,7 +51,7 @@ class Hardware(object):
         logger.info(f"{self.__class__.__name__}.release()")
 
     def signature(self):
-        return [f"hardware:{self.__class__.__name__}"]
+        return [f"blue-sbc-{VERSION}", f"hardware:{self.__class__.__name__}"]
 
     def update_screen(self, image, session, header, sidebar):
         return self
