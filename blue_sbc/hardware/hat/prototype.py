@@ -1,4 +1,4 @@
-from .basic_hat import Basic_Hat
+from blue_sbc.hardware.hat.abstract import Abstract_Hat
 from abcli.modules import host
 from abcli import logging
 import logging
@@ -6,9 +6,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class Led_Switch_Hat(Basic_Hat):
+class Prototype_Hat(Abstract_Hat):
     def __init__(self):
-        super(Led_Switch_Hat, self).__init__()
+        super(Prototype_Hat, self).__init__()
 
         self.is_rpi = host.is_rpi()
 

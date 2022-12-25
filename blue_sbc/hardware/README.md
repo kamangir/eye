@@ -1,6 +1,6 @@
 - [Hardware](./hardware.md)
-    - [Basic_Hat](./basic_hat.py)
-        - [Led_Switch_Hat](./led_switch_hat.py)
+    - [Abstract_Hat](./hat/abstract.py)
+        - [Prototype_Hat](./hat/prototype.py)
     - [Screen](./screen.py)
         - [Adafruit_Rgb_Matrix](./adafruit_rgb_matrix.py)
         - [Display](./display.py)

@@ -1,7 +1,7 @@
 import argparse
 import time
 from . import *
-from . import hardware
+from .prototype import Prototype_Hat
 from abcli import string
 from abcli import logging
 import logging
@@ -22,6 +22,8 @@ parser.add_argument(
     default="",
 )
 args = parser.parse_args()
+
+hardware = Prototype_Hat()
 
 success = False
 if args.task == "input":

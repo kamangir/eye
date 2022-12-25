@@ -1,13 +1,13 @@
 import math
 import time
-from .hardware import Hardware
+from blue_sbc.hardware import Hardware
 from abcli import logging
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-class Basic_Hat(Hardware):
+class Abstract_Hat(Hardware):
     def __init__(self):
         self.switch_pin = -1
 
@@ -61,7 +61,7 @@ class Basic_Hat(Hardware):
 
     def output(self, pin, output):
         """
-        set pin to ouput
+        set pin to output
         :param pin: pin number
         :param output: True / False
         :return: self
