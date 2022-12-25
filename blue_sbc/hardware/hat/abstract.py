@@ -1,6 +1,6 @@
 import math
 import time
-from blue_sbc.hardware import Hardware
+from blue_sbc.hardware.hardware import Hardware
 from abcli import logging
 import logging
 
