@@ -16,7 +16,7 @@ function blue_sbc_session() {
 
     if [ "$task" == "start" ] ; then
         local options=$2
-        local app_name=$(fast_option "$options" app)
+        local app_name=$(abcli_option "$options" app)
 
         abcli_log "blue-sbc: session started $options"
 
