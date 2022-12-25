@@ -31,4 +31,4 @@ else:
 
 hardware = Hardware_Class()
 
-logger.info(f"hardware: {hardware_kind}: {hardware.__class__.__name__}")
+logger.info(f"{NAME}: {hardware_kind}: {hardware.__class__.__name__}")

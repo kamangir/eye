@@ -14,4 +14,4 @@ if imager_name == "lepton":
 else:
     from .camera import instance as imager
 
-logger.info(f"{NAME}: imager: {imager.__class__.__name__}")
+logger.info(f"{NAME}: {imager_name}: {imager.__class__.__name__}")
