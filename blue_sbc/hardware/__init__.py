@@ -1,4 +1,4 @@
-from blue_sbc.hardware.hardware import Hardware_Class
+from blue_sbc.hardware.hardware import Hardware as Hardware_Class
 from abcli.modules.cookie import cookie
 import abcli.logging
 import logging
