@@ -23,8 +23,6 @@ class Abstract_Hat(Hardware):
         self.green_led_pin = -1
         self.red_led_pin = -1
 
-        self.base_led_frequency = 10
-
         self.pin_history = {}
 
     def activated(self, pin):
@@ -85,11 +83,22 @@ class Abstract_Hat(Hardware):
 
     def pulse(self, pin=None, frequency=None):
         """
-        pulse pin
-        :param pin: pin number / "outputs"
+        pulse pin.
+        :param pin: pin number / "data" / "incoming" / "loop" / "outputs"
         :param frequency: frequency
         :return: self
         """
+        super().pulse(self, pin, frequency)
+
+        if pin == "data":
+            pin = self.data_pin
+
+        if pin == "incoming":
+            pin = self.incoming_pin
+
+        if pin == "loop":
+            pin = self.looper_pin
+
         if pin == "outputs":
             for index, pin in enumerate(self.output_pins):
                 self.pulse(pin, index)
@@ -105,10 +114,7 @@ class Abstract_Hat(Hardware):
         self.pin_history[pin] = (
             not bool(self.pin_history.get(pin, False))
             if frequency is None
-            else (lambda x: x - math.floor(x))(
-                time.time() * (self.base_led_frequency + frequency)
-            )
-            >= 0.5
+            else (lambda x: x - math.floor(x))(time.time() * (10 + frequency)) >= 0.5
         )
 
         return self.output(pin, self.pin_history[pin])

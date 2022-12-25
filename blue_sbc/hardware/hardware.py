@@ -12,3 +12,12 @@ class Hardware(object):
         logger.info(f"{self.__class__.__name__}.init({self.kind}).")
 
         self.key_buffer = []
+
+    def pulse(self, pin=None, frequency=None):
+        """
+        pulse pin.
+        :param pin: "data" / "incoming" / "loop" / "outputs"
+        :param frequency: frequency
+        :return: self
+        """
+        return self

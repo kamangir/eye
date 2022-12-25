@@ -96,7 +96,7 @@ class Session(object):
         if not success:
             return
 
-        hardware.pulse(hardware.data_pin)
+        hardware.pulse("data")
 
         if self.diff.same(image):
             return
@@ -156,7 +156,7 @@ class Session(object):
 
         _, self.messages = messenger.request()
         if self.messages:
-            hardware.pulse(hardware.incoming_pin)
+            hardware.pulse("incoming")
 
         for message in self.messages:
 
@@ -373,7 +373,7 @@ class Session(object):
 
         self.params["iteration"] += 1
 
-        hardware.pulse(hardware.looper_pin, 0)
+        hardware.pulse("loop", 0)
 
         for enabled, step_ in zip(
             [

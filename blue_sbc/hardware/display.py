@@ -6,7 +6,7 @@ from abcli.modules import host
 from abcli.modules.cookie import cookie
 from abcli.plugins import graphics
 from . import NAME
-from .screen import Screen
+from .hat.prototype import Prototype_Hat
 from abcli.logging import crash_report
 import abcli.logging
 import logging
@@ -14,7 +14,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class Display(Screen):
+class Display(Prototype_Hat):
     def __init__(self):
         super(Display, self).__init__()
 
