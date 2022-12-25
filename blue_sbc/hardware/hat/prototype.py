@@ -13,6 +13,9 @@ class Prototype_Hat(Abstract_Hat):
     def __init__(self):
         super(Prototype_Hat, self).__init__()
 
+        self.switch_on_time = None
+
+        self.is_jetson = host.is_jetson()
         self.is_rpi = host.is_rpi()
 
         if self.is_rpi:
@@ -32,7 +35,8 @@ class Prototype_Hat(Abstract_Hat):
             self.red_led_pin = 7
 
             GPIO.setmode(GPIO.BOARD)  # numbers GPIOs by physical location
-        else:
+
+        if self.is_jetson:
             import Jetson.GPIO as GPIO
 
             self.switch_pin = 7
@@ -52,8 +56,6 @@ class Prototype_Hat(Abstract_Hat):
         for pin in self.output_pins:
             self.setup(pin, "output")
             self.output(pin, False)
-
-        self.switch_on_time = None
 
     def clock(self):
         super().clock()
@@ -79,8 +81,10 @@ class Prototype_Hat(Abstract_Hat):
 
         if self.is_rpi:
             import RPi.GPIO as GPIO
-        else:
+        elif self.is_jetson:
             import Jetson.GPIO as GPIO
+        else:
+            return False
 
         return GPIO.input(pin) == GPIO.HIGH
 
@@ -90,8 +94,10 @@ class Prototype_Hat(Abstract_Hat):
 
         if self.is_rpi:
             import RPi.GPIO as GPIO
-        else:
+        elif self.is_jetson:
             import Jetson.GPIO as GPIO
+        else:
+            return self
 
         GPIO.output(pin, GPIO.HIGH if output else GPIO.LOW)
         return self
@@ -99,8 +105,11 @@ class Prototype_Hat(Abstract_Hat):
     def release(self):
         if self.is_rpi:
             import RPi.GPIO as GPIO
-        else:
+        elif self.is_jetson:
             import Jetson.GPIO as GPIO
+        else:
+            return self
+
         logger.info(f"{self.__class__.__name__}.release()")
 
         GPIO.cleanup()
@@ -113,8 +122,10 @@ class Prototype_Hat(Abstract_Hat):
 
         if self.is_rpi:
             import RPi.GPIO as GPIO
-        else:
+        elif self.is_jetson:
             import Jetson.GPIO as GPIO
+        else:
+            return self
 
         if what == "output":
             what = GPIO.OUT
