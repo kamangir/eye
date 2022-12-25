@@ -191,7 +191,7 @@ class Session(object):
     def check_timers(self):
         if self.timer["screen"].tick():
             if self.application is None:
-                hardware.show(
+                hardware.update_screen(
                     image=self.frame_image,
                     session=self,
                     header=self.signature(),
