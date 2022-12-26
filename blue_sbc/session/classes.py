@@ -190,15 +190,15 @@ class Session(object):
 
     def check_timers(self):
         if self.timer["screen"].tick():
-            if self.application is None:
-                hardware.update_screen(
-                    image=self.frame_image,
-                    session=self,
-                    header=self.signature(),
-                    sidebar=string.pretty_param(self.params),
-                )
-            else:
+            if self.application is not None:
                 self.application.update_screen(self)
+
+            hardware.update_screen(
+                image=self.frame_image,
+                session=self,
+                header=self.signature(),
+                sidebar=string.pretty_param(self.params),
+            )
         elif hardware.animated:
             hardware.animate()
 
