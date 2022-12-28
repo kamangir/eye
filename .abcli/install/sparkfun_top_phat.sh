@@ -29,5 +29,5 @@ if [ "$(abcli cookie read hardware.kind other)" == "sparkfun-top-phat" ] ; then
     abcli_install_module sparkfun_top_phat 104
 
     # https://learn.sparkfun.com/tutorials/sparkfun-top-phat-hookup-guide/24-tft-display-archived
-    con2fbmap 1 1
+    # con2fbmap 1 1
 fi
