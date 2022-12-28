@@ -32,7 +32,8 @@ function blue_sbc_session() {
 
         local sudo_prefix=""
         if [ "$run_sudo" == 1 ] ; then
-            local sudo_prefix="sudo "
+            # https://stackoverflow.com/a/8633575/17619982
+            local sudo_prefix="sudo -E "
         fi
         local command_line="${sudo_prefix}python3 -m blue_sbc.session \
             start \
