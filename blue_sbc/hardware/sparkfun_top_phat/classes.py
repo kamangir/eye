@@ -19,6 +19,13 @@ class Sparkfun_Top_phat(Screen):
             auto_write=False,
         )
 
+    def release(self):
+        super().release()
+        for index in range(self.pixel_count):
+            self.pixels[index] = 3 * (0,)
+            self.pixels.show()
+            time.sleep(0.1)
+
     def update_screen(self, image, session, header, sidebar):
         image = cv2.resize(self.size)
 
