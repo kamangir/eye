@@ -23,7 +23,7 @@ elif hardware_kind == "prototype_hat":
 elif hardware_kind == "scroll_phat_hd":
     from .scroll_phat_hd import Scroll_Phat_HD as Hardware_Class
 elif hardware_kind == "sparkfun-top-phat":
-    from .sparkfun_top_phat import Sparkfun_Top_phat as Hardware_Class
+    from .sparkfun_top_phat.classes import Sparkfun_Top_phat as Hardware_Class
 elif hardware_kind == "unicorn_16x16":
     from .unicorn_16x16 import Unicorn_16x16 as Hardware_Class
 else:
