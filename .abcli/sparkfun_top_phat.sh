@@ -20,7 +20,7 @@ function blue_sbc_sparkfun_top_phat() {
         fi
 
         if [ "$what" == leds ] ; then
-            python3 -m blue_sbc.hardware.sparkfun_top_phat \
+            sudo python3 -m blue_sbc.hardware.sparkfun_top_phat \
                 validate_leds
             return
         fi
