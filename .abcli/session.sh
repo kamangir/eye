@@ -4,7 +4,7 @@ function blue_sbc_session() {
     local task=$(abcli_unpack_keyword $1 help)
 
     if [ $task == "help" ] ; then
-        abcli_show_usage "blue_sbc session start$ABCUL[app=<application>]$ABCUL[<args>]" \
+        abcli_show_usage "blue_sbc session start$ABCUL[app=<application>,sudo]$ABCUL[<args>]" \
             "start a blue_sbc session."
 
         if [ "$(abcli_keyword_is $2 verbose)" == true ] ; then
@@ -17,6 +17,7 @@ function blue_sbc_session() {
     if [ "$task" == "start" ] ; then
         local options=$2
         local app_name=$(abcli_option "$options" app)
+        local run_sudo=$(abcli_option_int "$options" sudo 0)
 
         abcli_log "blue-sbc: session started $options"
 
@@ -29,10 +30,17 @@ function blue_sbc_session() {
             local extra_args="--application $app_name"
         fi
 
-        python3 -m blue_sbc.session \
+        local sudo_prefix=""
+        if [ "$run_sudo" == 1 ] ; then
+            local sudo_prefix="sudo "
+        fi
+        local command_line="${sudo_prefix}python3 -m blue_sbc.session \
             start \
             $extra_args \
-            ${@:3}
+            ${@:3}"
+
+        abcli_log "⚙️  $command_line"
+        eval "$command_line"
 
         abcli_upload open
 
