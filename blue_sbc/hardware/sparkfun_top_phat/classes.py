@@ -7,7 +7,7 @@ class Sparkfun_Top_phat(Screen):
     def __init__(self):
         super(Sparkfun_Top_phat, self).__init__()
         self.size = (7, 17)
-        self.animated = True
+        self.animated = False
 
         import board
         import neopixel
@@ -28,10 +28,8 @@ class Sparkfun_Top_phat(Screen):
             time.sleep(0.1)
 
     def update_screen(self, image, session, header, sidebar):
-        image = cv2.resize(self.size)
+        image = cv2.resize(image, self.size)
 
         super().update_screen(image, session, header, sidebar)
-
-        # TODO: show image
 
         return self
