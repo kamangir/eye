@@ -1,4 +1,5 @@
 import cv2
+import time
 from blue_sbc.hardware.screen import Screen
 
 
