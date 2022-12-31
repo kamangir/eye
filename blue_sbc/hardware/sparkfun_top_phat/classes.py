@@ -15,7 +15,6 @@ class Sparkfun_Top_phat(Screen):
 
         # https://learn.sparkfun.com/tutorials/sparkfun-top-phat-hookup-guide/ws2812b-leds
         self.pixel_count = 6
-        self.pixel_index = 0
         self.pixels = neopixel.NeoPixel(
             board.D12,
             self.pixel_count,
@@ -25,20 +24,23 @@ class Sparkfun_Top_phat(Screen):
     def pulse(self, pin=None, frequency=None):
         super().pulse(pin, frequency)
 
+        pixel_index = 0
         color = (0, 0, 1)
         if pin == "data":
+            pixel_index = 1
             color = (0, 1, 0)
         if pin == "incoming":
+            pixel_index = 2
             color = (1, 1, 0)
         if pin == "loop":
+            pixel_index = 3
             color = (1, 0, 0)
         if pin == "outputs":
+            pixel_index = 4
             color = (0, 1, 1)
 
-        self.pixels[self.pixel_index] = tuple(int(thing * 64) for thing in color)
+        self.pixels[pixel_index] = tuple(int(thing * 64) for thing in color)
         self.pixels.show()
-
-        self.pixel_index = (self.pixel_index + 1) % self.pixel_count
 
         return self
 
