@@ -21,9 +21,6 @@ hardware = Sparkfun_Top_phat()
 
 success = False
 if args.task == "validate_leds":
-    # https://matplotlib.org/3.1.1/tutorials/colors/colormap-manipulation.html
-    # https://matplotlib.org/stable/tutorials/colors/colormaps.html
-
     logger.info("loop started (Ctrl+C to stop)")
     offset = 0
     # https://stackoverflow.com/a/18994932/10917551

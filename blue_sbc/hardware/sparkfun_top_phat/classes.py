@@ -22,7 +22,9 @@ class Sparkfun_Top_phat(Screen):
         )
 
         self.intensity = 48
-        self.colormap = cm.get_cmap("GnBu", self.pixel_count)(range(self.pixel_count))
+
+        # https://matplotlib.org/stable/tutorials/colors/colormaps.html
+        self.colormap = cm.get_cmap("copper", self.pixel_count)(range(self.pixel_count))
 
         self.pulse_cycle = 0
 
