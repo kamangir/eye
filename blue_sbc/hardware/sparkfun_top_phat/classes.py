@@ -1,7 +1,12 @@
 import cv2
 import time
+from . import NAME
 from blue_sbc.hardware.screen import Screen
 from matplotlib import cm
+from abcli import logging
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Sparkfun_Top_phat(Screen):
@@ -27,6 +32,26 @@ class Sparkfun_Top_phat(Screen):
         self.colormap = cm.get_cmap("copper", self.pixel_count)(range(self.pixel_count))
 
         self.pulse_cycle = 0
+
+        # https://github.com/sparkfun/Top_pHAT_Button_Py/blob/main/examples/top_phat_button_ex1.py
+        import top_phat_button
+
+        self.buttons = top_phat_button.ToppHATButton()
+        logger.info(f"{NAME}.connection status: {self.buttons.is_connected()}")
+
+        self.buttons.pressed_interrupt_enable = False
+        self.buttons.clicked_interrupt_enable = False
+
+    def clock(self):
+        super().clock()
+
+        self.buttons.button_pressed  # These functions must be called to update button variables to their latest setting
+        self.buttons.button_clicked  # These functions must be called to update button variables to their latest setting
+
+        if self.buttons.center_clicked == True:
+            logger.info(f"{NAME}: center released.")
+
+        return self
 
     def pulse(self, pin=None, frequency=None):
         super().pulse(pin, frequency)
