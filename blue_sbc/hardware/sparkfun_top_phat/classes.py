@@ -1,6 +1,7 @@
 import cv2
 import time
 from blue_sbc.hardware.screen import Screen
+import math
 
 
 class Sparkfun_Top_phat(Screen):
@@ -14,11 +15,32 @@ class Sparkfun_Top_phat(Screen):
 
         # https://learn.sparkfun.com/tutorials/sparkfun-top-phat-hookup-guide/ws2812b-leds
         self.pixel_count = 6
+        self.pixel_index = 0
         self.pixels = neopixel.NeoPixel(
             board.D12,
             self.pixel_count,
             auto_write=False,
         )
+
+    def pulse(self, pin=None, frequency=None):
+        super().pulse(pin, frequency)
+
+        color = (0, 0, 1)
+        if pin == "data":
+            color = (0, 1, 0)
+        if pin == "incoming":
+            color = (1, 1, 0)
+        if pin == "loop":
+            color = (1, 0, 0)
+        if pin == "outputs":
+            color = (0, 1, 1)
+
+        self.pixels[self.pixel_index] = tuple(int(thing * 64) for thing in color)
+        self.pixels.show()
+
+        self.pixel_index = (self.pixel_index + 1) % self.pixel_count
+
+        return self
 
     def release(self):
         super().release()
