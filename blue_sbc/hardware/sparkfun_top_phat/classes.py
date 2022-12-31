@@ -1,7 +1,7 @@
 import cv2
 import time
 from blue_sbc.hardware.screen import Screen
-import math
+from matplotlib import cm
 
 
 class Sparkfun_Top_phat(Screen):
@@ -21,26 +21,24 @@ class Sparkfun_Top_phat(Screen):
             auto_write=False,
         )
 
+        self.colormap = cm.get_cmap("GnBu", self.pixel_count)(range(self.pixel_count))
+
+        self.pulse_cycle = 0
+
     def pulse(self, pin=None, frequency=None):
         super().pulse(pin, frequency)
 
-        pixel_index = 0
-        color = (0, 0, 1)
-        if pin == "data":
-            pixel_index = 1
-            color = (0, 1, 0)
-        if pin == "incoming":
-            pixel_index = 2
-            color = (1, 1, 0)
-        if pin == "loop":
-            pixel_index = 3
-            color = (1, 0, 0)
-        if pin == "outputs":
-            pixel_index = 4
-            color = (0, 1, 1)
+        for index in range(self.pixel_count):
+            self.pixels[index] = tuple(
+                int(thing * 64)
+                for thing in self.colormap[
+                    (index + int(self.pulse_cycle / 10)) % self.pixel_count
+                ]
+            )
 
-        self.pixels[pixel_index] = tuple(int(thing * 64) for thing in color)
         self.pixels.show()
+
+        self.pulse_cycle += 1
 
         return self
 
