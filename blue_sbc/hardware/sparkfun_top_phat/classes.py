@@ -48,8 +48,25 @@ class Sparkfun_Top_phat(Screen):
         self.buttons.button_pressed  # These functions must be called to update button variables to their latest setting
         self.buttons.button_clicked  # These functions must be called to update button variables to their latest setting
 
+        if self.buttons.a_clicked == True:
+            logger.info(f"{NAME}: a clicked: update.")
+            self.key_buffer += ["u"]
+
+        if self.buttons.b_clicked == True:
+            logger.info(f"{NAME}: b clicked: shutdown.")
+            self.key_buffer += ["s"]
+
         if self.buttons.center_clicked == True:
-            logger.info(f"{NAME}: center released.")
+            logger.info(f"{NAME}: center clicked.")
+            self.key_buffer += [" "]
+
+        if self.buttons.up_clicked == True:
+            logger.info(f"{NAME}: up clicked.")
+            self.intensity = min(255, 2 * self.intensity)
+
+        if self.buttons.down_clicked == True:
+            logger.info(f"{NAME}: down clicked.")
+            self.intensity = max(1, self.intensity // 2)
 
         return self
 
