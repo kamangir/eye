@@ -21,6 +21,7 @@ class Sparkfun_Top_phat(Screen):
             auto_write=False,
         )
 
+        self.intensity = 48
         self.colormap = cm.get_cmap("GnBu", self.pixel_count)(range(self.pixel_count))
 
         self.pulse_cycle = 0
@@ -30,10 +31,10 @@ class Sparkfun_Top_phat(Screen):
 
         for index in range(self.pixel_count):
             self.pixels[index] = tuple(
-                int(thing * 64)
+                int(thing * self.intensity)
                 for thing in self.colormap[
                     (index + int(self.pulse_cycle / 10)) % self.pixel_count
-                ]
+                ][:3]
             )
 
         self.pixels.show()

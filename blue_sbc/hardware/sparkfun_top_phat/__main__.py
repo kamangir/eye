@@ -31,7 +31,7 @@ if args.task == "validate_leds":
         while True:
             for index in range(hardware.pixel_count):
                 hardware.pixels[index] = tuple(
-                    int(thing * 64)
+                    int(thing * hardware.intensity)
                     for thing in hardware.colormap[
                         (index + offset) % hardware.pixel_count
                     ][:3]
