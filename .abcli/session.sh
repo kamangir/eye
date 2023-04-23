@@ -16,10 +16,11 @@ function blue_sbc_session() {
 
     if [ "$task" == "start" ] ; then
         local options=$2
-        local app_name=$(abcli_option "$options" app)
+        local app_name=$(abcli_cookie read blue_sbc.application)
+        local app_name=$(abcli_option "$options" app $app_name)
         local run_sudo=$(abcli_option_int "$options" sudo 0)
 
-        abcli_log "blue-sbc: session started $options"
+        abcli_log "blue-sbc: session started $options $app_name"
 
         abcli_tag set \
             $abcli_object_name \
