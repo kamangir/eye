@@ -2,7 +2,6 @@ from blueness.pypi import setup
 
 from blue_sbc import NAME, VERSION, DESCRIPTION, REPO_NAME
 
-
 setup(
     filename=__file__,
     repo_name=REPO_NAME,
