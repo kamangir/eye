@@ -12,20 +12,20 @@ function abcli_install_sparkfun_top_phat() {
     # https://stackoverflow.com/a/53045690/17619982
     sudo pip3 install rpi_ws281x
 
-    pushd $abcli_path_home/git > /dev/null
+    pushd $abcli_path_home/git >/dev/null
     git clone https://github.com/sparkfun/Top_pHAT_Button_Py
-    popd > /dev/null
+    popd >/dev/null
 
     # https://learn.sparkfun.com/tutorials/sparkfun-top-phat-hookup-guide/24-tft-display-linux-54-update
-    pushd $abcli_path_home > /dev/null
+    pushd $abcli_path_home >/dev/null
     curl -L https://cdn.sparkfun.com/assets/learn_tutorials/1/1/7/0/sfe-topphat-overlay.dts \
         --output ./sfe-topphat-overlay.dts
     dtc -@ -I dts -O dtb -o rpi-display.dtbo sfe-topphat-overlay.dts
     sudo cp rpi-display.dtbo /boot/overlays
-    popd > /dev/null
+    popd >/dev/null
 }
 
-if [ "$(abcli cookie read hardware.kind other)" == "sparkfun-top-phat" ] ; then
+if [ "$BLUE_SBC_HARDWARE_KIND" == "sparkfun-top-phat" ]; then
     abcli_install_module sparkfun_top_phat 104
 
     # https://learn.sparkfun.com/tutorials/sparkfun-top-phat-hookup-guide/24-tft-display-archived
