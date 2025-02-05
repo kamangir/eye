@@ -5,9 +5,9 @@ function bsbc() {
 }
 
 function blue_sbc() {
-    local task=$(abcli_unpack_keyword $1 help)
+    local task=$(abcli_unpack_keyword $1 version)
 
-    if [ $task == "help" ] ; then
+    if [ $task == "help" ]; then
         blue_sbc_adafruit_rgb_matrix $@
         blue_sbc_camera $@
         blue_sbc_grove $@
@@ -21,10 +21,12 @@ function blue_sbc() {
     fi
 
     local function_name=blue_sbc_$task
-    if [[ $(type -t $function_name) == "function" ]] ; then
+    if [[ $(type -t $function_name) == "function" ]]; then
         $function_name ${@:2}
         return
     fi
 
-    abcli_log_error "-blue_sbc: $task: command not found."
+    python3 -m blue_sbc "$@"
 }
+
+abcli_log $(blue_sbc version --show_icon 1)
