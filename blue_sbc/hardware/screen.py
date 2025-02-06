@@ -10,8 +10,8 @@ class Screen(Hardware):
 
         self.buffer = None
 
-    def update_screen(self, image, session, header, sidebar):
+    def update_screen(self, image, session, header):
         if self.animated:
             self.buffer = copy.deepcopy(image)
 
-        return super().update_screen(image, session, header, sidebar)
+        return super().update_screen(image, session, header)

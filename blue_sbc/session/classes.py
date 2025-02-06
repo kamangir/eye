@@ -187,7 +187,6 @@ class Session:
                 image=self.frame_image,
                 session=self,
                 header=self.signature(),
-                sidebar=string.pretty_param(self.params),
             )
         elif hardware.animated:
             hardware.animate()

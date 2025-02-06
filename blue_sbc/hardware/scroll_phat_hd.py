@@ -10,7 +10,7 @@ class Scroll_Phat_HD(Screen):
         self.size = (7, 17)
         self.animated = True
 
-    def update_screen(self, image, session, header, sidebar):
+    def update_screen(self, image, session, header):
         import scrollphathd
 
         image = cv2.resize(
@@ -18,7 +18,7 @@ class Scroll_Phat_HD(Screen):
             self.size,
         )
 
-        super().update_screen(image, session, header, sidebar)
+        super().update_screen(image, session, header)
 
         image = cv2.cvtColor(
             image,

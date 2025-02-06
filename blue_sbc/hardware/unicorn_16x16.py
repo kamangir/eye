@@ -16,7 +16,7 @@ class Unicorn_16x16(Screen):
 
         unicornhathd.off()
 
-    def update_screen(self, image, session, header, sidebar):
+    def update_screen(self, image, session, header):
         import unicornhathd
 
         image = cv2.rotate(
@@ -27,7 +27,7 @@ class Unicorn_16x16(Screen):
             cv2.ROTATE_90_CLOCKWISE,
         )
 
-        super().update_screen(image, session, header, sidebar)
+        super().update_screen(image, session, header)
 
         for x in range(0, 16):
             for y in range(0, 16):

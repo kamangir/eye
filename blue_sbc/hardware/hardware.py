@@ -54,5 +54,5 @@ class Hardware:
             f"hardware:{self.__class__.__name__}",
         ]
 
-    def update_screen(self, image, session, header, sidebar):
+    def update_screen(self, image, session, header):
         return self

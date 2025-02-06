@@ -57,8 +57,8 @@ class Grove(Screen):
         self.line_count = 8
         self.line_length = 21
 
-    def update_screen(self, image, session, header, sidebar):
-        super().update_screen(image, session, header, sidebar)
+    def update_screen(self, image, session, header):
+        super().update_screen(image, session, header)
 
         signature = (" | ".join(session.signature())).split(" | ")
 

@@ -96,9 +96,9 @@ class Sparkfun_Top_phat(Screen):
             self.pixels.show()
             time.sleep(0.1)
 
-    def update_screen(self, image, session, header, sidebar):
+    def update_screen(self, image, session, header):
         image = cv2.resize(image, self.size)
 
-        super().update_screen(image, session, header, sidebar)
+        super().update_screen(image, session, header)
 
         return self

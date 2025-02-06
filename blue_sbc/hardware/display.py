@@ -86,8 +86,8 @@ class Display(Prototype_Hat):
         except Exception as e:
             crash_report(e)
 
-    def update_screen(self, image, session, header, sidebar):
-        super().update_screen(image, session, header, sidebar)
+    def update_screen(self, image, session, header):
+        super().update_screen(image, session, header)
 
         self.canvas = np.copy(image)
 
