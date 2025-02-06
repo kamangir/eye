@@ -18,6 +18,11 @@ function test_blue_sbc_help() {
         "@sbc camera capture video" \
         "@sbc camera preview" \
         \
+        "@sbc hat" \
+        "@sbc hat input" \
+        "@sbc hat output" \
+        "@sbc hat validate" \
+        \
         "@sbc lepton" \
         "@sbc lepton capture" \
         "@sbc lepton preview" \
@@ -31,6 +36,9 @@ function test_blue_sbc_help() {
         \
         "@sbc scroll_phat_hd" \
         "@sbc scroll_phat_hd validate" \
+        \
+        "@sbc session" \
+        "@sbc session start" \
         \
         "@sbc sparkfun_top_phat" \
         "@sbc sparkfun_top_phat validate" \

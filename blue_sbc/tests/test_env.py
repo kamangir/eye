@@ -10,6 +10,8 @@ def test_required_env():
 
 
 def test_blue_plugin_env():
+    assert isinstance(env.BLUE_SBC_APPLICATION, str)
+
     assert isinstance(env.BLUE_SBC_CAMERA_HI_RES, bool)
     assert isinstance(env.BLUE_SBC_CAMERA_WIDTH, int)
     assert isinstance(env.BLUE_SBC_CAMERA_HEIGHT, int)
@@ -22,6 +24,8 @@ def test_blue_plugin_env():
     assert isinstance(env.BLUE_SBC_SESSION_IMAGER_DIFF, float)
     assert isinstance(env.BLUE_SBC_SESSION_IMAGER_ENABLED, bool)
     assert isinstance(env.BLUE_SBC_SESSION_MONITOR_ENABLED, bool)
+
+    assert isinstance(env.BLUE_SBC_SESSION_OBJECT_TAGS, str)
 
     assert isinstance(env.BLUE_SBC_SESSION_OUTBOUND_QUEUE, str)
 

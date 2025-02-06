@@ -1,55 +1,45 @@
 #! /usr/bin/env bash
 
 function blue_sbc_session() {
-    local task=$(abcli_unpack_keyword $1 help)
+    local task=$(abcli_unpack_keyword $1 start)
 
-    if [ $task == "help" ] ; then
-        abcli_show_usage "blue_sbc session start$ABCUL[app=<application>,sudo]$ABCUL[<args>]" \
-            "start a blue_sbc session."
-
-        if [ "$(abcli_keyword_is $2 verbose)" == true ] ; then
-            python3 -m blue_sbc.session --help
-        fi
-
-        return
-    fi
-
-    if [ "$task" == "start" ] ; then
+    if [ "$task" == "start" ]; then
         local options=$2
-        local app_name=$(abcli_cookie read blue_sbc.application)
-        local app_name=$(abcli_option "$options" app $app_name)
+        local do_dryrun=$(abcli_option_int "$options" dryrun 0)
+        local app_name=$(abcli_option "$options" app $BLUE_SBC_APPLICATION)
         local run_sudo=$(abcli_option_int "$options" sudo 0)
+        local do_upload=$(abcli_option_int "$options" upload 1)
 
-        abcli_log "blue-sbc: session started $options $app_name"
+        abcli_log "@sbc: session started $options $app_name"
 
-        abcli_tag set \
+        abcli_mlflow_tags_set \
             $abcli_object_name \
-            open,session,$abcli_hostname,$(abcli_string_today),$(abcli_cookie read session.object.tags),$app_name
+            open,session,$abcli_hostname,$(abcli_string_today),$BLUE_SBC_SESSION_OBJECT_TAGS,$app_name
 
         local extra_args=""
-        if [ ! -z "$app_name" ] ; then
-            local extra_args="--application $app_name"
-        fi
+        [[ ! -z "$app_name" ]] &&
+            extra_args="--application $app_name"
 
         local sudo_prefix=""
-        if [ "$run_sudo" == 1 ] ; then
-            # https://stackoverflow.com/a/8633575/17619982
-            local sudo_prefix="sudo -E "
-        fi
-        local command_line="${sudo_prefix}python3 -m blue_sbc.session \
+        # https://stackoverflow.com/a/8633575/17619982
+        [[ "$run_sudo" == 1 ]] &&
+            sudo_prefix="sudo -E "
+
+        abcli_log dryrun=$do_dryrun \
+            $sudo_prefix \
+            python3 -m blue_sbc.session \
             start \
             $extra_args \
-            ${@:3}"
+            "${@:3}"
+        local status="$?"
 
-        abcli_log "⚙️  $command_line"
-        eval "$command_line"
+        [[ "$do_upload" == 1 ]] &&
+            abcli_upload - $abcli_object_name
 
-        abcli_upload open
+        abcli_log "@sbc: session ended."
 
-        abcli_log "blue-sbc: session ended."
-
-        return
+        return $status
     fi
 
-    abcli_log_error "-blue-sbc: session: $task: command not found."
+    python3 -m blue_sbc.session "$@"
 }
