@@ -29,6 +29,9 @@ function test_blue_sbc_help() {
         "@sbc lepton capture" \
         "@sbc lepton preview" \
         \
+        "@sbc scroll_phat_hd" \
+        "@sbc scroll_phat_hd validate" \
+        \
         "blue_sbc"; do
         abcli_eval ,$options \
             abcli_help $module
