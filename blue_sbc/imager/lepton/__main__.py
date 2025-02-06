@@ -35,13 +35,13 @@ if args.task == "capture":
         filename=os.path.join(args.output_path, "camera.jpg"),
     )
 elif args.task == "preview":
+    success = True
+
     hardware.sign_images = False
     try:
         while not hardware.pressed("qe"):
             _, image = lepton.capture()
             hardware.update_screen(image)
-
-        success = True
     finally:
         pass
 else:
