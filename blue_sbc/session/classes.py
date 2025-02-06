@@ -110,7 +110,7 @@ class Session:
         )
 
         filename = objects.path_of(
-            object_name=self.self.object_name,
+            object_name=self.object_name,
             filename=f"{self.frame:016d}.jpg",
         )
         if not file.save_image(filename, image):
