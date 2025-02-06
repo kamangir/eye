@@ -32,6 +32,9 @@ function test_blue_sbc_help() {
         "@sbc scroll_phat_hd" \
         "@sbc scroll_phat_hd validate" \
         \
+        "@sbc sparkfun_top_phat" \
+        "@sbc sparkfun_top_phat validate" \
+        \
         "blue_sbc"; do
         abcli_eval ,$options \
             abcli_help $module

@@ -15,8 +15,11 @@ graph LR
 
     camera["@sbc camera capture|preview image|video"]
 
+    hardware_validate["@sbc <hardware> validate <options>"]
+
     object["📂 object"]:::folder
     camera_hardware["👁️‍🗨️ camera"]:::folder
+    hardware["🖱️ hardware"]:::folder
     UI["💻 UI"]:::folder
 
     camera_hardware --> lepton
@@ -26,6 +29,9 @@ graph LR
     camera_hardware --> camera
     camera --> object
     camera --> UI
+
+    hardware --> hardware_validate
+    hardware_validate --> UI
 
     classDef folder fill:#999,stroke:#333,stroke-width:2px;
 ```

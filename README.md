@@ -17,8 +17,11 @@ graph LR
 
     camera["@sbc<br>camera<br>capture|preview<br>image|video"]
 
+    hardware_validate["@sbc<br>&lt;hardware&gt;<br>validate<br>&lt;options&gt;"]
+
     object["📂 object"]:::folder
     camera_hardware["👁️‍🗨️ camera"]:::folder
+    hardware["🖱️ hardware"]:::folder
     UI["💻 UI"]:::folder
 
     camera_hardware --> lepton
@@ -29,6 +32,9 @@ graph LR
     camera --> object
     camera --> UI
 
+    hardware --> hardware_validate
+    hardware_validate --> UI
+
     classDef folder fill:#999,stroke:#333,stroke-width:2px;
 ```
 
@@ -37,4 +43,4 @@ graph LR
 
 [![pylint](https://github.com/kamangir/blue-sbc/actions/workflows/pylint.yml/badge.svg)](https://github.com/kamangir/blue-sbc/actions/workflows/pylint.yml) [![pytest](https://github.com/kamangir/blue-sbc/actions/workflows/pytest.yml/badge.svg)](https://github.com/kamangir/blue-sbc/actions/workflows/pytest.yml) [![bashtest](https://github.com/kamangir/blue-sbc/actions/workflows/bashtest.yml/badge.svg)](https://github.com/kamangir/blue-sbc/actions/workflows/bashtest.yml) [![PyPI version](https://img.shields.io/pypi/v/blue-sbc.svg)](https://pypi.org/project/blue-sbc/) [![PyPI - Downloads](https://img.shields.io/pypi/dd/blue-sbc)](https://pypistats.org/packages/blue-sbc)
 
-built by 🌀 [`blue_options-4.210.1`](https://github.com/kamangir/awesome-bash-cli), based on 🌀 [`blue_sbc-7.23.1`](https://github.com/kamangir/blue-sbc).
+built by 🌀 [`blue_options-4.210.1`](https://github.com/kamangir/awesome-bash-cli), based on 🌀 [`blue_sbc-7.24.1`](https://github.com/kamangir/blue-sbc).
