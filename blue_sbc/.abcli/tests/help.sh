@@ -7,15 +7,8 @@ function test_blue_sbc_help() {
     for module in \
         "@sbc" \
         \
-        "@sbc pypi" \
-        "@sbc pypi browse" \
-        "@sbc pypi build" \
-        "@sbc pypi install" \
-        \
-        "@sbc pytest" \
-        \
-        "@sbc test" \
-        "@sbc test list" \
+        "@sbc adafruit_rgb_matrix" \
+        "@sbc adafruit_rgb_matrix validate" \
         \
         "@sbc browse" \
         \
@@ -29,11 +22,24 @@ function test_blue_sbc_help() {
         "@sbc lepton capture" \
         "@sbc lepton preview" \
         \
+        "@sbc pypi" \
+        "@sbc pypi browse" \
+        "@sbc pypi build" \
+        "@sbc pypi install" \
+        \
+        "@sbc pytest" \
+        \
         "@sbc scroll_phat_hd" \
         "@sbc scroll_phat_hd validate" \
         \
         "@sbc sparkfun_top_phat" \
         "@sbc sparkfun_top_phat validate" \
+        \
+        "@sbc test" \
+        "@sbc test list" \
+        \
+        "@sbc unicorn_16x16" \
+        "@sbc unicorn_16x16 validate" \
         \
         "grove info" \
         "grove validate" \
