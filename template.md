@@ -10,7 +10,7 @@ pip install blue_sbc
 
 ```mermaid
 graph LR
-    camera["@sbc camera capture|preview image|video"]
+    camera["@sbc camera|lepton capture|preview image|video"]
 
     hardware_validate["@sbc <hardware> validate <options>"]
 
