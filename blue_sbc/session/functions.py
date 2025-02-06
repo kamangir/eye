@@ -1,12 +1,10 @@
 import os
 from typing import List
 
-from blue_objects.env import ABCLI_PATH_STORAGE
+from abcli.env import ABCLI_PATH_IGNORE
 from blue_objects import file
 
 from blue_sbc.logger import logger
-
-session_path = os.path.join(ABCLI_PATH_STORAGE, "session")
 
 
 def reply_to_bash(
@@ -17,7 +15,7 @@ def reply_to_bash(
 
     return file.save_text(
         filename=os.path.join(
-            session_path,
+            ABCLI_PATH_IGNORE,
             f"session_reply_{status}",
         ),
         text=content,
