@@ -23,7 +23,6 @@ class Display(Prototype_Hat):
         super().__init__()
 
         self.canvas = None
-        self.notifications = []
         self.canvas_size = (640, 480)
 
         self.title = fullname()
@@ -90,8 +89,6 @@ class Display(Prototype_Hat):
     def update_screen(self, image, session, header, sidebar):
         super().update_screen(image, session, header, sidebar)
 
-        self.notifications = self.notifications[-5:]
-
         self.canvas = np.copy(image)
 
         if self.sign_images:
@@ -99,12 +96,6 @@ class Display(Prototype_Hat):
                 self.canvas,
                 header=header,
                 footer=[" | ".join(signature())],
-            )
-
-            self.canvas = graphics.add_sidebar(
-                self.canvas,
-                sidebar,
-                self.notifications,
             )
 
         self.create()
