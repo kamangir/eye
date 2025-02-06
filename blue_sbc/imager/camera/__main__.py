@@ -54,6 +54,8 @@ elif args.task == "capture_video":
         resolution=(728, 600),
     )
 elif args.task == "preview":
+    logger.info("to quit press q or e.")
+
     hardware.sign_images = False
     try:
         camera.open(
