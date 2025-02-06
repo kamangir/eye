@@ -164,7 +164,7 @@ class Session:
 
     def check_seed(self):
         seed_filename = host.get_seed_filename()
-        if not file.exist(seed_filename):
+        if not file.exists(seed_filename):
             return None
 
         success, content = file.load_json(file.set_extension(seed_filename, "json"))
