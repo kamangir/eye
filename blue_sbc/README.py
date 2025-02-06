@@ -12,7 +12,7 @@ design_prefix = "https://github.com/kamangir/blue-bracket/blob/main/designs/"
 
 def items() -> List[str]:
     return [
-        "[![image]({}{})]({}.md)".format(
+        "[![image]({}{})]({}{}.md)".format(
             image_prefix,
             item["image"],
             design_prefix,

@@ -55,8 +55,8 @@ class Camera(Imager):
             try:
                 self.device.capture(temp)
                 success = True
-            except:
-                crash_report(f"{NAME}.capture() failed.")
+            except Exception as e:
+                crash_report(e)
 
             if success:
                 success, image = file.load_image(temp)
@@ -67,8 +67,8 @@ class Camera(Imager):
                 if success:
                     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-            except:
-                crash_report(f"{NAME}.capture() failed.")
+            except Exception as e:
+                crash_report(e)
 
         if close_after:
             self.close()
@@ -122,8 +122,8 @@ class Camera(Imager):
 
             if preview:
                 self.device.stop_preview()
-        except:
-            crash_report(f"{NAME}.capture_video()")
+        except Exception as e:
+            crash_report(e)
             success = False
 
         if not self.close():
@@ -162,8 +162,8 @@ class Camera(Imager):
             else:
                 self.device.release()
             success = True
-        except:
-            crash_report(f"{NAME}.close() failed")
+        except Exception as e:
+            crash_report(e)
             return False
 
         self.device = None
@@ -184,8 +184,8 @@ class Camera(Imager):
                     int(self.device.get(const))
                     for const in [cv2.CAP_PROP_FRAME_HEIGHT, cv2.CAP_PROP_FRAME_WIDTH]
                 ]
-        except:
-            crash_report("camera.get_resolution() failed")
+        except Exception as e:
+            crash_report(e)
             return []
 
     def open(
@@ -235,6 +235,6 @@ class Camera(Imager):
                 logger.info(f"{NAME}.open({string.pretty_shape(self.resolution)})")
 
             return True
-        except:
-            crash_report(f"{NAME}.open: failed.")
+        except Exception as e:
+            crash_report(e)
             return False

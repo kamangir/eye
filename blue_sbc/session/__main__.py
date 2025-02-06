@@ -38,8 +38,8 @@ if args.task == "start":
             logger.info(f"created an {application}.")
 
             success = True
-        except:
-            crash_report(f"-{NAME}: importing {args.application}.Application: failed.")
+        except Exception as e:
+            crash_report(e)
 
     if success or not args.application:
         logger.info(f"{fullname()}.session.start({application.__class__.__name__})")

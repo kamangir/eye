@@ -75,9 +75,7 @@ class Diff:
 
             return is_same
         except Exception as e:
-            crash_report(
-                f"{NAME}.diff.same({string.pretty_shape_of_matrix(image)}) failed"
-            )
+            crash_report(e)
 
         self.previous = None
         return False

@@ -241,8 +241,8 @@ class Session:
                 if message.data["version"] > abcli_VERSION:
                     reply_to_bash("update")
                     return False
-            except:
-                crash_report(f"-{NAME}: process_message(): bad update message.")
+            except Exception as e:
+                crash_report(e)
 
         return None
 
@@ -259,8 +259,8 @@ class Session:
             if output:
                 try:
                     params["temperature.cpu"] = float(output[0]) / 1000
-                except:
-                    crash_report(f"{NAME}: read_temperature(): failed.")
+                except Exception as e:
+                    crash_report(e)
                     return
 
         self.params.update(params)
@@ -314,14 +314,14 @@ class Session:
         except KeyboardInterrupt:
             logger.info(f"{NAME}: Ctrl+C: stopped.")
             reply_to_bash("exit")
-        except:
-            crash_report(f"{NAME} failed.")
+        except Exception as e:
+            crash_report(e)
             success = False
 
         try:
             session.close()
-        except:
-            crash_report(f"-{NAME}: close(): failed.")
+        except Exception as e:
+            crash_report(e)
             success = False
 
         return success

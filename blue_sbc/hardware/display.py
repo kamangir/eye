@@ -88,8 +88,8 @@ class Display(Prototype_Hat):
                     cv2.COLOR_BGR2RGB,
                 ),
             )
-        except:
-            crash_report(f"{NAME}.update_gui() failed.")
+        except Exception as e:
+            crash_report(e)
 
     def update_screen(self, image, session, header, sidebar):
         super().update_screen(image, session, header, sidebar)
