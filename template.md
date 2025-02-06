@@ -11,18 +11,21 @@ pip install blue_sbc
 ```mermaid
 graph LR
 
-    lepton_capture["@sbc lepton capture"]
-    lepton_preview["@sbc lepton preview"]
+    lepton["@sbc lepton capture|preview"]
+
+    camera["@sbc camera capture|preview image|video"]
 
     object["📂 object"]:::folder
-    camera["👁️‍🗨️ camera"]:::folder
+    camera_hardware["👁️‍🗨️ camera"]:::folder
     UI["💻 UI"]:::folder
 
-    camera --> lepton_capture
-    lepton_capture --> object
+    camera_hardware --> lepton
+    lepton --> object
+    lepton --> UI
 
-    camera --> lepton_preview
-    lepton_preview --> UI
+    camera_hardware --> camera
+    camera --> object
+    camera --> UI
 
     classDef folder fill:#999,stroke:#333,stroke-width:2px;
 ```

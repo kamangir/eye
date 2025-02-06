@@ -19,11 +19,15 @@ function test_blue_sbc_help() {
         \
         "@sbc browse" \
         \
+        "@sbc camera" \
+        "@sbc camera capture" \
+        "@sbc camera capture image" \
+        "@sbc camera capture video" \
+        "@sbc camera preview" \
+        \
         "@sbc lepton" \
         "@sbc lepton capture" \
         "@sbc lepton preview" \
-        \
-        "@sbc task" \
         \
         "blue_sbc"; do
         abcli_eval ,$options \
