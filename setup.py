@@ -15,6 +15,7 @@ setup(
         f"{NAME}.hardware",
         f"{NAME}.hardware.hat",
         f"{NAME}.hardware.sparkfun_top_phat",
+        f"{NAME}.help",
         f"{NAME}.imager",
         f"{NAME}.imager.camera",
         f"{NAME}.imager.lepton",

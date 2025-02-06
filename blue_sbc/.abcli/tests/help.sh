@@ -19,7 +19,9 @@ function test_blue_sbc_help() {
         \
         "@sbc browse" \
         \
-        "@sbc leaf" \
+        "@sbc lepton" \
+        "@sbc lepton capture" \
+        "@sbc lepton preview" \
         \
         "@sbc task" \
         \

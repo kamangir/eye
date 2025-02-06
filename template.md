@@ -8,6 +8,25 @@ pip install blue_sbc
 
 --table--
 
+```mermaid
+graph LR
+
+    lepton_capture["@sbc lepton capture"]
+    lepton_preview["@sbc lepton preview"]
+
+    object["📂 object"]:::folder
+    camera["👁️‍🗨️ camera"]:::folder
+    UI["💻 UI"]:::folder
+
+    camera --> lepton_capture
+    lepton_capture --> object
+
+    camera --> lepton_preview
+    lepton_preview --> UI
+
+    classDef folder fill:#999,stroke:#333,stroke-width:2px;
+```
+
 ---
 
 --signature--
