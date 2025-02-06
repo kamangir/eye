@@ -6,6 +6,7 @@ from time import sleep
 from blueness import module
 from blue_options import string
 from blue_options import host
+from blue_options.timer import Timer
 from blue_options.logger import crash_report
 from blue_objects import file, objects
 
@@ -215,10 +216,19 @@ class Camera(Imager):
             crash_report(e)
             return False
 
-    def preview(self) -> bool:
-        logger.info("to quit press q or e.")
+    def preview(
+        self,
+        length: float = -1,
+    ) -> bool:
+        logger.info(
+            "{}.preview{} ... | press q or e to quit ...".format(
+                NAME,
+                "[{}]".format("" if length == -1 else string.pretty_duration(length)),
+            )
+        )
 
         hardware.sign_images = False
+        timer = Timer(length, "preview")
         try:
             self.open(
                 log=True,
@@ -232,6 +242,12 @@ class Camera(Imager):
                     open_before=False,
                 )
                 hardware.update_screen(image, None, [])
+
+                if timer.tick(wait=True):
+                    logger.info(
+                        "{} is up, quitting.".format(string.pretty_duration(length))
+                    )
+                    break
 
         except KeyboardInterrupt:
             logger.info("Ctrl+C, stopping.")

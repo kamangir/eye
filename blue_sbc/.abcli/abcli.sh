@@ -7,3 +7,6 @@ abcli_env_dot_load \
 
 abcli_env_dot_load \
     caller,filename=config.env,suffix=/..
+
+[[ "$abcli_is_github_workflow" == true ]] &&
+    export BLUE_SBC_SESSION_IMAGER_ENABLED=0

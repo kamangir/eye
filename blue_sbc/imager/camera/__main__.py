@@ -31,7 +31,7 @@ parser.add_argument(
 parser.add_argument(
     "--length",
     type=int,
-    default=10,
+    default=0,
 )
 parser.add_argument(
     "--output_path",
@@ -56,12 +56,12 @@ elif args.task == "capture_video":
     success = camera.capture_video(
         filename=args.filename if args.filename else f"{string.timestamp()}.h264",
         object_name=args.object_name,
-        length=args.length,
+        length=args.length if args.length else 10,
         preview=args.preview,
         resolution=(728, 600),
     )
 elif args.task == "preview":
-    success = camera.preview()
+    success = camera.preview(length=args.length if args.length else -1)
 
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")
