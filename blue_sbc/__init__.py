@@ -4,7 +4,7 @@ ICON = "🌀"
 
 DESCRIPTION = f"{ICON} AI for single board computers."
 
-VERSION = "7.33.1"
+VERSION = "7.34.1"
 
 REPO_NAME = "blue-sbc"
 

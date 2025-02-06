@@ -27,7 +27,7 @@ NAME = module.name(__file__, NAME)
 
 class Session:
     def __init__(self):
-        super(Session, self).__init__()
+        super().__init__()
 
         self.bash_keys = {
             "e": "exit",
