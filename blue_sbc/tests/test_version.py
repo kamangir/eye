@@ -1,4 +1,4 @@
-from blue_plugin import VERSION
+from blue_sbc import VERSION
 
 
 def test_version():
