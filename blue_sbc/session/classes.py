@@ -60,10 +60,10 @@ class Session:
 
         self.timer = {}
         for name, period in {
-            "imager": env.BLUE_SBC_SESSION_TEMPERATURE_IMAGER_PERIOD,
-            "messenger": env.BLUE_SBC_SESSION_TEMPERATURE_MESSENGER_PERIOD,
-            "reboot": env.BLUE_SBC_SESSION_TEMPERATURE_REBOOT_PERIOD,
-            "screen": env.BLUE_SBC_SESSION_TEMPERATURE_SCREEN_PERIOD,
+            "imager": env.BLUE_SBC_SESSION_IMAGER_PERIOD,
+            "messenger": env.BLUE_SBC_SESSION_MESSENGER_PERIOD,
+            "reboot": env.BLUE_SBC_SESSION_REBOOT_PERIOD,
+            "screen": env.BLUE_SBC_SESSION_SCREEN_PERIOD,
             "temperature": env.BLUE_SBC_SESSION_TEMPERATURE_PERIOD,
         }.items():
             self.add_timer(name, period)

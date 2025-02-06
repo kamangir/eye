@@ -21,6 +21,8 @@ def test_blue_plugin_env():
 
     assert env.BLUE_SBC_HARDWARE_KIND
 
+    assert isinstance(env.BLUE_SBC_SESSION, str)
+
     assert isinstance(env.BLUE_SBC_SESSION_IMAGER, str)
 
     assert isinstance(env.BLUE_SBC_SESSION_IMAGER_DIFF, float)
@@ -33,8 +35,8 @@ def test_blue_plugin_env():
 
     assert isinstance(env.BLUE_SBC_SESSION_AUTO_UPLOAD, bool)
 
-    assert isinstance(env.BLUE_SBC_SESSION_TEMPERATURE_IMAGER_PERIOD, int)
-    assert isinstance(env.BLUE_SBC_SESSION_TEMPERATURE_MESSENGER_PERIOD, int)
-    assert isinstance(env.BLUE_SBC_SESSION_TEMPERATURE_REBOOT_PERIOD, int)
-    assert isinstance(env.BLUE_SBC_SESSION_TEMPERATURE_SCREEN_PERIOD, int)
+    assert isinstance(env.BLUE_SBC_SESSION_IMAGER_PERIOD, int)
+    assert isinstance(env.BLUE_SBC_SESSION_MESSENGER_PERIOD, int)
+    assert isinstance(env.BLUE_SBC_SESSION_REBOOT_PERIOD, int)
+    assert isinstance(env.BLUE_SBC_SESSION_SCREEN_PERIOD, int)
     assert isinstance(env.BLUE_SBC_SESSION_TEMPERATURE_PERIOD, int)
