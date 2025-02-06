@@ -1,4 +1,4 @@
-from blue_plugin import README
+from blue_sbc import README
 
 
 def test_build_README():

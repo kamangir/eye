@@ -27,7 +27,7 @@ def help_browse(
             "browse",
             f"[{options}]",
         ],
-        "browse blue_plugin.",
+        "browse blue_sbc.",
         mono=mono,
     )
 
