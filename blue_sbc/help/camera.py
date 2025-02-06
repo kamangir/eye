@@ -3,12 +3,26 @@ from typing import List
 from blue_options.terminal import show_usage
 
 
-def help_capture(
+def help_capture_image(
     tokens: List[str],
     mono: bool,
 ) -> str:
-    options = "image|video"
+    return show_usage(
+        [
+            "@sbc",
+            "camera",
+            "capture",
+            "image",
+        ],
+        "capture an image.",
+        mono=mono,
+    )
 
+
+def help_capture_video(
+    tokens: List[str],
+    mono: bool,
+) -> str:
     args = [
         "[--length 10]",
         "[--preview 1]",
@@ -19,11 +33,10 @@ def help_capture(
             "@sbc",
             "camera",
             "capture",
-            f"[{options}]",
-            "[.|<object-name>]",
+            "video",
         ]
         + args,
-        "camera.capture",
+        "capture a video",
         mono=mono,
     )
 
@@ -32,18 +45,27 @@ def help_preview(
     tokens: List[str],
     mono: bool,
 ) -> str:
+    args = [
+        "[--length 10]",
+    ]
+
     return show_usage(
         [
             "@sbc",
             "camera",
             "preview",
-        ],
-        "camera.preview.",
+            "[-]",
+        ]
+        + args,
+        "preview.",
         mono=mono,
     )
 
 
 help_functions = {
-    "capture": help_capture,
+    "capture": {
+        "image": help_capture_image,
+        "video": help_capture_video,
+    },
     "preview": help_preview,
 }

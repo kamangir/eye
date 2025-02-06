@@ -1,12 +1,14 @@
 import cv2
+from typing import Tuple
 import numpy as np
 from time import sleep
 
 from blueness import module
 from blue_options import string
 from blue_options import host
+from blue_options.timer import Timer
 from blue_options.logger import crash_report
-from blue_objects import file
+from blue_objects import file, objects
 
 from blue_sbc import env
 from blue_sbc import NAME
@@ -24,22 +26,12 @@ class Camera(Imager):
 
     def capture(
         self,
-        close_after=True,
-        log=True,
-        open_before=True,
-    ):
-        """capture.
-
-        Args:
-            close_after (bool, optional): close camera after capture. Defaults to True.
-            log (bool, optional): log. Defaults to True.
-            open_before (bool, optional): open the camera before capture. Defaults to True.
-            save (bool, optional): save the image. Defaults to True.
-
-        Returns:
-            bool: success.
-            image: np.ndarray.
-        """
+        close_after: bool = True,
+        log: bool = True,
+        open_before: bool = True,
+        filename: str = "",
+        object_name: str = "",
+    ) -> Tuple[bool, np.ndarray]:
         success = False
         image = np.ones((1, 1, 3), dtype=np.uint8) * 127
 
@@ -76,29 +68,28 @@ class Camera(Imager):
         if success and log:
             logger.info(f"{NAME}.capture(): {string.pretty_shape_of_matrix(image)}")
 
+        if success and filename:
+            success = file.save_image(
+                filename=objects.path_of(
+                    object_name=object_name,
+                    filename=filename,
+                ),
+                image=image,
+                log=log,
+            )
+
         return success, image
 
     # https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/6
     def capture_video(
         self,
-        filename,
-        length=10,
-        preview=True,
-        pulse=True,
+        filename: str,
+        object_name: str,
+        length: int = 10,  # in seconds
+        preview: bool = True,
+        pulse: bool = True,
         resolution=None,
-    ):
-        """capture video
-
-        Args:
-            filename (str): filename.
-            length (int): length in seconds. Default to 10.
-            preview (bool, optional): show preview. Defaults to True.
-            pulse (bool, optional): pulse hardware leds. Defaults to True.
-            resolution (Any, optional): resolution. Defaults to None.
-
-        Returns:
-            bool: success.
-        """
+    ) -> bool:
         if not host.is_rpi():
             logger.error(f"{NAME}.capture_video() only works on rpi.")
             return False
@@ -106,12 +97,17 @@ class Camera(Imager):
         if not self.open(resolution=resolution):
             return False
 
+        full_filename = objects.path_of(
+            object_name=object_name,
+            filename=filename,
+        )
+
         success = True
         try:
             if preview:
                 self.device.start_preview()
 
-            self.device.start_recording(filename)
+            self.device.start_recording(full_filename)
             if pulse:
                 for _ in range(int(10 * length)):
                     hardware.pulse("outputs")
@@ -134,23 +130,14 @@ class Camera(Imager):
                 "{}.capture_video(): {} -{}-> {}".format(
                     NAME,
                     string.pretty_duration(length),
-                    string.pretty_bytes(file.size(filename)),
+                    string.pretty_bytes(file.size(full_filename)),
                     filename,
                 )
             )
 
         return success
 
-    def close(self, log=True):
-        """close camera.
-
-        Args:
-            log (bool, optional): log. Defaults to True.
-
-        Returns:
-            bool: success
-        """
-
+    def close(self, log: bool = True) -> bool:
         if self.device is None:
             logger.warning(f"{NAME}.close(): device is {self.device}, failed.")
             return False
@@ -190,18 +177,9 @@ class Camera(Imager):
 
     def open(
         self,
-        log=True,
+        log: bool = True,
         resolution=None,
-    ):
-        """open camera.
-
-        Args:
-            log (bool, optional): log. Defaults to True.
-            resolution (Tuple(int,int), optional): resolution. Defaults to None.
-
-        Returns:
-            bool: success.
-        """
+    ) -> bool:
         try:
             if host.is_rpi():
                 from picamera import PiCamera
@@ -238,3 +216,44 @@ class Camera(Imager):
         except Exception as e:
             crash_report(e)
             return False
+
+    def preview(
+        self,
+        length: float = -1,
+    ) -> bool:
+        logger.info(
+            "{}.preview{} ... | press q or e to quit ...".format(
+                NAME,
+                "[{}]".format("" if length == -1 else string.pretty_duration(length)),
+            )
+        )
+
+        hardware.sign_images = False
+        timer = Timer(length, "preview")
+        try:
+            self.open(
+                log=True,
+                resolution=(320, 240),
+            )
+
+            while not hardware.pressed("qe"):
+                _, image = self.capture(
+                    close_after=False,
+                    log=False,
+                    open_before=False,
+                )
+                hardware.update_screen(image, None, [])
+
+                if timer.tick(wait=True):
+                    logger.info(
+                        "{} is up, quitting.".format(string.pretty_duration(length))
+                    )
+                    break
+
+        except KeyboardInterrupt:
+            logger.info("Ctrl+C, stopping.")
+
+        finally:
+            self.close(log=True)
+
+        return True

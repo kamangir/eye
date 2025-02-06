@@ -11,10 +11,12 @@ from blue_objects.storage import instance as storage
 from blue_objects.graphics.signature import add_signature
 from abcli import VERSION as abcli_VERSION
 from abcli.modules import terraform
+from blue_objects.env import abcli_object_name
 from abcli.plugins.message.messenger import instance as messenger
 
 from blue_sbc import NAME
 from blue_sbc import env
+from blue_sbc.host import signature
 from blue_sbc.session.functions import reply_to_bash
 from blue_sbc.algo.diff import Diff
 from blue_sbc.hardware import hardware
@@ -26,9 +28,7 @@ NAME = module.name(__file__, NAME)
 
 
 class Session:
-    def __init__(self, object_name: str):
-        self.object_name = object_name
-
+    def __init__(self):
         self.bash_keys = {
             "e": "exit",
             "r": "reboot",
@@ -106,11 +106,11 @@ class Session:
         image = add_signature(
             image,
             [" | ".join(objects.signature(self.frame))],
-            [" | ".join(host.signature())],
+            [" | ".join(signature())],
         )
 
         filename = objects.path_of(
-            object_name=self.object_name,
+            object_name=abcli_object_name,
             filename=f"{self.frame:016d}.jpg",
         )
         if not file.save_image(filename, image):
@@ -282,12 +282,12 @@ class Session:
         ]
 
     @staticmethod
-    def start(object_name: str):
+    def start():
         success = True
         logger.info(f"{NAME}: started ...")
 
         try:
-            session = Session(object_name=object_name)
+            session = Session()
 
             while session.step():
                 pass
@@ -311,15 +311,7 @@ class Session:
     def step(
         self,
         steps="all",
-    ):
-        """step session.
-
-        Args:
-            steps (str, optional): steps. Defaults to "all".
-
-        Returns:
-            bool: success.
-        """
+    ) -> bool:
         if steps == "all":
             steps = "imager,keys,messages,seed,switch,timers".split(",")
 

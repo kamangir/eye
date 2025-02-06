@@ -11,7 +11,6 @@ from blue_sbc import NAME
 from blue_sbc import env
 from blue_sbc.hardware.hat.prototype import Prototype_Hat
 from blue_sbc.host import signature
-from blue_sbc import fullname
 from blue_sbc.logger import logger
 
 
@@ -25,7 +24,7 @@ class Display(Prototype_Hat):
         self.canvas = None
         self.canvas_size = (640, 480)
 
-        self.title = fullname()
+        self.title = " | ".join(signature())
 
         self.created = False
 
