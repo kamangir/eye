@@ -1,17 +1,19 @@
 import numpy as np
 import os
 import os.path
-from abcli import file
-from abcli import path
-from abcli import string
-from abcli.modules import host
-from abcli.plugins import graphics
-from blue_sbc.imager.classes import Imager
-from . import NAME
-import abcli.logging
-import logging
 
-logger = logging.getLogger(__name__)
+from blueness import module
+from blue_options import string
+from blue_objects import file
+from blue_objects import path
+from blue_objects.host import shell
+
+from blue_sbc import NAME
+from blue_sbc.imager.classes import Imager
+from blue_sbc.logger import logger
+
+
+NAME = module.name(__file__, NAME)
 
 
 class Lepton(Imager):
@@ -20,7 +22,7 @@ class Lepton(Imager):
         image = np.ones((1, 1, 3), dtype=np.uint8) * 127
 
         temp_dir = path.auxiliary("lepton")
-        success = host.shell(
+        success = shell(
             f"python python2.py capture --output_path {temp_dir}",
             work_dir="{}/blue-sbc/blue_sbc/imager/lepton".format(
                 os.getenv("abcli_path_git", "")

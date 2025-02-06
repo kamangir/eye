@@ -1,22 +1,20 @@
-import argparse
 import cv2
 import numpy as np
-import os
 from time import sleep
-from abcli import file
-from abcli.modules import host
-from abcli.modules.cookie import cookie
-from abcli.plugins import graphics
-from abcli import string
-from . import NAME
-from .constants import *
+
+from blueness import module
+from blue_options import string
+from blue_options import host
+from blue_options.logger import crash_report
+from blue_objects import file
+
+from blue_sbc import env
+from blue_sbc import NAME
 from blue_sbc.hardware import hardware
 from blue_sbc.imager.classes import Imager
-from abcli.logging import crash_report
-from abcli import logging
-import logging
+from blue_sbc.logger import logger
 
-logger = logging.getLogger(__name__)
+NAME = module.name(__file__, NAME)
 
 
 class Camera(Imager):
@@ -209,16 +207,16 @@ class Camera(Imager):
                 from picamera import PiCamera
 
                 self.device = PiCamera()
-                self.device.rotation = int(cookie.get("camera.rotation", 0))
+                self.device.rotation = env.BLUE_SBC_CAMERA_ROTATION
 
                 # https://projects.raspberrypi.org/en/projects/getting-started-with-picamera/7
                 self.device.resolution = (
                     (
                         (2592, 1944)
-                        if cookie.get("camera.hi_res", True)
+                        if env.BLUE_SBC_CAMERA_HI_RES
                         else (
-                            cookie.get("camera.width", 728),
-                            cookie.get("camera.height", 600),
+                            env.BLUE_SBC_CAMERA_WIDTH,
+                            env.BLUE_SBC_CAMERA_HEIGHT,
                         )
                     )
                     if resolution is None

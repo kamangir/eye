@@ -1,16 +1,18 @@
 import cv2
 import numpy as np
 import time
-from . import NAME
-from abcli import string
-from abcli.logging import crash_report
-from abcli import logging
-import logging
 
-logger = logging.getLogger(__name__)
+from blueness import module
+from blue_options import string
+from blue_options.logger import crash_report
+
+from blue_sbc import NAME
+from blue_sbc.logger import logger
+
+NAME = module.name(__file__, NAME)
 
 
-class Diff(object):
+class Diff:
     def __init__(self, threshold=0.1):
         self.size = (60, 80)
         self.threshold = threshold
@@ -72,7 +74,7 @@ class Diff(object):
             self.previous = image_scaled
 
             return is_same
-        except:
+        except Exception as e:
             crash_report(
                 f"{NAME}.diff.same({string.pretty_shape_of_matrix(image)}) failed"
             )

@@ -1,12 +1,14 @@
 import argparse
 import time
-from . import *
-from .prototype import Prototype_Hat
-from abcli import string
-from abcli import logging
-import logging
 
-logger = logging.getLogger(__name__)
+from blueness import module
+from blue_options import string
+
+from blue_sbc import NAME
+from blue_sbc.hardware.hat.prototype import Prototype_Hat
+from blue_sbc.logger import logger
+
+NAME = module.name(__file__, NAME)
 
 
 parser = argparse.ArgumentParser(NAME)

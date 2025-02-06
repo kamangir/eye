@@ -1,5 +1,3 @@
-NAME = "blue_sbc.imager.lepton"
-
-from .classes import *
+from blue_sbc.imager.lepton.classes import Lepton
 
 instance = Lepton()

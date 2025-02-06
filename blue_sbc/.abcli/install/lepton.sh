@@ -28,6 +28,6 @@ function abcli_install_lepton() {
     sudo pip install pylepton
 }
 
-if [ "$BLUE_SBC_SESSION_IMAGER_CAMERA" == "lepton" ]; then
+if [ "$BLUE_SBC_SESSION_IMAGER" == "lepton" ]; then
     abcli_install_module lepton 102
 fi

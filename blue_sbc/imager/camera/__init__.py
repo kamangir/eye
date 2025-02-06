@@ -1,5 +1,3 @@
-NAME = "blue_sbc.imager.camera"
-
-from .classes import *
+from blue_sbc.imager.camera.classes import Camera
 
 instance = Camera()

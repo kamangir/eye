@@ -2,7 +2,8 @@ import argparse
 from . import *
 import importlib
 from blue_sbc import VERSION
-from abcli.logging import crash_report
+from blue_options.logger import crash_report
+
 from abcli import logging
 import logging
 

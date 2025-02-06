@@ -1,30 +1,31 @@
 import os
-import time
+
+from blueness import module
+from blue_options import string
+from blue_options import host
+from blue_options.logger import crash_report
+from blue_options.timer import Timer
+from blue_objects import file
+from blue_objects import objects
+from blue_objects.storage import instance as storage
+from blue_objects.graphics.signature import add_signature
 from abcli import VERSION as abcli_VERSION
-from abcli import file
-from abcli import string
-from abcli.modules import host
 from abcli.modules import terraform
-from abcli.modules.cookie import cookie
-from abcli.modules import objects
-from abcli.plugins import storage
-from abcli.plugins.graphics import add_signature
 from abcli.plugins.message.messenger import instance as messenger
-from abcli.timer import Timer
-from . import NAME
-from .functions import reply_to_bash
-from blue_sbc import VERSION as blue_sbc_VERSION
+
+from blue_sbc import NAME
+from blue_sbc import env
+from blue_sbc.session.functions import reply_to_bash
 from blue_sbc.algo.diff import Diff
 from blue_sbc.hardware import hardware
 from blue_sbc.imager import imager
-from abcli.logging import crash_report
-from abcli import logging
-import logging
-
-logger = logging.getLogger(__name__)
+from blue_sbc.logger import logger
 
 
-class Session(object):
+NAME = module.name(__file__, NAME)
+
+
+class Session:
     def __init__(self):
         super(Session, self).__init__()
 
@@ -35,7 +36,7 @@ class Session(object):
             "u": "update",
         }
 
-        self.diff = Diff(cookie.get("session.imager.diff", 0.1))
+        self.diff = Diff(env.BLUE_SBC_SESSION_IMAGER_DIFF)
 
         self.capture_requested = False
 
@@ -44,8 +45,8 @@ class Session(object):
         self.frame_image = terraform.poster(None)
         self.frame_filename = ""
 
-        self.auto_upload = cookie.get("session.auto_upload", True)
-        self.outbound_queue = cookie.get("session.outbound_queue", "stream")
+        self.auto_upload = env.BLUE_SBC_SESSION_AUTO_UPLOAD
+        self.outbound_queue = env.BLUE_SBC_SESSION_OUTBOUND_QUEUE
 
         self.messages = []
 
@@ -59,17 +60,20 @@ class Session(object):
 
         self.timer = {}
         for name, period in {
-            "imager": 60 * 5,
-            "messenger": 60,
-            "reboot": 60 * 60 * 4,
-            "screen": 4,
-            "temperature": 300,
+            "imager": env.BLUE_SBC_SESSION_TEMPERATURE_IMAGER_PERIOD,
+            "messenger": env.BLUE_SBC_SESSION_TEMPERATURE_MESSENGER_PERIOD,
+            "reboot": env.BLUE_SBC_SESSION_TEMPERATURE_REBOOT_PERIOD,
+            "screen": env.BLUE_SBC_SESSION_TEMPERATURE_SCREEN_PERIOD,
+            "temperature": env.BLUE_SBC_SESSION_TEMPERATURE_PERIOD,
         }.items():
             self.add_timer(name, period)
 
-    def add_timer(self, name, period):
+    def add_timer(
+        self,
+        name: str,
+        period: float,
+    ):
         if name not in self.timer:
-            period = cookie.get(f"session.{name}.period", period)
             self.timer[name] = Timer(period, name)
             logger.info(
                 "{}: timer[{}]:{}".format(
@@ -84,7 +88,7 @@ class Session(object):
     def check_imager(self):
         self.new_frame = False
 
-        if not cookie.get("session.imager.enabled", True):
+        if not env.BLUE_SBC_SESSION_IMAGER_ENABLED:
             return
         if not self.capture_requested and not self.timer["imager"].tick():
             return
@@ -216,7 +220,7 @@ class Session(object):
 
     def process_message(self, message):
         if (
-            cookie.get("session.monitor.enabled", True)
+            env.BLUE_SBC_SESSION_OUTBOUND_QUEUE
             and message.subject in "bolt,frame".split(",")
             and not host.is_headless()
         ):

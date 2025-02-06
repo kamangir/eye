@@ -1,12 +1,14 @@
 import cv2
 import time
-from . import NAME
-from blue_sbc.hardware.screen import Screen
 from matplotlib import cm
-from abcli import logging
-import logging
 
-logger = logging.getLogger(__name__)
+from blueness import module
+
+from blue_sbc import NAME
+from blue_sbc.hardware.screen import Screen
+from blue_sbc.logger import logger
+
+NAME = module.name(__file__, NAME)
 
 
 class Sparkfun_Top_phat(Screen):

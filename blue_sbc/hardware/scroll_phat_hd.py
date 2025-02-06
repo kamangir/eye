@@ -1,6 +1,7 @@
 import cv2
 import time
-from .screen import Screen
+
+from blue_sbc.hardware.screen import Screen
 
 
 class Scroll_Phat_HD(Screen):

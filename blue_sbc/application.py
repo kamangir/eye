@@ -1,10 +1,7 @@
-from abcli import logging
-import logging
-
-logger = logging.getLogger(__name__)
+from blue_sbc.logger import logger
 
 
-class Application(object):
+class Application:
     def __init__(self):
         logger.info(f"{self.__class__.__name__} initialized.")
 

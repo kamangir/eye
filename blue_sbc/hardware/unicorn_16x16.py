@@ -1,9 +1,6 @@
 import cv2
-from .screen import Screen
-from abcli import logging
-import logging
 
-logger = logging.getLogger(__name__)
+from blue_sbc.hardware.screen import Screen
 
 
 class Unicorn_16x16(Screen):

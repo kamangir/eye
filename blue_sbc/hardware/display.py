@@ -1,17 +1,17 @@
 import cv2
 import numpy as np
-from abcli import file
-from abcli import fullname
-from abcli.modules import host
-from abcli.modules.cookie import cookie
-from abcli.plugins import graphics
-from . import NAME
-from .hat.prototype import Prototype_Hat
-from abcli.logging import crash_report
-import abcli.logging
-import logging
 
-logger = logging.getLogger(__name__)
+from blue_options.logger import crash_report
+from blue_objects import file
+from blue_options.host import is_mac
+from blue_objects import graphics
+from . import NAME
+
+from .hat.prototype import Prototype_Hat
+
+from blue_sbc.host import signature
+from blue_sbc import fullname
+from blue_sbc.logger import logger
 
 
 class Display(Prototype_Hat):
@@ -36,7 +36,7 @@ class Display(Prototype_Hat):
 
         logger.info(f"{NAME}.create()")
 
-        if cookie.get("display.fullscreen", True) and not host.is_mac():
+        if cookie.get("display.fullscreen", True) and not is_mac():
             # https://stackoverflow.com/a/34337534
             cv2.namedWindow(self.title, cv2.WND_PROP_FULLSCREEN)
             cv2.setWindowProperty(
@@ -102,7 +102,7 @@ class Display(Prototype_Hat):
             self.canvas = graphics.add_signature(
                 self.canvas,
                 header=header,
-                footer=[" | ".join(host.signature())],
+                footer=[" | ".join(signature())],
             )
 
             self.canvas = graphics.add_sidebar(

@@ -1,12 +1,14 @@
-from blue_sbc.hardware.hat.abstract import Abstract_Hat
-from abcli.modules import host
-from abcli import string
 import time
-from . import NAME
-from abcli import logging
-import logging
 
-logger = logging.getLogger(__name__)
+from blueness import module
+from blue_options import string
+from blue_options import host
+
+from blue_sbc import NAME
+from blue_sbc.hardware.hat.abstract import Abstract_Hat
+from blue_sbc.logger import logger
+
+NAME = module.name(__file__, NAME)
 
 
 class Prototype_Hat(Abstract_Hat):

@@ -1,13 +1,11 @@
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
-import cv2
-from .screen import Screen
-from abcli import string
-from abcli import logging
-import logging
 
-logger = logging.getLogger(__name__)
+from blue_options import string
+
+from blue_sbc.hardware.screen import Screen
+from blue_sbc.logger import logger
 
 BUTTON = 24
 
@@ -84,11 +82,11 @@ class Grove(Screen):
         return self
 
 
-def grove_button_on_press(screen, t):
+def grove_button_on_press(screen: Screen, t):
     logger.info("grove.button: pressed.")
 
 
-def grove_button_on_release(screen, t):
+def grove_button_on_release(screen: Screen, t):
     logger.info(f"grove.button: released after {string.pretty_duration(t)}.")
 
     if t > 60:

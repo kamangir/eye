@@ -1,12 +1,10 @@
 import random
-from blue_sbc import VERSION
-from abcli import logging
-import logging
 
-logger = logging.getLogger(__name__)
+from blue_sbc import fullname
+from blue_sbc.logger import logger
 
 
-class Hardware(object):
+class Hardware:
     def __init__(self):
         logger.info(f"{self.__class__.__name__}.init().")
 
@@ -51,7 +49,10 @@ class Hardware(object):
         logger.info(f"{self.__class__.__name__}.release()")
 
     def signature(self):
-        return [f"blue-sbc-{VERSION}", f"hardware:{self.__class__.__name__}"]
+        return [
+            fullname(),
+            f"hardware:{self.__class__.__name__}",
+        ]
 
     def update_screen(self, image, session, header, sidebar):
         return self

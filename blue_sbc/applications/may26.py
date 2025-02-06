@@ -1,8 +1,5 @@
 from blue_sbc.application import Application as Template
-from abcli import logging
-import logging
-
-logger = logging.getLogger(__name__)
+from blue_sbc.logger import logger
 
 
 class Application(Template):

@@ -1,14 +1,13 @@
-from abcli.modules.cookie import cookie
-import abcli.logging
-import logging
+from blueness import module
 
-logger = logging.getLogger(__name__)
+from blue_sbc import NAME
+from blue_sbc import env
+from blue_sbc.logger import logger
 
-NAME = "blue_sbc.imager"
+NAME = module.name(__file__, NAME)
 
-from .classes import *
 
-imager_name = cookie.get("session.imager", "camera")
+imager_name = env.BLUE_SBC_SESSION_IMAGER
 if imager_name == "lepton":
     from .lepton import instance as imager
 else:

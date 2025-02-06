@@ -10,5 +10,25 @@ def test_required_env():
 
 
 def test_blue_plugin_env():
+    assert isinstance(env.BLUE_SBC_CAMERA_HI_RES, bool)
+    assert isinstance(env.BLUE_SBC_CAMERA_WIDTH, int)
+    assert isinstance(env.BLUE_SBC_CAMERA_HEIGHT, int)
+    assert isinstance(env.BLUE_SBC_CAMERA_ROTATION, int)
+
     assert env.BLUE_SBC_HARDWARE_KIND
-    assert env.BLUE_SBC_SESSION_IMAGER_CAMERA
+
+    assert isinstance(env.BLUE_SBC_SESSION_IMAGER, str)
+
+    assert isinstance(env.BLUE_SBC_SESSION_IMAGER_DIFF, float)
+    assert isinstance(env.BLUE_SBC_SESSION_IMAGER_ENABLED, bool)
+    assert isinstance(env.BLUE_SBC_SESSION_MONITOR_ENABLED, bool)
+
+    assert isinstance(env.BLUE_SBC_SESSION_OUTBOUND_QUEUE, str)
+
+    assert isinstance(env.BLUE_SBC_SESSION_AUTO_UPLOAD, bool)
+
+    assert isinstance(env.BLUE_SBC_SESSION_TEMPERATURE_IMAGER_PERIOD, int)
+    assert isinstance(env.BLUE_SBC_SESSION_TEMPERATURE_MESSENGER_PERIOD, int)
+    assert isinstance(env.BLUE_SBC_SESSION_TEMPERATURE_REBOOT_PERIOD, int)
+    assert isinstance(env.BLUE_SBC_SESSION_TEMPERATURE_SCREEN_PERIOD, int)
+    assert isinstance(env.BLUE_SBC_SESSION_TEMPERATURE_PERIOD, int)
