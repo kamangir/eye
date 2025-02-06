@@ -16,6 +16,7 @@ from abcli.plugins.message.messenger import instance as messenger
 
 from blue_sbc import NAME
 from blue_sbc import env
+from blue_sbc.host import signature
 from blue_sbc.session.functions import reply_to_bash
 from blue_sbc.algo.diff import Diff
 from blue_sbc.hardware import hardware
@@ -105,7 +106,7 @@ class Session:
         image = add_signature(
             image,
             [" | ".join(objects.signature(self.frame))],
-            [" | ".join(host.signature())],
+            [" | ".join(signature())],
         )
 
         filename = objects.path_of(
@@ -310,15 +311,7 @@ class Session:
     def step(
         self,
         steps="all",
-    ):
-        """step session.
-
-        Args:
-            steps (str, optional): steps. Defaults to "all".
-
-        Returns:
-            bool: success.
-        """
+    ) -> bool:
         if steps == "all":
             steps = "imager,keys,messages,seed,switch,timers".split(",")
 
