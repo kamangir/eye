@@ -1,8 +1,9 @@
 from typing import List
 
-from blue_options.terminal import show_usage, xtra
+from blue_options.terminal import show_usage
 from abcli.help.generic import help_functions as generic_help_functions
 
+from blue_sbc.help.camera import help_functions as help_camera
 from blue_sbc.help.lepton import help_functions as help_lepton
 from blue_sbc import ALIAS
 
@@ -29,6 +30,7 @@ help_functions = generic_help_functions(plugin_name=ALIAS)
 help_functions.update(
     {
         "browse": help_browse,
+        "camera": help_camera,
         "lepton": help_lepton,
     }
 )
