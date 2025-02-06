@@ -233,10 +233,10 @@ class Camera(Imager):
                 )
                 hardware.update_screen(image, None, [])
 
-            success = True
-
         except KeyboardInterrupt:
             logger.info("Ctrl+C, stopping.")
 
         finally:
-            camera.close(log=True)
+            self.close(log=True)
+
+        return True
