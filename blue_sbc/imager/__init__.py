@@ -9,8 +9,8 @@ NAME = module.name(__file__, NAME)
 
 imager_name = env.BLUE_SBC_SESSION_IMAGER
 if imager_name == "lepton":
-    from .lepton import instance as imager
+    from blue_sbc.imager.lepton import instance as imager
 else:
-    from .camera import instance as imager
+    from blue_sbc.imager.camera import instance as imager
 
 logger.info(f"{NAME}: {imager_name}: {imager.__class__.__name__}")

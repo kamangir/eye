@@ -1,17 +1,21 @@
 import cv2
 import numpy as np
 
+from blueness import module
 from blue_options.logger import crash_report
 from blue_objects import file
 from blue_options.host import is_mac
 from blue_objects import graphics
-from . import NAME
 
-from .hat.prototype import Prototype_Hat
-
+from blue_sbc import NAME
+from blue_sbc import env
+from blue_sbc.hardware.hat.prototype import Prototype_Hat
 from blue_sbc.host import signature
 from blue_sbc import fullname
 from blue_sbc.logger import logger
+
+
+NAME = module.name(__file__, NAME)
 
 
 class Display(Prototype_Hat):
@@ -36,7 +40,7 @@ class Display(Prototype_Hat):
 
         logger.info(f"{NAME}.create()")
 
-        if cookie.get("display.fullscreen", True) and not is_mac():
+        if env.BLUE_SBC_DISPLAY_FULLSCREEN and not is_mac():
             # https://stackoverflow.com/a/34337534
             cv2.namedWindow(self.title, cv2.WND_PROP_FULLSCREEN)
             cv2.setWindowProperty(
@@ -55,15 +59,7 @@ class Display(Prototype_Hat):
                 self.canvas_size[1],
             )
 
-    def save(self, filename=""):
-        """save self.
-
-        Args:
-            filename (str, optional): filename. Defaults to "".
-
-        Returns:
-            bool: success.
-        """
+    def save(self, filename: str = "") -> str:
         if self.canvas is None:
             return ""
 
