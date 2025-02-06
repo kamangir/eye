@@ -67,7 +67,7 @@ elif args.task == "preview":
                 log=False,
                 open_before=False,
             )
-            hardware.update_screen(image, None, [], [])
+            hardware.update_screen(image, None, [])
 
         success = True
 
