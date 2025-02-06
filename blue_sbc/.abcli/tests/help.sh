@@ -35,6 +35,10 @@ function test_blue_sbc_help() {
         "@sbc sparkfun_top_phat" \
         "@sbc sparkfun_top_phat validate" \
         \
+        "grove info" \
+        "grove validate" \
+        "grove validate oled_128x64" \
+        \
         "blue_sbc"; do
         abcli_eval ,$options \
             abcli_help $module
