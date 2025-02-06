@@ -24,6 +24,7 @@ graph LR
     camera --> UI
 
     hardware --> hardware_validate
+    hardware_validate --> hardware
     hardware_validate --> UI
 
     classDef folder fill:#999,stroke:#333,stroke-width:2px;
