@@ -21,7 +21,7 @@ def test_blue_plugin_env():
 
     assert env.BLUE_SBC_HARDWARE_KIND
 
-    assert isinstance(env.BLUE_SBC_SESSION, str)
+    assert isinstance(env.BLUE_SBC_SESSION_PLUGIN, str)
 
     assert isinstance(env.BLUE_SBC_SESSION_IMAGER, str)
 
