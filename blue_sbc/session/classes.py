@@ -26,8 +26,8 @@ NAME = module.name(__file__, NAME)
 
 
 class Session:
-    def __init__(self):
-        super().__init__()
+    def __init__(self, object_name: str):
+        self.object_name = object_name
 
         self.bash_keys = {
             "e": "exit",
@@ -55,8 +55,6 @@ class Session:
         self.params = {"iteration": -1}
 
         self.state = {}
-
-        self.application = None
 
         self.timer = {}
         for name, period in {
@@ -105,20 +103,16 @@ class Session:
 
         self.frame += 1
 
-        if self.application is not None:
-            self.application.process_image(self.frame, image)
-
         image = add_signature(
             image,
             [" | ".join(objects.signature(self.frame))],
             [" | ".join(host.signature())],
         )
 
-        filename = os.path.join(
-            os.getenv("abcli_object_path", ""),
-            f"{self.frame:016d}.jpg",
+        filename = objects.path_of(
+            object_name=self.self.object_name,
+            filename=f"{self.frame:016d}.jpg",
         )
-
         if not file.save_image(filename, image):
             return
 
@@ -166,11 +160,6 @@ class Session:
             if output in [True, False]:
                 return output
 
-            if self.application is not None:
-                output = self.application.process_message(message)
-                if output in [True, False]:
-                    return output
-
         return None
 
     def check_seed(self):
@@ -194,9 +183,6 @@ class Session:
 
     def check_timers(self):
         if self.timer["screen"].tick():
-            if self.application is not None:
-                self.application.update_screen(self)
-
             hardware.update_screen(
                 image=self.frame_image,
                 session=self,
@@ -297,18 +283,15 @@ class Session:
         ]
 
     @staticmethod
-    def start(application=None):
+    def start(object_name: str):
         success = True
-        logger.info(f"{NAME}: started: {application.__class__.__name__}.")
+        logger.info(f"{NAME}: started ...")
 
         try:
-            session = Session()
-
-            session.application = application
+            session = Session(object_name=object_name)
 
             while session.step():
-                if session.application is not None:
-                    session.application.step(session)
+                pass
 
             logger.info(f"{NAME}: stopped.")
         except KeyboardInterrupt:

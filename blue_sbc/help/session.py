@@ -7,7 +7,7 @@ def help_session_start(
     tokens: List[str],
     mono: bool,
 ) -> str:
-    options = xtra("app=<application>,dryrun,sudo,~upload", mono=mono)
+    options = xtra("dryrun,sudo,~upload", mono=mono)
 
     return show_usage(
         [

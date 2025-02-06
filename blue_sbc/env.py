@@ -3,8 +3,6 @@ from blue_options.env import load_config, load_env, get_env
 load_env(__name__)
 load_config(__name__)
 
-BLUE_SBC_APPLICATION = get_env("BLUE_SBC_APPLICATION")
-
 BLUE_SBC_CAMERA_HI_RES = get_env("BLUE_SBC_CAMERA_HI_RES", True)
 BLUE_SBC_CAMERA_WIDTH = get_env("BLUE_SBC_CAMERA_WIDTH", 728)
 BLUE_SBC_CAMERA_HEIGHT = get_env("BLUE_SBC_CAMERA_HEIGHT", 600)

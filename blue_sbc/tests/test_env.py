@@ -10,8 +10,6 @@ def test_required_env():
 
 
 def test_blue_plugin_env():
-    assert isinstance(env.BLUE_SBC_APPLICATION, str)
-
     assert isinstance(env.BLUE_SBC_CAMERA_HI_RES, bool)
     assert isinstance(env.BLUE_SBC_CAMERA_WIDTH, int)
     assert isinstance(env.BLUE_SBC_CAMERA_HEIGHT, int)
