@@ -75,6 +75,7 @@ class Camera(Imager):
                     filename=filename,
                 ),
                 image=image,
+                log=log,
             )
 
         return success, image
