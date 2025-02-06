@@ -16,7 +16,7 @@ def help_session_start(
             "start",
             f"[{options}]",
         ],
-        "start a blue_sbc session.",
+        "start an @sbc session.",
         mono=mono,
     )
 

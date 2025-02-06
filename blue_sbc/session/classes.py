@@ -11,6 +11,7 @@ from blue_objects.storage import instance as storage
 from blue_objects.graphics.signature import add_signature
 from abcli import VERSION as abcli_VERSION
 from abcli.modules import terraform
+from blue_objects.env import abcli_object_name
 from abcli.plugins.message.messenger import instance as messenger
 
 from blue_sbc import NAME
@@ -26,9 +27,7 @@ NAME = module.name(__file__, NAME)
 
 
 class Session:
-    def __init__(self, object_name: str):
-        self.object_name = object_name
-
+    def __init__(self):
         self.bash_keys = {
             "e": "exit",
             "r": "reboot",
@@ -110,7 +109,7 @@ class Session:
         )
 
         filename = objects.path_of(
-            object_name=self.object_name,
+            object_name=abcli_object_name,
             filename=f"{self.frame:016d}.jpg",
         )
         if not file.save_image(filename, image):
@@ -282,12 +281,12 @@ class Session:
         ]
 
     @staticmethod
-    def start(object_name: str):
+    def start():
         success = True
         logger.info(f"{NAME}: started ...")
 
         try:
-            session = Session(object_name=object_name)
+            session = Session()
 
             while session.step():
                 pass

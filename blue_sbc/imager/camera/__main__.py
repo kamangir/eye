@@ -2,6 +2,7 @@ import argparse
 import os
 
 from blueness import module
+from blue_objects import file
 
 from blue_sbc import NAME
 from blue_sbc.imager.camera import instance as camera
@@ -43,9 +44,12 @@ args = parser.parse_args()
 
 success = False
 if args.task == "capture":
-    success, _, _ = camera.capture(
-        filename=os.path.join(args.output_path, "camera.jpg")
-    )
+    success, image = camera.capture()
+    if success:
+        success = file.save_image(
+            os.path.join(args.output_path, "camera.jpg"),
+            image,
+        )
 elif args.task == "capture_video":
     success = camera.capture_video(
         args.filename,

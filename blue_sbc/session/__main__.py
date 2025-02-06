@@ -15,15 +15,11 @@ parser.add_argument(
     type=str,
     help="start",
 )
-parser.add_argument(
-    "--object_name",
-    type=str,
-)
 args = parser.parse_args()
 
 success = False
 if args.task == "start":
-    success = Session.start(object_name=args.object_name)
+    success = Session.start()
 else:
     logger.error(f"-{NAME}: {args.task}: command not found.")
 
