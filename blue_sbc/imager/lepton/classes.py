@@ -1,11 +1,12 @@
+from typing import Tuple
 import numpy as np
-import os
 import os.path
 
 from blueness import module
 from blue_options import string
 from blue_objects import file
 from blue_objects import path
+from blue_objects.env import abcli_path_git
 from blue_objects.host import shell
 
 from blue_sbc import NAME
@@ -17,16 +18,13 @@ NAME = module.name(__file__, NAME)
 
 
 class Lepton(Imager):
-    def capture(self):
-        success = True
-        image = np.ones((1, 1, 3), dtype=np.uint8) * 127
+    def capture(self) -> Tuple[bool, np.ndarray]:
+        success, image = super().capture()
 
         temp_dir = path.auxiliary("lepton")
         success = shell(
             f"python python2.py capture --output_path {temp_dir}",
-            work_dir="{}/blue-sbc/blue_sbc/imager/lepton".format(
-                os.getenv("abcli_path_git", "")
-            ),
+            work_dir=f"{abcli_path_git}/blue-sbc/blue_sbc/imager/lepton",
         )
 
         if success:

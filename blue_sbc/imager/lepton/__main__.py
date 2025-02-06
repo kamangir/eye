@@ -1,10 +1,14 @@
 import argparse
-from blue_sbc.hardware import hardware
-from . import *
-from abcli import logging
-import logging
+import os
 
-logger = logging.getLogger(__name__)
+from blueness import module
+
+from blue_sbc import NAME
+from blue_sbc.imager.lepton import instance as lepton
+from blue_sbc.hardware import hardware
+from blue_sbc.logger import logger
+
+NAME = module.name(__file__, NAME)
 
 parser = argparse.ArgumentParser(NAME)
 parser.add_argument(
@@ -27,14 +31,14 @@ args = parser.parse_args()
 
 success = False
 if args.task == "capture":
-    success, _, _ = instance.capture(
+    success, _, _ = lepton.capture(
         filename=os.path.join(args.output_path, "camera.jpg"),
     )
 elif args.task == "preview":
     hardware.sign_images = False
     try:
         while not hardware.pressed("qe"):
-            _, image = instance.capture()
+            _, image = lepton.capture()
             hardware.update_screen(image)
 
         success = True

@@ -1,13 +1,15 @@
 import argparse
-from . import *
 import importlib
-from blue_sbc import VERSION
+
+from blueness import module
 from blue_options.logger import crash_report
 
-from abcli import logging
-import logging
+from blue_sbc import fullname, NAME
+from blue_sbc.session.classes import Session
+from blue_sbc.logger import logger
 
-logger = logging.getLogger(__name__)
+NAME = module.name(__file__, NAME)
+
 
 parser = argparse.ArgumentParser(NAME)
 parser.add_argument(
@@ -40,9 +42,7 @@ if args.task == "start":
             crash_report(f"-{NAME}: importing {args.application}.Application: failed.")
 
     if success or not args.application:
-        logger.info(
-            f"blue-sbc-{VERSION}.session.start({application.__class__.__name__})"
-        )
+        logger.info(f"{fullname()}.session.start({application.__class__.__name__})")
 
         success = Session.start(application)
 else:

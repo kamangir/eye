@@ -1,33 +1,25 @@
+from typing import Tuple, List
 import numpy as np
-import os
-from abcli import file
-from abcli.modules import host
-from abcli.modules.cookie import cookie
-from abcli import string
-from abcli import logging
-import logging
 
-logger = logging.getLogger(__name__)
+from blueness import module
+
+from blue_sbc import NAME
+
+NAME = module.name(__file__, NAME)
 
 
-class Imager(object):
-    pass
+class Imager:
+    def capture(self) -> Tuple[bool, np.ndarray]:
+        return True, np.zeros(())
 
 
 class TemplateImager(Imager):
-    def capture(self):
-        """capture.
-
-        Returns:
-            bool: success.
-            image: np.ndarray.
-        """
-        success = True
-        image = np.ones((1, 1, 3), dtype=np.uint8) * 127
+    def capture(self) -> Tuple[bool, np.ndarray]:
+        success, image = super().capture()
 
         # TODO: capture the image here
 
         return success, image
 
-    def signature(self):
-        return ["device_name"]
+    def signature(self) -> List[str]:
+        return [self.__class__.__name__]
