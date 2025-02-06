@@ -30,8 +30,10 @@ graph LR
     hardware_validate --> UI
 
     hardware --> session_start
+    session_start --> hardware
     camera_hardware --> session_start
     session_start --> object
+    session_start --> UI
 
     classDef folder fill:#999,stroke:#333,stroke-width:2px;
 ```
