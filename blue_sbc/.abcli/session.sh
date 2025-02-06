@@ -10,11 +10,13 @@ function blue_sbc_session() {
         local run_sudo=$(abcli_option_int "$options" sudo 0)
         local do_upload=$(abcli_option_int "$options" upload 1)
 
-        abcli_log "@sbc: session started $options $app_name"
+        local object_name=blue_sbc_session-$(abcli_string_timestamp_short)
+
+        abcli_log "@sbc: session started $options $app_name -> $object_name"
 
         abcli_mlflow_tags_set \
-            $abcli_object_name \
-            open,session,$abcli_hostname,$(abcli_string_today),$BLUE_SBC_SESSION_OBJECT_TAGS,$app_name
+            $object_name \
+            session,host=$abcli_hostname,$BLUE_SBC_SESSION_OBJECT_TAGS,app=$app_name
 
         local extra_args=""
         [[ ! -z "$app_name" ]] &&
@@ -25,16 +27,17 @@ function blue_sbc_session() {
         [[ "$run_sudo" == 1 ]] &&
             sudo_prefix="sudo -E "
 
-        abcli_log dryrun=$do_dryrun \
+        abcli_eval dryrun=$do_dryrun \
             $sudo_prefix \
             python3 -m blue_sbc.session \
             start \
+            --object_name $object_name \
             $extra_args \
             "${@:3}"
         local status="$?"
 
         [[ "$do_upload" == 1 ]] &&
-            abcli_upload - $abcli_object_name
+            abcli_upload - $object_name
 
         abcli_log "@sbc: session ended."
 
