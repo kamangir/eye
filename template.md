@@ -38,6 +38,12 @@ graph LR
     classDef folder fill:#999,stroke:#333,stroke-width:2px;
 ```
 
+# branches
+
+- [current](.) active and default branch.
+- [main](https://github.com/kamangir/blue-sbc/tree/main) legacy branch, is running on [a cluster of Raspberry pis](https://github.com/kamangir/blue-bracket). ⚠️ do not touch. ⚠️
+
 ---
 
 --signature--
+
