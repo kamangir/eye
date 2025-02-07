@@ -3,9 +3,10 @@ import numpy as np
 
 from blueness import module
 from blue_options.logger import crash_report
-from blue_objects import file
 from blue_options.host import is_mac
-from blue_objects import graphics
+from blue_objects import file
+from blue_objects.graphics import add_signature
+from blue_objects.graphics.screen import get_size
 
 from blue_sbc import NAME
 from blue_sbc import env
@@ -45,9 +46,10 @@ class Display(Prototype_Hat):
                 self.title, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN
             )
 
+            screen_height, screen_width = get_size()
             self.canvas_size = (
-                graphics.screen_width,
-                graphics.screen_height,
+                screen_width,
+                screen_height,
             )
         else:
             cv2.namedWindow(self.title, cv2.WINDOW_NORMAL)
@@ -91,7 +93,7 @@ class Display(Prototype_Hat):
         self.canvas = np.copy(image)
 
         if self.sign_images:
-            self.canvas = graphics.add_signature(
+            self.canvas = add_signature(
                 self.canvas,
                 header=header,
                 footer=[" | ".join(signature())],
