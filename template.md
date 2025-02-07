@@ -4,6 +4,9 @@
 
 ```bash
 pip install blue_sbc
+
+# @env dot list
+@env dot cp <env-name> local
 ```
 
 --table--
