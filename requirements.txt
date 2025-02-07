@@ -1,4 +1,2 @@
-blueness
-blue-options
-blue-objects
 abcli
+blue-objects
